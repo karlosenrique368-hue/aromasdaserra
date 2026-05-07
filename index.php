@@ -33,9 +33,10 @@ require __DIR__ . '/includes/partials.php';
     </div>
   </div>
 
-  <a href="#manifesto" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-cream-100/70 hover:text-gold-500 transition flex flex-col items-center gap-2">
-    <span class="text-[10px] tracking-eyebrow uppercase">Descer</span>
-    <span class="w-px h-10 bg-cream-100/40 relative overflow-hidden"><span class="absolute inset-0 bg-gold-500 animate-[loaderbar_2.2s_ease-in-out_infinite]"></span></span>
+  <a href="#manifesto" class="scroll-cue" aria-label="Descer para o conteúdo">
+    <span class="scroll-cue__label">Descer</span>
+    <span class="scroll-cue__mouse"></span>
+    <span class="scroll-cue__line"></span>
   </a>
 </section>
 
@@ -167,6 +168,7 @@ require __DIR__ . '/includes/partials.php';
     <header class="text-center max-w-3xl mx-auto reveal">
       <span class="eyebrow">Vivências na Serra</span>
       <h2 class="font-editorial text-4xl md:text-6xl text-forest-900 mt-4 leading-[1.05]">Rituais que <em class="serif-italic text-terracota-500">tocam a alma.</em></h2>
+      <p class="gallery-mobile-hint"><i data-lucide="maximize-2" class="w-4 h-4"></i> Toque nas fotos para abrir a galeria em tela cheia.</p>
     </header>
 
     <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-5 reveal-stagger">
@@ -177,8 +179,9 @@ require __DIR__ . '/includes/partials.php';
         ['photo-1466692476868-aef1dfb1e735','Mandala · horta orgânica'],
         ['photo-1522098635833-216c03d20ad4','Espaço Redário'],
       ]; foreach($tiles as [$ph,$cap]): $src="https://images.unsplash.com/$ph?auto=format&fit=crop&w=900&q=80"; ?>
-        <a href="<?= e($src) ?>" class="glightbox gallery-tile aspect-[3/4] block" data-gallery="home-exp" data-description="<?= e($cap) ?>">
+        <a href="<?= e($src) ?>" class="glightbox gallery-tile aspect-[3/4] block" data-gallery="home-exp" data-type="image" data-description="<?= e($cap) ?>">
           <img src="<?= e($src) ?>" alt="<?= e($cap) ?>" class="w-full h-full object-cover" loading="lazy">
+          <span class="gallery-action"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Abrir galeria</span>
           <figcaption><?= e($cap) ?></figcaption>
         </a>
       <?php endforeach; ?>

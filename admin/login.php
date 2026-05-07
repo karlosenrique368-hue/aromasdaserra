@@ -4,7 +4,10 @@ if (is_admin_logged()) { header('Location: ' . admin_url('index.php')); exit; }
 
 $err = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!csrf_check()) {
+  $lockedUntil = (int)($_SESSION['login_locked_until'] ?? 0);
+  if ($lockedUntil > time()) {
+    $err = 'Muitas tentativas. Aguarde alguns minutos e tente novamente.';
+  } elseif (!csrf_check()) {
         $err = 'Sessão expirada — recarregue a página.';
     } else {
         $email = trim($_POST['email'] ?? '');
@@ -14,9 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $u = $stmt->fetch();
         if ($u && password_verify($pass, $u['password_hash'])) {
             $_SESSION['admin_id'] = (int)$u['id'];
+          unset($_SESSION['login_attempts'], $_SESSION['login_locked_until']);
             session_regenerate_id(true);
             header('Location: ' . admin_url('index.php')); exit;
         }
+        $_SESSION['login_attempts'] = (int)($_SESSION['login_attempts'] ?? 0) + 1;
+        if ($_SESSION['login_attempts'] >= 5) $_SESSION['login_locked_until'] = time() + 300;
         $err = 'Credenciais inválidas.';
     }
 }
@@ -74,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <i data-lucide="log-in" class="w-4 h-4"></i> Entrar
         </button>
       </form>
-      <p class="mt-8 text-center text-[12px] text-ink-700/60">Padrão: <code class="font-mono">admin@aromas.local</code> · <code class="font-mono">aromas2025</code></p>
+      <p class="mt-8 text-center text-[12px] text-ink-700/60">Acesso reservado à administração da pousada.</p>
       <p class="mt-2 text-center"><a href="<?= ee(front_url()) ?>" class="text-[12px] text-terracota-500 hover:underline">← Voltar ao site</a></p>
     </div>
   </div>

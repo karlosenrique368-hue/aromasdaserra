@@ -19,10 +19,16 @@ if (!isset($pages[$page])) $page = 'home';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_check()) { flash('Sessão expirada. Tente novamente.', 'error'); header('Location: ' . admin_url('pages.php?page=' . urlencode($page))); exit; }
 
+  $metaRows = db()->query('SELECT id, type FROM page_blocks')->fetchAll();
+  $blockTypes = [];
+  foreach ($metaRows as $row) $blockTypes[(int)$row['id']] = $row['type'] ?? 'text';
     $upd = db()->prepare('UPDATE page_blocks SET value=? WHERE id=?');
 
     foreach ($_POST['block'] ?? [] as $id => $val) {
         $id = (int)$id; if ($id <= 0) continue;
+    $type = $blockTypes[$id] ?? 'text';
+    if ($type === 'html') $val = sanitize_block_html((string)$val);
+    elseif ($type === 'image') $val = sanitize_public_image_url((string)$val);
         $upd->execute([(string)$val, $id]);
     }
     // Image uploads

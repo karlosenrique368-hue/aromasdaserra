@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'category'    => trim($_POST['category'] ?? ''),
             'view'        => trim($_POST['view'] ?? ''),
             'description' => trim($_POST['description'] ?? ''),
-            'cover'       => trim($_POST['cover'] ?? ''),
-            'gallery'     => trim($_POST['gallery'] ?? ''),
+            'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
+            'gallery'     => sanitize_public_image_list((string)($_POST['gallery'] ?? '')),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];

@@ -12,14 +12,15 @@ function embla_carousel(array $slides, array $opts = []): void {
     $lightbox = $opts['lightbox'] ?? false;
     $group    = $opts['group']    ?? 'gallery-' . substr(md5(serialize($slides)), 0, 6);
     ?>
-    <div class="embla relative" data-autoplay="<?= $autoplay ? 'true' : 'false' ?>">
+    <div class="embla relative<?= $lightbox ? ' embla--lightbox' : '' ?>" data-autoplay="<?= $autoplay ? 'true' : 'false' ?>">
       <div class="embla__viewport">
         <div class="embla__container">
           <?php foreach ($slides as $s): ?>
             <div class="embla__slide" style="aspect-ratio: <?= e($ratio) ?>;">
               <?php if ($lightbox): ?>
-                <a href="<?= e($s['src']) ?>" class="glightbox block w-full h-full" data-gallery="<?= e($group) ?>" data-description="<?= e($s['caption'] ?? '') ?>">
+                <a href="<?= e($s['src']) ?>" class="glightbox block w-full h-full" data-gallery="<?= e($group) ?>" data-type="image" data-description="<?= e($s['caption'] ?? '') ?>">
                   <img src="<?= e($s['src']) ?>" alt="<?= e($s['alt'] ?? '') ?>" class="w-full h-full object-cover" loading="lazy">
+                  <span class="lightbox-tap-hint"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Ampliar</span>
                 </a>
               <?php else: ?>
                 <img src="<?= e($s['src']) ?>" alt="<?= e($s['alt'] ?? '') ?>" class="w-full h-full object-cover" loading="lazy">

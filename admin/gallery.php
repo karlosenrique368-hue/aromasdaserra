@@ -18,7 +18,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
                 $stmt->execute([$f['name'], $cat, $p]); $count++;
             }
         }
-        flash("$count imagens enviadas.");
+        if ($count > 0) {
+          flash("$count imagens enviadas.");
+        } else {
+          flash('Nenhuma imagem válida foi enviada. Use JPG, PNG ou WEBP até 8MB.', 'error');
+        }
         header('Location: ' . admin_url('gallery.php')); exit;
     }
     if ($op==='delete') {

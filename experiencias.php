@@ -19,6 +19,7 @@ require __DIR__ . '/includes/partials.php';
     <header class="reveal max-w-3xl">
       <span class="eyebrow">Os 4 rituais</span>
       <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight">Cada experiência, um <em class="serif-italic text-terracota-500">presente.</em></h2>
+      <p class="gallery-mobile-hint !justify-start"><i data-lucide="maximize-2" class="w-4 h-4"></i> Nas fotos, toque para ampliar e navegar pelo lightbox.</p>
     </header>
 
     <div class="mt-12 grid lg:grid-cols-2 gap-8 reveal-stagger">

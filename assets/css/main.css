@@ -8,8 +8,8 @@
 
 [x-cloak]{display:none !important;}
 
-html{scroll-behavior:smooth;}
-body{font-feature-settings:"ss01","liga","kern";}
+html{scroll-behavior:smooth; overflow-x:hidden;}
+body{font-feature-settings:"ss01","liga","kern"; overflow-x:hidden;}
 
 /* Loader */
 @keyframes loaderbar{0%{transform:translateX(-100%)}50%{transform:translateX(0)}100%{transform:translateX(100%)}}

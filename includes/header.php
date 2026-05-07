@@ -124,49 +124,51 @@ tailwind.config = {
       </a>
     </div>
 
-    <button @click="open=true" data-mobile-menu-open class="lg:hidden w-11 h-11 grid place-items-center text-forest-900" aria-label="Abrir menu" aria-expanded="false">
+    <button @click="open=true" data-mobile-menu-open class="lg:hidden w-11 h-11 grid place-items-center text-forest-900" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
       <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
   </div>
 
-  <!-- Mobile menu fullscreen editorial -->
-  <div x-show="open" x-cloak data-mobile-menu-panel aria-hidden="true" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="lg:hidden">
-    <div class="mm">
-      <div class="mm-enter h-full flex flex-col">
-        <div class="mm-head">
-          <a href="<?= url('') ?>" class="flex items-center gap-2"><span class="brand-mark" style="width:54px;height:54px;"><img src="<?= asset('img/logoserra.jpg') ?>" alt=""></span></a>
-          <button @click="open=false" data-mobile-menu-close class="w-10 h-10 grid place-items-center text-ink-800" aria-label="Fechar menu"><i data-lucide="x" class="w-6 h-6"></i></button>
-        </div>
+</header>
 
-        <nav class="mm-list">
-          <?php $i=1; foreach ($NAV as $item): ?>
-            <a href="<?= e($item['href']) ?>" class="mm-item">
-              <span><?= e($item['label']) ?></span>
-              <span class="num">0<?= $i ?></span>
-            </a>
-            <?php if (!empty($item['children'])): ?>
-              <div class="mm-sub">
-                <?php foreach ($item['children'] as $sub): ?>
-                  <a href="<?= e($sub['href']) ?>"><?= e($sub['label']) ?></a>
-                <?php endforeach; ?>
-              </div>
-            <?php endif; $i++; endforeach; ?>
-        </nav>
+<!-- Mobile menu off canvas -->
+<div id="mobile-menu" data-mobile-menu-panel aria-hidden="true" class="mobile-drawer lg:hidden">
+  <button type="button" class="mobile-drawer__scrim" data-mobile-menu-close aria-label="Fechar menu"></button>
+  <aside class="mm" role="dialog" aria-modal="true" aria-label="Menu principal" tabindex="-1">
+    <div class="mm-enter h-full flex flex-col">
+      <div class="mm-head">
+        <a href="<?= url('') ?>" class="flex items-center gap-2"><span class="brand-mark" style="width:54px;height:54px;"><img src="<?= asset('img/logoserra.jpg') ?>" alt=""></span></a>
+        <button data-mobile-menu-close class="w-10 h-10 grid place-items-center text-ink-800" aria-label="Fechar menu"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
 
-        <div class="mm-foot">
-          <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="btn-primary w-full justify-center">
-            <i data-lucide="message-circle" class="w-4 h-4"></i> Reservar pelo WhatsApp
+      <nav class="mm-list">
+        <?php $i=1; foreach ($NAV as $item): ?>
+          <a href="<?= e($item['href']) ?>" class="mm-item">
+            <span><?= e($item['label']) ?></span>
+            <span class="num">0<?= $i ?></span>
           </a>
-          <div class="grid grid-cols-3 gap-3 text-center text-[12px]">
-            <a href="tel:+<?= SITE_PHONE_RAW ?>" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="phone" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>Ligar</a>
-            <a href="<?= e(SITE_INSTAGRAM) ?>" target="_blank" rel="noopener" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="instagram" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>Instagram</a>
-            <a href="mailto:<?= e(SITE_EMAIL) ?>" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="mail" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>E-mail</a>
-          </div>
-          <p class="text-center text-[11px] tracking-eyebrow uppercase text-ink-700/60 pt-2"><?= e(SITE_LOCATION) ?> · Suíça Alagoana</p>
+          <?php if (!empty($item['children'])): ?>
+            <div class="mm-sub">
+              <?php foreach ($item['children'] as $sub): ?>
+                <a href="<?= e($sub['href']) ?>"><?= e($sub['label']) ?></a>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; $i++; endforeach; ?>
+      </nav>
+
+      <div class="mm-foot">
+        <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="btn-primary w-full justify-center">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Reservar pelo WhatsApp
+        </a>
+        <div class="grid grid-cols-3 gap-3 text-center text-[12px]">
+          <a href="tel:+<?= SITE_PHONE_RAW ?>" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="phone" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>Ligar</a>
+          <a href="<?= e(SITE_INSTAGRAM) ?>" target="_blank" rel="noopener" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="instagram" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>Instagram</a>
+          <a href="mailto:<?= e(SITE_EMAIL) ?>" class="py-3 border border-cream-200 rounded-md text-ink-800"><i data-lucide="mail" class="w-4 h-4 mx-auto mb-1 text-terracota-500"></i>E-mail</a>
         </div>
+        <p class="text-center text-[11px] tracking-eyebrow uppercase text-ink-700/60 pt-2"><?= e(SITE_LOCATION) ?> · Suíça Alagoana</p>
       </div>
     </div>
-  </div>
-</header>
+  </aside>
+</div>
 
 <main id="conteudo">

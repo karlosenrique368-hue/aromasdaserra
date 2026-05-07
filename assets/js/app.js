@@ -14,20 +14,20 @@
   const menuRoot = $('[data-mobile-menu-root]');
   if (menuRoot) {
     const openBtn = $('[data-mobile-menu-open]', menuRoot);
-    const closeBtn = $('[data-mobile-menu-close]', menuRoot);
-    const panel = $('[data-mobile-menu-panel]', menuRoot);
+    const closeBtns = $$('[data-mobile-menu-close]');
+    const panel = $('[data-mobile-menu-panel]');
     const setMenu = (open) => {
       if (!panel) return;
       const alpine = window.Alpine && window.Alpine.$data ? window.Alpine.$data(menuRoot) : null;
       if (alpine && Object.prototype.hasOwnProperty.call(alpine, 'open')) alpine.open = open;
-      if (open) panel.removeAttribute('x-cloak');
-      panel.style.display = open ? 'block' : 'none';
+      panel.classList.toggle('is-open', open);
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       if (openBtn) openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.classList.toggle('mm-open', open);
+      if (open) setTimeout(() => panel.querySelector('.mm')?.focus({ preventScroll: true }), 40);
     };
     if (openBtn) openBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); setMenu(true); });
-    if (closeBtn) closeBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); setMenu(false); });
+    closeBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); setMenu(false); }));
     panel && panel.addEventListener('click', (e) => { if (e.target.closest('.mm-item, .mm-sub a, .mm-foot a')) setMenu(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
   }
@@ -182,7 +182,7 @@
   /* ---------- GLightbox ---------- */
   const lightboxTry = (n=0) => {
     if (window.GLightbox) {
-      window.GLightbox({ selector: '.glightbox', loop: true, touchNavigation: true });
+      window.GLightbox({ selector: '.glightbox', loop: true, touchNavigation: true, draggable: true, openEffect: 'fade', closeEffect: 'fade', slideEffect: 'fade' });
     } else if (n < 40) setTimeout(() => lightboxTry(n+1), 100);
   };
   lightboxTry();

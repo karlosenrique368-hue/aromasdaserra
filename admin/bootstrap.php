@@ -1,6 +1,28 @@
 <?php
 declare(strict_types=1);
-session_start();
+
+$sessionSecure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'secure' => $sessionSecure,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    session_start();
+}
+
+function admin_security_headers(): void {
+    if (headers_sent()) return;
+    header('X-Frame-Options: SAMEORIGIN');
+    header('X-Content-Type-Options: nosniff');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'");
+}
+
+admin_security_headers();
 
 define('DATA_DIR', __DIR__ . '/../data');
 define('UPLOAD_DIR', __DIR__ . '/../assets/uploads');
@@ -295,15 +317,57 @@ function slugify(string $s): string {
     return trim($s, '-');
 }
 
+function sanitize_block_html(string $html): string {
+    $html = strip_tags($html, '<p><br><strong><b><em><i><u><ul><ol><li><a><blockquote><h2><h3>');
+    $html = preg_replace('/\s(?:on\w+|style|src|srcset|formaction|xlink:href)\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html) ?? $html;
+    $html = preg_replace_callback('/\shref\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', function(array $match): string {
+        $url = trim($match[1], "\"' \t\n\r\0\x0B");
+        $decoded = html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $scheme = strtolower((string)parse_url($decoded, PHP_URL_SCHEME));
+        if ($scheme === '' || in_array($scheme, ['http', 'https', 'mailto', 'tel'], true)) {
+            return ' href="' . htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '"';
+        }
+        return ' href="#"';
+    }, $html) ?? $html;
+    return trim($html);
+}
+
+function sanitize_public_image_url(string $url): string {
+    $url = trim($url);
+    if ($url === '') return '';
+    if (str_starts_with($url, '/') || str_starts_with($url, 'assets/') || str_starts_with($url, FRONT_BASE . '/assets/')) return $url;
+    $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
+    return in_array($scheme, ['http', 'https'], true) ? $url : '';
+}
+
+function sanitize_public_image_list(string $urls): string {
+    $safe = [];
+    foreach (preg_split('/\R+/', $urls) ?: [] as $url) {
+        $clean = sanitize_public_image_url($url);
+        if ($clean !== '') $safe[] = $clean;
+    }
+    return implode("\n", $safe);
+}
+
 function upload_file(array $file, string $prefix = 'img'): ?string {
     if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) return null;
-    $allowed = ['jpg'=>'image/jpeg','jpeg'=>'image/jpeg','png'=>'image/png','webp'=>'image/webp','svg'=>'image/svg+xml'];
+    $allowed = ['jpg'=>['image/jpeg','image/pjpeg'],'jpeg'=>['image/jpeg','image/pjpeg'],'png'=>['image/png'],'webp'=>['image/webp']];
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     if (!isset($allowed[$ext])) return null;
     if ($file['size'] > 8 * 1024 * 1024) return null;
+    $tmp = $file['tmp_name'] ?? '';
+    if (!is_uploaded_file($tmp)) return null;
+    $mime = function_exists('finfo_open') ? (function() use ($tmp) {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        if (!$finfo) return '';
+        $detected = finfo_file($finfo, $tmp) ?: '';
+        finfo_close($finfo);
+        return $detected;
+    })() : (mime_content_type($tmp) ?: '');
+    if (!in_array($mime, $allowed[$ext], true)) return null;
     $name = $prefix . '_' . date('Ymd_His') . '_' . bin2hex(random_bytes(3)) . '.' . $ext;
     $dest = UPLOAD_DIR . DIRECTORY_SEPARATOR . $name;
-    if (!move_uploaded_file($file['tmp_name'], $dest)) return null;
+    if (!move_uploaded_file($tmp, $dest)) return null;
     return front_url('assets/uploads/' . $name);
 }
 
