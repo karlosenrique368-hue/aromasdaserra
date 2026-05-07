@@ -1,8 +1,6 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-RUN docker-php-ext-install pdo_mysql \
-    && a2dismod mpm_event mpm_worker \
-    && a2enmod mpm_prefork rewrite
+RUN docker-php-ext-install pdo_mysql
 
 WORKDIR /var/www/html
 COPY . .
@@ -11,4 +9,6 @@ RUN mkdir -p data assets/uploads \
     && chown -R www-data:www-data data assets/uploads
 
 ENV APP_BASE=""
-EXPOSE 80
+EXPOSE 8080
+
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t /var/www/html"]
