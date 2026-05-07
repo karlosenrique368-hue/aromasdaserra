@@ -16,6 +16,28 @@
     const openBtn = $('[data-mobile-menu-open]', menuRoot);
     const closeBtns = $$('[data-mobile-menu-close]');
     const panel = $('[data-mobile-menu-panel]');
+    const desktopDropdowns = $$('[data-nav-parent]', menuRoot);
+    const mobileDropdowns = panel ? $$('[data-mm-group]', panel) : [];
+
+    const setDesktopDropdown = (activeRoot = null) => {
+      desktopDropdowns.forEach(root => {
+        const isOpen = activeRoot === root;
+        $('[data-nav-panel]', root)?.classList.toggle('hidden', !isOpen);
+        $('[data-nav-trigger]', root)?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        $('[data-nav-icon]', root)?.classList.toggle('rotate-180', isOpen);
+      });
+    };
+
+    const setMobileDropdown = (root, open) => {
+      $('[data-mm-sub]', root)?.classList.toggle('hidden', !open);
+      $('[data-mm-parent]', root)?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      $('[data-mm-icon]', root)?.classList.toggle('rotate-180', open);
+    };
+
+    const resetMobileDropdowns = () => {
+      mobileDropdowns.forEach(root => setMobileDropdown(root, false));
+    };
+
     const setMenu = (open) => {
       if (!panel) return;
       const alpine = window.Alpine && window.Alpine.$data ? window.Alpine.$data(menuRoot) : null;
@@ -24,12 +46,35 @@
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       if (openBtn) openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.classList.toggle('mm-open', open);
+      if (!open) resetMobileDropdowns();
       if (open) setTimeout(() => panel.querySelector('.mm')?.focus({ preventScroll: true }), 40);
     };
+
     if (openBtn) openBtn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); setMenu(true); });
     closeBtns.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); setMenu(false); }));
-    panel && panel.addEventListener('click', (e) => { if (e.target.closest('.mm-item, .mm-sub a, .mm-foot a')) setMenu(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+    panel && panel.addEventListener('click', (e) => { if (e.target.closest('[data-mm-link], .mm-sub a, .mm-foot a')) setMenu(false); });
+    desktopDropdowns.forEach(root => {
+      const trigger = $('[data-nav-trigger]', root);
+      trigger && trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const panelEl = $('[data-nav-panel]', root);
+        const willOpen = !!panelEl && panelEl.classList.contains('hidden');
+        setDesktopDropdown(willOpen ? root : null);
+      });
+    });
+    mobileDropdowns.forEach(root => {
+      const trigger = $('[data-mm-parent]', root);
+      trigger && trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const sub = $('[data-mm-sub]', root);
+        const willOpen = !!sub && sub.classList.contains('hidden');
+        setMobileDropdown(root, willOpen);
+      });
+    });
+    document.addEventListener('click', () => setDesktopDropdown(null));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setDesktopDropdown(null); setMenu(false); } });
   }
 
   /* ---------- Lenis smooth scroll ---------- */

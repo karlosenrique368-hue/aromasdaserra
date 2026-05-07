@@ -100,11 +100,11 @@ tailwind.config = {
     <nav class="hidden lg:flex items-center gap-1" aria-label="Principal">
       <?php foreach ($NAV as $item): $hasKids = !empty($item['children']); ?>
         <?php if ($hasKids): ?>
-          <div class="relative" x-data="{m:false}" @mouseenter="m=true" @mouseleave="m=false">
-            <a href="<?= e($item['href']) ?>" class="px-3 py-2 text-[13px] tracking-wide uppercase font-medium text-ink-800 hover:text-forest-800 inline-flex items-center gap-1 transition">
-              <?= e($item['label']) ?> <i data-lucide="chevron-down" class="w-3.5 h-3.5 mt-px transition-transform" :class="m && 'rotate-180'"></i>
+          <div class="relative" data-nav-parent>
+            <a href="#" data-nav-trigger aria-expanded="false" aria-haspopup="true" class="px-3 py-2 text-[13px] tracking-wide uppercase font-medium text-ink-800 hover:text-forest-800 inline-flex items-center gap-1 transition">
+              <?= e($item['label']) ?> <i data-nav-icon data-lucide="chevron-down" class="w-3.5 h-3.5 mt-px transition-transform duration-300"></i>
             </a>
-            <div x-show="m" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" class="absolute top-full left-0 min-w-[260px] pt-3">
+            <div data-nav-panel class="absolute top-full left-0 min-w-[260px] pt-3 hidden">
               <div class="bg-cream-50 border border-cream-200 shadow-2xl rounded-md py-2">
                 <?php foreach ($item['children'] as $sub): ?>
                   <a href="<?= e($sub['href']) ?>" class="block px-5 py-2.5 text-[14px] text-ink-800 hover:bg-cream-100 hover:text-forest-800 transition"><?= e($sub['label']) ?></a>
@@ -142,17 +142,27 @@ tailwind.config = {
       </div>
 
       <nav class="mm-list">
-        <?php $i=1; foreach ($NAV as $item): ?>
-          <a href="<?= e($item['href']) ?>" class="mm-item">
-            <span><?= e($item['label']) ?></span>
-            <span class="num">0<?= $i ?></span>
-          </a>
-          <?php if (!empty($item['children'])): ?>
-            <div class="mm-sub">
-              <?php foreach ($item['children'] as $sub): ?>
-                <a href="<?= e($sub['href']) ?>"><?= e($sub['label']) ?></a>
-              <?php endforeach; ?>
+        <?php $i=1; foreach ($NAV as $item): $hasKids = !empty($item['children']); ?>
+          <?php if ($hasKids): ?>
+            <div class="mm-group" data-mm-group>
+              <a href="#" class="mm-item mm-item--toggle" data-mm-parent aria-expanded="false" aria-haspopup="true">
+                <span class="mm-item__main"><?= e($item['label']) ?></span>
+                <span class="mm-item__meta">
+                  <span class="num">0<?= $i ?></span>
+                  <i data-mm-icon data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300"></i>
+                </span>
+              </a>
+              <div class="mm-sub hidden" data-mm-sub>
+                <?php foreach ($item['children'] as $sub): ?>
+                  <a href="<?= e($sub['href']) ?>"><?= e($sub['label']) ?></a>
+                <?php endforeach; ?>
+              </div>
             </div>
+          <?php else: ?>
+            <a href="<?= e($item['href']) ?>" class="mm-item" data-mm-link>
+              <span class="mm-item__main"><?= e($item['label']) ?></span>
+              <span class="num">0<?= $i ?></span>
+            </a>
           <?php endif; $i++; endforeach; ?>
       </nav>
 
