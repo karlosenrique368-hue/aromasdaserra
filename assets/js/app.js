@@ -22,7 +22,7 @@
       if (alpine && Object.prototype.hasOwnProperty.call(alpine, 'open')) alpine.open = open;
       if (open) panel.removeAttribute('x-cloak');
       panel.style.display = open ? 'block' : 'none';
-      panel.toggleAttribute('aria-hidden', !open);
+      panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       if (openBtn) openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.classList.toggle('mm-open', open);
     };

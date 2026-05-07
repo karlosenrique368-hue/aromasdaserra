@@ -22,7 +22,15 @@ define('SITE_INSTAGRAM', 'https://www.instagram.com/pousadaaromasdaserra/');
 define('SITE_FACEBOOK', 'https://www.facebook.com/pousadaaromasdaserra');
 
 function asset(string $path): string {
-    return SITE_BASE . '/assets/' . ltrim($path, '/');
+    $cleanPath = ltrim($path, '/');
+    $url = SITE_BASE . '/assets/' . $cleanPath;
+    $file = dirname(__DIR__) . '/assets/' . $cleanPath;
+
+    if (is_file($file)) {
+        $url .= '?v=' . filemtime($file);
+    }
+
+    return $url;
 }
 function url(string $path = ''): string {
     return SITE_BASE . '/' . ltrim($path, '/');

@@ -21,9 +21,9 @@ $pageSlug  = $pageSlug  ?? 'home';
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
 
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
 <script>
-window.tailwind = window.tailwind || {};
-window.tailwind.config = {
+tailwind.config = {
   theme: {
     extend: {
       colors: {
@@ -44,7 +44,6 @@ window.tailwind.config = {
   }
 }
 </script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
 <link rel="stylesheet" href="<?= asset('css/main.css') ?>">
 <link rel="stylesheet" href="<?= asset('css/premium.css') ?>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
@@ -88,8 +87,8 @@ window.tailwind.config = {
 <header x-data="{ open:false, scrolled:false }"
   data-mobile-menu-root
   @scroll.window="scrolled = window.scrollY > 24"
-  :class="scrolled ? 'bg-cream-50/95 shadow-[0_1px_0_0_rgba(60,50,40,.08)]' : 'bg-transparent'"
-  class="sticky top-0 z-[100] backdrop-blur transition-colors duration-300">
+  :class="scrolled ? 'shadow-[0_1px_0_0_rgba(60,50,40,.08)]' : 'shadow-none'"
+  class="sticky top-0 z-[100] bg-cream-50/95 backdrop-blur transition-colors duration-300">
   <div class="max-w-8xl mx-auto px-6 h-20 flex items-center justify-between">
     <a href="<?= url('') ?>" class="flex items-center gap-3 group">
       <span class="brand-mark brand-mark--lg"><img src="<?= asset('img/logoserra.jpg') ?>" alt="<?= e(SITE_NAME) ?>"></span>
@@ -131,7 +130,7 @@ window.tailwind.config = {
   </div>
 
   <!-- Mobile menu fullscreen editorial -->
-  <div x-show="open" x-cloak data-mobile-menu-panel x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="lg:hidden">
+  <div x-show="open" x-cloak data-mobile-menu-panel aria-hidden="true" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="lg:hidden">
     <div class="mm">
       <div class="mm-enter h-full flex flex-col">
         <div class="mm-head">

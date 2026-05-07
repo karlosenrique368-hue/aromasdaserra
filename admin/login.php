@@ -28,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
-<script>window.tailwind=window.tailwind||{};window.tailwind.config={theme:{extend:{colors:{forest:{700:'#3a5b30',800:'#2f4a2a',900:'#1f3019'},cream:{50:'#faf6ef',100:'#f4ece0',200:'#ebdcc4'},gold:{500:'#c4a46c',600:'#a98955'},ink:{700:'#3b342c',800:'#2a2520',900:'#1a1612'},terracota:{500:'#b8754a'}},fontFamily:{editorial:['"Italiana"','serif'],display:['"Cormorant Garamond"','serif']}}}}</script>
 <script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{forest:{700:'#3a5b30',800:'#2f4a2a',900:'#1f3019'},cream:{50:'#faf6ef',100:'#f4ece0',200:'#ebdcc4'},gold:{500:'#c4a46c',600:'#a98955'},ink:{700:'#3b342c',800:'#2a2520',900:'#1a1612'},terracota:{500:'#b8754a'}},fontFamily:{editorial:['"Italiana"','serif'],display:['"Cormorant Garamond"','serif']}}}}</script>
 <link rel="stylesheet" href="<?= ee(admin_url('assets/admin.css')) ?>">
 <script defer src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 </head>
