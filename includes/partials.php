@@ -16,14 +16,19 @@ function embla_carousel(array $slides, array $opts = []): void {
       <div class="embla__viewport">
         <div class="embla__container">
           <?php foreach ($slides as $s): ?>
+            <?php
+              $slideSrc = repair_image_url((string)($s['src'] ?? ''));
+              $slideAlt = (string)($s['alt'] ?? '');
+              $slideLabel = trim((string)($s['caption'] ?? $slideAlt));
+            ?>
             <div class="embla__slide" style="aspect-ratio: <?= e($ratio) ?>;">
               <?php if ($lightbox): ?>
-                <a href="<?= e($s['src']) ?>" class="glightbox block w-full h-full" data-gallery="<?= e($group) ?>" data-type="image" data-description="<?= e($s['caption'] ?? '') ?>">
-                  <img src="<?= e($s['src']) ?>" alt="<?= e($s['alt'] ?? '') ?>" class="w-full h-full object-cover" loading="lazy">
+                <a href="<?= e($slideSrc) ?>" class="glightbox block w-full h-full" data-gallery="<?= e($group) ?>" data-type="image" data-description="<?= e($slideLabel) ?>">
+                  <img src="<?= e($slideSrc) ?>" alt="<?= e($slideAlt) ?>" class="w-full h-full object-cover" loading="lazy">
                   <span class="lightbox-tap-hint"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Ampliar</span>
                 </a>
               <?php else: ?>
-                <img src="<?= e($s['src']) ?>" alt="<?= e($s['alt'] ?? '') ?>" class="w-full h-full object-cover" loading="lazy">
+                <img src="<?= e($slideSrc) ?>" alt="<?= e($slideAlt) ?>" class="w-full h-full object-cover" loading="lazy">
               <?php endif; ?>
               <?php if (!empty($s['caption'])): ?>
                 <span class="absolute left-4 bottom-4 z-[1] bg-cream-50/95 text-ink-900 text-[11px] tracking-eyebrow uppercase px-3 py-1 rounded-full"><?= e($s['caption']) ?></span>

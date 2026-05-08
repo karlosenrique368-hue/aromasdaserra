@@ -55,7 +55,7 @@ require __DIR__ . '/includes/partials.php';
         ['photo-1490645935967-10de6ba17061','Doces'],
         ['photo-1466637574441-749b8f19452f','Frutas frescas'],
       ];
-      foreach($imgs as [$ph,$cap]): $src="https://images.unsplash.com/$ph?auto=format&fit=crop&w=900&q=80"; ?>
+      foreach($imgs as [$ph,$cap]): $src=repair_image_url("https://images.unsplash.com/$ph?auto=format&fit=crop&w=900&q=80"); ?>
         <a href="<?= e($src) ?>" class="glightbox gallery-tile aspect-square block" data-gallery="gastro" data-type="image" data-description="<?= e($cap) ?>">
           <img src="<?= e($src) ?>" alt="<?= e($cap) ?>" class="w-full h-full object-cover" loading="lazy">
           <span class="gallery-action"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Abrir galeria</span>

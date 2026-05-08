@@ -7,19 +7,19 @@ require __DIR__ . '/includes/partials.php';
 ?>
 
 <!-- ============ HERO ============ -->
-<section class="relative min-h-[94vh] grid items-end overflow-hidden">
+<section class="relative min-h-[100svh] md:min-h-[94vh] grid items-end overflow-hidden">
   <picture class="absolute inset-0 kenburns">
-    <source media="(max-width:640px)" srcset="<?= e(block('home','hero_image','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=70')) ?>">
-    <img src="<?= e(block('home','hero_image','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=80')) ?>"
+    <source media="(max-width:640px)" srcset="<?= e(repair_image_url(block('home','hero_image','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=70'))) ?>">
+    <img src="<?= e(repair_image_url(block('home','hero_image','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=80'))) ?>"
          alt="Vista da serra alagoana ao amanhecer" class="w-full h-full object-cover">
   </picture>
   <div class="absolute inset-0 bg-tint"></div>
 
-  <div class="absolute inset-x-0 top-24 text-center pointer-events-none">
+  <div class="absolute inset-x-0 top-24 text-center pointer-events-none hero-kicker">
     <span class="text-cream-50/85 tracking-eyebrow uppercase text-[11px]">Pousada · Mar Vermelho — Alagoas</span>
   </div>
 
-  <div class="relative max-w-6xl mx-auto px-6 pb-24 md:pb-32 text-cream-50">
+  <div class="relative max-w-6xl mx-auto px-6 pb-40 sm:pb-32 md:pb-32 text-cream-50 hero-copy">
     <p class="font-editorial text-cream-50/85 text-lg mb-4"><?= block('home','hero_eyebrow','— Seja bem-vindo —') ?></p>
     <h1 class="font-editorial text-5xl md:text-7xl lg:text-[88px] leading-[1.02] tracking-tight max-w-5xl text-reveal">
       <?= block('home','hero_title','Onde o silêncio da serra<br><em class="serif-italic text-gold-500">acolhe e transforma.</em>') ?>
@@ -27,16 +27,15 @@ require __DIR__ . '/includes/partials.php';
     <p class="mt-6 max-w-xl text-cream-100/90 text-lg leading-relaxed reveal">
       <?= block('home','hero_subtitle','Um refúgio exclusivo para adultos em meio à <strong class="text-gold-500/95 font-medium">Suíça Alagoana</strong> — gastronomia mediterrânea, contemplação e tempo para si.') ?>
     </p>
-    <div class="mt-9 flex flex-wrap gap-3 reveal">
-      <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="btn-gold magnetic"><i data-lucide="calendar-heart" class="w-4 h-4"></i> Reservar estadia</a>
-      <a href="<?= url('a-pousada.php') ?>" class="btn-ghost-light">Conheça a pousada <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    <div class="mt-9 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 reveal">
+      <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="btn-gold magnetic w-full sm:w-auto justify-center"><i data-lucide="calendar-heart" class="w-4 h-4"></i> Reservar estadia</a>
+      <a href="<?= url('a-pousada.php') ?>" class="btn-ghost-light w-full sm:w-auto justify-center">Conheça a pousada <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
     </div>
   </div>
 
   <a href="#manifesto" class="scroll-cue" aria-label="Descer para o conteúdo">
-    <span class="scroll-cue__label">Descer</span>
-    <span class="scroll-cue__mouse"></span>
-    <span class="scroll-cue__line"></span>
+    <span class="scroll-cue__mouse" aria-hidden="true"></span>
+    <span class="scroll-cue__line" aria-hidden="true"></span>
   </a>
 </section>
 

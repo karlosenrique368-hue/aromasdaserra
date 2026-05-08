@@ -39,6 +39,16 @@ function e(string $s): string {
     return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+function repair_image_url(string $url): string {
+    $url = trim($url);
+    if ($url === '') return '';
+
+    return strtr($url, [
+        'photo-1559717865-a99cac1c95d8' => 'photo-1499636136210-6f4ee915583e',
+        'photo-1474482546248-690a01702af3' => 'photo-1455218873509-8097305ee378',
+    ]);
+}
+
 function send_security_headers(): void {
     if (headers_sent()) return;
     header('X-Frame-Options: SAMEORIGIN');

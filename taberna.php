@@ -4,7 +4,7 @@ require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
 ?>
 <section class="page-hero">
-  <img class="page-hero-img kenburns" src="<?= e(block('taberna','hero_image','https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=2000&q=80')) ?>" alt="Taberna do Monge">
+  <img class="page-hero-img kenburns" src="<?= e(repair_image_url(block('taberna','hero_image','https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=2000&q=80'))) ?>" alt="Taberna do Monge">
   <div class="page-hero-grad"></div>
   <div class="relative z-[1] max-w-6xl mx-auto px-6 pb-16 text-cream-50">
     <span class="text-cream-50/80 tracking-eyebrow uppercase text-[11px]"><?= e(block('taberna','hero_eyebrow','Restaurante boutique')) ?></span>

@@ -35,7 +35,7 @@
 .scroll-progress{position:fixed; top:0; left:0; height:2px; width:0; z-index:200; background:linear-gradient(90deg, var(--gold), var(--terracota)); transition:width .12s linear;}
 
 /* ===== Hero scroll cue ===== */
-.scroll-cue{position:absolute; left:50%; bottom:22px; z-index:2; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(250,246,239,.78); transition:color .3s var(--motion-out), transform .3s var(--motion-out);}
+.scroll-cue{position:absolute; left:50%; bottom:18px; z-index:2; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(250,246,239,.78); transition:color .3s var(--motion-out), transform .3s var(--motion-out);}
 .scroll-cue:hover{color:var(--gold); transform:translateX(-50%) translateY(-2px);}
 .scroll-cue__label{font-size:10px; letter-spacing:.32em; text-transform:uppercase;}
 .scroll-cue__mouse{width:28px; height:46px; border:1px solid rgba(250,246,239,.42); border-radius:999px; position:relative; background:rgba(250,246,239,.06); box-shadow:inset 0 0 18px rgba(250,246,239,.08);}
@@ -43,6 +43,12 @@
 .scroll-cue__line{width:1px; height:28px; background:linear-gradient(180deg, currentColor, transparent); transform-origin:top; animation:scroll-line 2.2s var(--motion-out-exp) infinite;}
 @keyframes scroll-dot{0%,100%{opacity:0; transform:translate(-50%,0);} 25%{opacity:1;} 70%{opacity:1; transform:translate(-50%,18px);} 90%{opacity:0; transform:translate(-50%,22px);}}
 @keyframes scroll-line{0%,100%{opacity:.25; transform:scaleY(.45);} 50%{opacity:.9; transform:scaleY(1);}}
+@media (max-width:640px){
+  .scroll-cue{bottom:max(.8rem, env(safe-area-inset-bottom)); gap:0;}
+  .scroll-cue__mouse{width:24px; height:40px;}
+  .scroll-cue__mouse::before{top:8px;}
+  .scroll-cue__line{display:none;}
+}
 
 /* ===== Magnetic CTA — class to opt in ===== */
 .magnetic{transition:transform .35s var(--motion-out-exp);}
@@ -133,15 +139,15 @@ body.mm-open{overflow:hidden;}
 @media (min-width:1024px){.mobile-drawer{display:none !important;}}
 
 /* ===== Lightbox glightbox tweaks ===== */
-.gslide-description.gdesc-inner{font-family:"Italiana", serif !important;}
 .glightbox-open, body.glightbox-open{overflow:hidden !important;}
 .glightbox-container{max-width:100vw !important; max-height:100vh !important; overflow:hidden !important;}
 .glightbox-container .gslider, .glightbox-container .gslide, .glightbox-container .ginner-container{max-width:100vw !important; max-height:100vh !important; overflow:hidden !important;}
-.glightbox-container .gslide-media{max-width:min(94vw,1200px) !important; max-height:calc(100vh - 112px) !important; overflow:hidden !important;}
-.glightbox-container .gslide-image img{max-width:100% !important; max-height:calc(100vh - 112px) !important; object-fit:contain !important;}
-.glightbox-container .gslide-description{max-width:min(94vw,1200px) !important; overflow:hidden !important;}
-.glightbox-container .gdesc-inner{max-height:18vh !important; overflow:hidden !important; text-overflow:ellipsis;}
-@media (max-width:640px){.glightbox-container .gslide-media,.glightbox-container .gslide-image img{max-height:calc(100dvh - 104px) !important;}.glightbox-container .gdesc-inner{max-height:16dvh !important;}}
+.glightbox-container .ginner-container{position:relative !important;}
+.glightbox-container .gslide-media{position:relative !important; margin:0 auto !important; max-width:min(94vw,1200px) !important; max-height:calc(100vh - 112px) !important; overflow:hidden !important;}
+.glightbox-container .gslide-image img{max-width:100% !important; max-height:calc(100vh - 112px) !important; object-fit:contain !important; border-radius:10px !important;}
+.glightbox-container .gslide-description{display:none !important;}
+.glightbox-badge{position:absolute; left:16px; top:16px; z-index:3; display:inline-flex; align-items:center; max-width:calc(100% - 32px); padding:.48rem .8rem; border-radius:999px; background:rgba(250,246,239,.94); color:var(--forest-900); border:1px solid rgba(60,50,40,.08); box-shadow:0 12px 30px -18px rgba(26,22,18,.55); font-size:10px; letter-spacing:.16em; text-transform:uppercase; line-height:1.25; pointer-events:none;}
+@media (max-width:640px){.glightbox-container .gslide-media,.glightbox-container .gslide-image img{max-height:calc(100dvh - 92px) !important;}.glightbox-badge{left:12px; top:12px; max-width:calc(100% - 24px);}}
 
 /* ===== Lightbox affordances ===== */
 .gallery-mobile-hint{margin:1rem auto 0; display:inline-flex; align-items:center; justify-content:center; gap:.45rem; color:rgba(59,52,44,.72); font-size:13px; line-height:1.5;}

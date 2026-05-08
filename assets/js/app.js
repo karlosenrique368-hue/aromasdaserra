@@ -10,6 +10,29 @@
   const renderIcons = () => { if (window.lucide) window.lucide.createIcons({attrs:{'stroke-width':1.6}}); };
   renderIcons();
 
+  const decorateLightbox = () => {
+    $$('.glightbox-container .gslide').forEach(slide => {
+      const media = $('.gslide-media', slide);
+      if (!media) return;
+
+      const desc = $('.gslide-desc, .gslide-title', slide);
+      const fallbackAlt = $('.gslide-image img', slide)?.getAttribute('alt') || '';
+      const label = (desc?.textContent || fallbackAlt || '').trim();
+
+      $('.glightbox-badge', slide)?.remove();
+      if (!label) return;
+
+      const badge = document.createElement('span');
+      badge.className = 'glightbox-badge';
+      badge.textContent = label;
+      media.appendChild(badge);
+    });
+  };
+
+  const queueLightboxDecorate = () => {
+    [70, 220, 420].forEach(delay => setTimeout(decorateLightbox, delay));
+  };
+
   /* ---------- Mobile menu fallback (keeps menu working even if Alpine is late) ---------- */
   const menuRoot = $('[data-mobile-menu-root]');
   if (menuRoot) {
@@ -227,7 +250,14 @@
   /* ---------- GLightbox ---------- */
   const lightboxTry = (n=0) => {
     if (window.GLightbox) {
-      window.GLightbox({ selector: '.glightbox', loop: true, touchNavigation: true, draggable: true, openEffect: 'fade', closeEffect: 'fade', slideEffect: 'fade' });
+      const lightbox = window.GLightbox({ selector: '.glightbox', loop: true, touchNavigation: true, draggable: true, openEffect: 'fade', closeEffect: 'fade', slideEffect: 'fade' });
+      queueLightboxDecorate();
+      if (lightbox && typeof lightbox.on === 'function') {
+        ['open', 'slide_changed', 'slide_after_load'].forEach(eventName => lightbox.on(eventName, queueLightboxDecorate));
+      }
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.glightbox')) queueLightboxDecorate();
+      });
     } else if (n < 40) setTimeout(() => lightboxTry(n+1), 100);
   };
   lightboxTry();
