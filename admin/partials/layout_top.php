@@ -32,8 +32,9 @@ $NAV = [
 <script defer src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script defer src="<?= ee(admin_url('assets/admin.js')) ?>"></script>
 </head>
-<body x-data="{ side:false }">
+<body x-data="{ side:false }" @keydown.escape.window="side=false">
 <div class="admin-shell">
+  <button type="button" class="adm-side-scrim" :class="side && 'open'" @click="side=false" aria-label="Fechar menu"></button>
   <aside class="adm-side" :class="side && 'open'" @click.away="side=false">
     <div class="adm-brand">
       <img src="<?= ee(front_url('assets/img/logoserra.jpg')) ?>" alt="">

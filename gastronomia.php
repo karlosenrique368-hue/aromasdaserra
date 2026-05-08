@@ -16,22 +16,22 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-50">
   <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal">
-      <span class="eyebrow">A nossa filosofia</span>
+      <span class="eyebrow"><?= e(block('gastronomia','philosophy_eyebrow','A nossa filosofia')) ?></span>
       <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight"><?= block('gastronomia','philosophy_title','A mesa é o <em class="serif-italic text-terracota-500">coração</em> da pousada.') ?></h2>
       <p class="mt-6 text-[17px] leading-[1.9] text-ink-700/90"><?= block('gastronomia','philosophy_body','Combinando ingredientes frescos e temperos colhidos diretamente da nossa Mandala, cada prato é uma alquimia de sabores e aromas. Mesa farta, vinhos especiais e tempo desacelerado.') ?></p>
       <ul class="mt-7 grid sm:grid-cols-2 gap-3 text-[15px]">
-        <li class="flex items-start gap-2"><i data-lucide="wheat" class="w-4 h-4 mt-1 text-gold-600"></i> Pães rústicos artesanais</li>
-        <li class="flex items-start gap-2"><i data-lucide="wine" class="w-4 h-4 mt-1 text-gold-600"></i> Carta de vinhos curada</li>
-        <li class="flex items-start gap-2"><i data-lucide="flame" class="w-4 h-4 mt-1 text-gold-600"></i> Temporada de fondues</li>
-        <li class="flex items-start gap-2"><i data-lucide="sprout" class="w-4 h-4 mt-1 text-gold-600"></i> Ervas da Mandala</li>
+        <li class="flex items-start gap-2"><i data-lucide="wheat" class="w-4 h-4 mt-1 text-gold-600"></i> <?= e(block('gastronomia','bullet_1','Pães rústicos artesanais')) ?></li>
+        <li class="flex items-start gap-2"><i data-lucide="wine" class="w-4 h-4 mt-1 text-gold-600"></i> <?= e(block('gastronomia','bullet_2','Carta de vinhos curada')) ?></li>
+        <li class="flex items-start gap-2"><i data-lucide="flame" class="w-4 h-4 mt-1 text-gold-600"></i> <?= e(block('gastronomia','bullet_3','Temporada de fondues')) ?></li>
+        <li class="flex items-start gap-2"><i data-lucide="sprout" class="w-4 h-4 mt-1 text-gold-600"></i> <?= e(block('gastronomia','bullet_4','Ervas da Mandala')) ?></li>
       </ul>
     </div>
     <div class="reveal rounded-md overflow-hidden shadow-xl">
       <?php embla_carousel([
-        ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','alt'=>'Mesa farta','caption'=>'Café da manhã'],
-        ['src'=>'https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=1200&q=85','alt'=>'Fondue'],
-        ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85','alt'=>'Prato'],
-        ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','alt'=>'Massa'],
+        ['src'=>block('gastronomia','carousel_image_1','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Mesa farta','caption'=>'Café da manhã'],
+        ['src'=>block('gastronomia','carousel_image_2','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Fondue'],
+        ['src'=>block('gastronomia','carousel_image_3','https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Prato'],
+        ['src'=>block('gastronomia','carousel_image_4','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Massa'],
       ], ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'gastro-hero']); ?>
     </div>
   </div>
@@ -40,8 +40,8 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-100 paper">
   <div class="max-w-7xl mx-auto px-6">
     <header class="reveal text-center max-w-2xl mx-auto">
-      <span class="eyebrow">Galeria</span>
-      <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight">Aromas, cores e <em class="serif-italic text-terracota-500">texturas.</em></h2>
+      <span class="eyebrow"><?= e(block('gastronomia','gallery_eyebrow','Galeria')) ?></span>
+      <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight"><?= block('gastronomia','gallery_title','Aromas, cores e <em class="serif-italic text-terracota-500">texturas.</em>') ?></h2>
     </header>
     <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 reveal-stagger">
       <?php

@@ -84,6 +84,76 @@
     });
   }
 
+  // ===== Gallery Picker (multi-image cards) =====
+  function initGalleryPick(){
+    document.querySelectorAll('[data-gallery-picker]').forEach(picker => {
+      if (picker.__init) return; picker.__init = true;
+      const list = picker.querySelector('[data-gallery-list]');
+      const fileInput = picker.querySelector('[data-gallery-files]');
+      const urlInput = picker.querySelector('[data-gallery-url]');
+      const addBtn = picker.querySelector('[data-gallery-add]');
+      const inputName = picker.dataset.inputName || 'gallery_urls[]';
+
+      const makeItem = (src, hiddenValue, fileRef) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-picker__item';
+        item.dataset.galleryItem = 'true';
+        if (fileRef) item.dataset.filePreview = 'true';
+        item.innerHTML = `<img src="${src}" alt=""><button type="button" data-gallery-remove aria-label="Remover imagem"><i data-lucide="x"></i></button>`;
+        if (hiddenValue) {
+          const hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.name = inputName;
+          hidden.value = hiddenValue;
+          item.appendChild(hidden);
+        }
+        item.querySelector('[data-gallery-remove]').addEventListener('click', () => {
+          if (fileRef && fileInput) {
+            const dt = new DataTransfer();
+            Array.from(fileInput.files).forEach(file => { if (file !== fileRef) dt.items.add(file); });
+            fileInput.files = dt.files;
+          }
+          item.remove();
+        });
+        list.appendChild(item);
+        refreshIcons();
+      };
+
+      const renderFiles = () => {
+        list.querySelectorAll('[data-file-preview]').forEach(item => item.remove());
+        Array.from(fileInput?.files || []).forEach(file => makeItem(URL.createObjectURL(file), '', file));
+      };
+
+      fileInput && fileInput.addEventListener('change', renderFiles);
+      addBtn && addBtn.addEventListener('click', () => {
+        const value = (urlInput?.value || '').trim();
+        if (!value) return;
+        makeItem(value, value, null);
+        urlInput.value = '';
+      });
+      urlInput && urlInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); addBtn?.click(); }
+      });
+
+      ['dragenter','dragover'].forEach(ev => picker.addEventListener(ev, e => {
+        e.preventDefault(); picker.classList.add('is-drag');
+      }));
+      ['dragleave','drop'].forEach(ev => picker.addEventListener(ev, e => {
+        e.preventDefault(); picker.classList.remove('is-drag');
+      }));
+      picker.addEventListener('drop', e => {
+        if (!fileInput) return;
+        const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+        if (!files.length) return;
+        const dt = new DataTransfer();
+        Array.from(fileInput.files).forEach(file => dt.items.add(file));
+        files.forEach(file => dt.items.add(file));
+        fileInput.files = dt.files;
+        renderFiles();
+      });
+    });
+  }
+
   // ===== Quill editors =====
   function initEditors(){
     if (!window.Quill) return;
@@ -111,6 +181,7 @@
     refreshIcons();
     initUpload();
     initImgPick();
+    initGalleryPick();
     initEditors();
   });
   document.addEventListener('alpine:initialized', refreshIcons);

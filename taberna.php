@@ -17,19 +17,19 @@ require __DIR__ . '/includes/partials.php';
   <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal rounded-md overflow-hidden shadow-xl">
       <?php embla_carousel([
-        ['src'=>'https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=1200&q=85','alt'=>'Salão Taberna'],
-        ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','alt'=>'Mesa'],
-        ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','alt'=>'Prato'],
+        ['src'=>block('taberna','about_image_1','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Salão Taberna'],
+        ['src'=>block('taberna','about_image_2','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Mesa'],
+        ['src'=>block('taberna','about_image_3','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Prato'],
       ], ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'taberna-hero']); ?>
     </div>
     <div class="reveal">
-      <span class="eyebrow">Sobre a casa</span>
+      <span class="eyebrow"><?= e(block('taberna','about_eyebrow','Sobre a casa')) ?></span>
       <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight"><?= block('taberna','about_title','Aberta ao <em class="serif-italic text-terracota-500">público.</em>') ?></h2>
       <p class="mt-6 text-[17px] leading-[1.9] text-ink-700/90"><?= block('taberna','about_body','A Taberna do Monge é o restaurante boutique da pousada — aberto também a visitantes externos. Receitas autorais, vinhos selecionados e ambiente acolhedor com vista para a serra.') ?></p>
       <ul class="mt-7 space-y-3 text-[15px]">
-        <li class="flex items-center gap-3"><i data-lucide="clock" class="w-5 h-5 text-terracota-500"></i> Aberto para almoços e jantares · reservas recomendadas</li>
-        <li class="flex items-center gap-3"><i data-lucide="users" class="w-5 h-5 text-terracota-500"></i> Espaço íntimo · capacidade limitada</li>
-        <li class="flex items-center gap-3"><i data-lucide="flame" class="w-5 h-5 text-terracota-500"></i> Temporada de fondues no inverno</li>
+        <li class="flex items-center gap-3"><i data-lucide="clock" class="w-5 h-5 text-terracota-500"></i> <?= e(block('taberna','bullet_1','Aberto para almoços e jantares · reservas recomendadas')) ?></li>
+        <li class="flex items-center gap-3"><i data-lucide="users" class="w-5 h-5 text-terracota-500"></i> <?= e(block('taberna','bullet_2','Espaço íntimo · capacidade limitada')) ?></li>
+        <li class="flex items-center gap-3"><i data-lucide="flame" class="w-5 h-5 text-terracota-500"></i> <?= e(block('taberna','bullet_3','Temporada de fondues no inverno')) ?></li>
       </ul>
       <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="btn-primary magnetic mt-8"><i data-lucide="calendar" class="w-4 h-4"></i> Reservar mesa</a>
     </div>

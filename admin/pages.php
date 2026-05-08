@@ -11,6 +11,7 @@ $pages = [
     'experiencias' => 'Experiências',
     'localizacao'  => 'Localização',
     'itinerario'   => 'Itinerário',
+    'global'       => 'Global / Rodapé',
 ];
 $page    = $_GET['page'] ?? 'home';
 if (!isset($pages[$page])) $page = 'home';

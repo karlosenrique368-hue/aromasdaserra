@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'icon'        => trim($_POST['icon'] ?? 'sparkles'),
             'description' => trim($_POST['description'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
-            'gallery'     => sanitize_public_image_list((string)($_POST['gallery'] ?? '')),
+            'gallery'     => sanitize_public_image_items(array_merge((array)($_POST['gallery_urls'] ?? []), upload_gallery_files('gallery_files', 'experience_gallery'))),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];
@@ -61,7 +61,7 @@ if ($action==='edit' || $action==='new') {
       <label><span class="lbl">Capa</span></label>
       <?php $name='cover_file'; $current=$row['cover']; $multiple=false; $hint='JPG, PNG ou WEBP'; require __DIR__ . '/partials/upload_zone.php'; ?>
       <label style="margin-top:.6rem;"><span class="lbl" style="font-size:11px; color:var(--a-muted);">Ou cole uma URL externa</span><input type="text" name="cover" value="<?= ee($row['cover']) ?>" placeholder="https://..."></label>
-      <label><span class="lbl">Galeria (uma URL por linha)</span><textarea name="gallery" rows="4"><?= ee($row['gallery']) ?></textarea></label>
+      <?php $items=$row['gallery']; $inputName='gallery_urls[]'; $uploadName='gallery_files[]'; $hint='Organize a galeria por cards. Remova o que não quiser manter e envie novas imagens.'; require __DIR__ . '/partials/gallery_picker.php'; ?>
       <div class="row-2">
         <label style="display:flex; align-items:center; gap:.6rem; padding-top:1.6rem;"><input type="checkbox" name="is_active" <?= $row['is_active']?'checked':'' ?>> Ativo</label>
         <label><span class="lbl">Ordem</span><input type="number" name="sort_order" value="<?= (int)$row['sort_order'] ?>"></label>

@@ -16,7 +16,7 @@ require __DIR__ . '/includes/partials.php';
   <div class="absolute inset-0 bg-tint"></div>
 
   <div class="absolute inset-x-0 top-24 text-center pointer-events-none hero-kicker">
-    <span class="text-cream-50/85 tracking-eyebrow uppercase text-[11px]">Pousada · Mar Vermelho — Alagoas</span>
+    <span class="text-cream-50/85 tracking-eyebrow uppercase text-[11px]"><?= e(block('home','hero_kicker','Pousada · Mar Vermelho — Alagoas')) ?></span>
   </div>
 
   <div class="relative max-w-6xl mx-auto px-6 pb-40 sm:pb-32 md:pb-32 text-cream-50 hero-copy">
@@ -59,24 +59,24 @@ require __DIR__ . '/includes/partials.php';
   <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle_at_70%_30%,#c4a46c_0,transparent_55%)]"></div>
   <div class="relative max-w-7xl mx-auto px-6">
     <header class="text-center max-w-2xl mx-auto reveal">
-      <span class="eyebrow text-gold-500/80">Diferenciais</span>
-      <h2 class="font-editorial text-4xl md:text-5xl text-cream-50 mt-3">O que nos faz <em class="serif-italic text-gold-500">únicos.</em></h2>
+      <span class="eyebrow text-gold-500/80"><?= e(block('home','features_eyebrow','Diferenciais')) ?></span>
+      <h2 class="font-editorial text-4xl md:text-5xl text-cream-50 mt-3"><?= block('home','features_title','O que nos faz <em class="serif-italic text-gold-500">únicos.</em>') ?></h2>
     </header>
     <div class="mt-14 grid md:grid-cols-3 gap-10 reveal-stagger">
       <article class="text-center">
         <i data-lucide="utensils-crossed" class="w-9 h-9 mx-auto text-gold-500"></i>
-        <h3 class="font-editorial text-2xl text-cream-50 mt-5">Cozinha Mediterrânea</h3>
-        <p class="mt-3 text-cream-100/75 leading-relaxed">Receitas autorais inspiradas no sul da França, Itália e Mediterrâneo, harmonizadas com vinhos especiais.</p>
+        <h3 class="font-editorial text-2xl text-cream-50 mt-5"><?= e(block('home','feature_1_title','Cozinha Mediterrânea')) ?></h3>
+        <p class="mt-3 text-cream-100/75 leading-relaxed"><?= e(block('home','feature_1_body','Receitas autorais inspiradas no sul da França, Itália e Mediterrâneo, harmonizadas com vinhos especiais.')) ?></p>
       </article>
       <article class="text-center">
         <i data-lucide="flame" class="w-9 h-9 mx-auto text-gold-500"></i>
-        <h3 class="font-editorial text-2xl text-cream-50 mt-5">Ritual da Fogueira</h3>
-        <p class="mt-3 text-cream-100/75 leading-relaxed">Noites de celebração à beira do fogo — música, conversas e gastronomia em um ambiente íntimo e ancestral.</p>
+        <h3 class="font-editorial text-2xl text-cream-50 mt-5"><?= e(block('home','feature_2_title','Ritual da Fogueira')) ?></h3>
+        <p class="mt-3 text-cream-100/75 leading-relaxed"><?= e(block('home','feature_2_body','Noites de celebração à beira do fogo — música, conversas e gastronomia em um ambiente íntimo e ancestral.')) ?></p>
       </article>
       <article class="text-center">
         <i data-lucide="leaf" class="w-9 h-9 mx-auto text-gold-500"></i>
-        <h3 class="font-editorial text-2xl text-cream-50 mt-5">Contemplação</h3>
-        <p class="mt-3 text-cream-100/75 leading-relaxed">Espaços de leitura, redário, mandala e o caminho das pedras — feitos para o reencontro consigo.</p>
+        <h3 class="font-editorial text-2xl text-cream-50 mt-5"><?= e(block('home','feature_3_title','Contemplação')) ?></h3>
+        <p class="mt-3 text-cream-100/75 leading-relaxed"><?= e(block('home','feature_3_body','Espaços de leitura, redário, mandala e o caminho das pedras — feitos para o reencontro consigo.')) ?></p>
       </article>
     </div>
   </div>
@@ -86,26 +86,25 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-50">
   <div class="max-w-7xl mx-auto px-6">
     <header class="max-w-3xl reveal">
-      <span class="eyebrow">Acomodações</span>
-      <h2 class="font-editorial text-4xl md:text-6xl text-forest-900 mt-4 leading-tight">Chalés que <em class="serif-italic text-terracota-500">abraçam o jardim.</em></h2>
-      <p class="mt-5 text-[17px] leading-[1.85] text-ink-700/85">Cada detalhe foi pensado para proporcionar tranquilidade — aconchego, conforto, gentilezas e o contato constante com a natureza.</p>
+      <span class="eyebrow"><?= e(block('home','chalets_eyebrow','Acomodações')) ?></span>
+      <h2 class="font-editorial text-4xl md:text-6xl text-forest-900 mt-4 leading-tight"><?= block('home','chalets_title','Chalés que <em class="serif-italic text-terracota-500">abraçam o jardim.</em>') ?></h2>
+      <p class="mt-5 text-[17px] leading-[1.85] text-ink-700/85"><?= block('home','chalets_body','Cada detalhe foi pensado para proporcionar tranquilidade — aconchego, conforto, gentilezas e o contato constante com a natureza.') ?></p>
     </header>
 
     <div class="mt-14 grid md:grid-cols-3 gap-7 reveal-stagger">
       <?php
-      $cards = [
-        ['lavanda', 'Chalé Lavanda', 'Luxo · Vista panorâmica', 'Único com vista panorâmica para a serra. Varanda privativa com rede e decoração charmosa.', [
-          'photo-1582719478250-c89cae4dc85b','photo-1540541338287-41700207dee6','photo-1598300042247-d088f8ab3a91',
-        ]],
-        ['manjericao', 'Chalé Manjericão', 'Luxo VIP · Vista jardim', 'Refúgio sofisticado para retiros sabáticos — estrutura completa para permanências mais prolongadas.', [
-          'photo-1505691938895-1758d7feb511','photo-1505693416388-ac5ce068fe85','photo-1567016432779-094069958ea5',
-        ]],
-        ['standard', 'Chalés Aromáticos', 'Standard · Vista jardim', 'Alecrim, Capim Cidreira, Calêndula, Erva Doce, Melissa e Jasmim — vista para o nosso lindo e perfumado jardim.', [
-          'photo-1566073771259-6a8506099945','photo-1611892440504-42a792e24d32','photo-1591088398332-8a7791972843',
-        ]],
-      ];
-      foreach($cards as [$slug,$title,$tag,$desc,$ph]):
-        $slides = array_map(fn($p) => ['src' => "https://images.unsplash.com/$p?auto=format&fit=crop&w=900&q=80", 'alt' => $title], $ph);
+      $cards = array_slice(catalog_chalets([
+        ['slug'=>'lavanda', 'name'=>'Chalé Lavanda', 'category'=>'Luxo · Vista panorâmica', 'description'=>'Único com vista panorâmica para a serra. Varanda privativa com rede e decoração charmosa.', 'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=900&q=80'])],
+        ['slug'=>'manjericao', 'name'=>'Chalé Manjericão', 'category'=>'Luxo VIP · Vista jardim', 'description'=>'Refúgio sofisticado para retiros sabáticos — estrutura completa para permanências mais prolongadas.', 'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=900&q=80'])],
+        ['slug'=>'standard', 'name'=>'Chalés Aromáticos', 'category'=>'Standard · Vista jardim', 'description'=>'Alecrim, Capim Cidreira, Calêndula, Erva Doce, Melissa e Jasmim — vista para o nosso lindo e perfumado jardim.', 'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=900&q=80'])],
+      ]), 0, 3);
+      foreach($cards as $card):
+        $slug = (string)($card['slug'] ?? 'chales');
+        $title = (string)($card['name'] ?? 'Chalé');
+        $tag = (string)($card['category'] ?? 'Acomodação');
+        $desc = (string)($card['description'] ?? '');
+        $slides = gallery_slides((string)($card['gallery'] ?? ''), $title);
+        if (!$slides && !empty($card['cover'])) $slides = [['src'=>(string)$card['cover'], 'alt'=>$title]];
       ?>
         <article class="card-elevated overflow-hidden flex flex-col group">
           <div class="relative">
@@ -135,7 +134,7 @@ require __DIR__ . '/includes/partials.php';
         <?= block('home','gastro_body','As receitas da Pousada Aromas da Serra são fruto de uma jornada culinária pela Suíça, sul da França, Itália e Mediterrâneo. Combinando ingredientes frescos e temperos colhidos diretamente da nossa <em class="serif-italic">Mandala</em>, cada prato é uma alquimia de sabores e aromas.') ?>
       </p>
       <p class="mt-4 text-[17px] leading-[1.9] text-ink-700/90">
-        Mesa farta, tempo desacelerado e harmonização com vinhos muito especiais. A gastronomia é o coração da experiência, não um adicional.
+        <?= block('home','gastro_body_2','Mesa farta, tempo desacelerado e harmonização com vinhos muito especiais. A gastronomia é o coração da experiência, não um adicional.') ?>
       </p>
       <ul class="mt-7 grid sm:grid-cols-2 gap-3 text-[15px]">
         <li class="flex items-start gap-2"><i data-lucide="wheat" class="w-4 h-4 mt-1 text-gold-600"></i> Pães rústicos artesanais</li>
@@ -172,12 +171,17 @@ require __DIR__ . '/includes/partials.php';
 
     <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-5 reveal-stagger">
       <?php
-      $tiles = [
-        ['photo-1517248135467-4c7edcad34c4','Ritual do Chá da Tarde'],
-        ['photo-1542367592-8849eb950fd8','Ritual da Fogueira'],
-        ['photo-1466692476868-aef1dfb1e735','Mandala · horta orgânica'],
-        ['photo-1522098635833-216c03d20ad4','Espaço Redário'],
-      ]; foreach($tiles as [$ph,$cap]): $src="https://images.unsplash.com/$ph?auto=format&fit=crop&w=900&q=80"; ?>
+      $tiles = array_slice(catalog_experiences([
+        ['title'=>'Ritual do Chá da Tarde','cover'=>'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'],
+        ['title'=>'Ritual da Fogueira','cover'=>'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=900&q=80'],
+        ['title'=>'Mandala · horta orgânica','cover'=>'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=900&q=80'],
+        ['title'=>'Espaço Redário','cover'=>'https://images.unsplash.com/photo-1522098635833-216c03d20ad4?auto=format&fit=crop&w=900&q=80'],
+      ]), 0, 4);
+      foreach($tiles as $tile):
+        $cap = (string)($tile['title'] ?? 'Experiência');
+        $gallery = public_image_list((string)($tile['gallery'] ?? ''));
+        $src = repair_image_url((string)($gallery[0] ?? ($tile['cover'] ?? '')));
+      ?>
         <a href="<?= e($src) ?>" class="glightbox gallery-tile aspect-[3/4] block" data-gallery="home-exp" data-type="image" data-description="<?= e($cap) ?>">
           <img src="<?= e($src) ?>" alt="<?= e($cap) ?>" class="w-full h-full object-cover" loading="lazy">
           <span class="gallery-action"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Abrir galeria</span>
@@ -194,13 +198,13 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-100 paper relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal">
-      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80" alt="Estrada para Mar Vermelho" class="w-full aspect-[5/4] object-cover rounded-md shadow-xl">
+      <img src="<?= e(repair_image_url(block('home','itinerary_image','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80'))) ?>" alt="Estrada para Mar Vermelho" class="w-full aspect-[5/4] object-cover rounded-md shadow-xl">
     </div>
     <div class="reveal">
-      <span class="eyebrow">Itinerário</span>
-      <h2 class="font-editorial text-4xl md:text-6xl text-forest-900 mt-4 leading-[1.05]">A viagem até a serra <em class="serif-italic text-terracota-500">já é parte da experiência.</em></h2>
+      <span class="eyebrow"><?= e(block('home','itinerary_eyebrow','Itinerário')) ?></span>
+      <h2 class="font-editorial text-4xl md:text-6xl text-forest-900 mt-4 leading-[1.05]"><?= block('home','itinerary_title','A viagem até a serra <em class="serif-italic text-terracota-500">já é parte da experiência.</em>') ?></h2>
       <p class="mt-6 text-[17px] leading-[1.9] text-ink-700/85">
-        Preparamos um roteiro afetuoso pelo trajeto até <strong>Mar Vermelho</strong>: paradas gastronômicas, artesanato local, cafés e experiências culturais que tornam o caminho tão especial quanto o destino.
+        <?= block('home','itinerary_body','Preparamos um roteiro afetuoso pelo trajeto até <strong>Mar Vermelho</strong>: paradas gastronômicas, artesanato local, cafés e experiências culturais que tornam o caminho tão especial quanto o destino.') ?>
       </p>
       <a href="<?= url('itinerario.php') ?>" class="btn-primary magnetic mt-8"><i data-lucide="map" class="w-4 h-4"></i> Ver itinerário completo</a>
     </div>

@@ -115,6 +115,47 @@ function block(string $page, string $key, string $default = ''): string {
     return ($v !== null && $v !== '') ? $v : $default;
 }
 
+function public_image_list(string $urls): array {
+    $items = [];
+    foreach (preg_split('/\R+/', $urls) ?: [] as $url) {
+        $url = repair_image_url(trim($url));
+        if ($url !== '') $items[] = $url;
+    }
+    return array_values(array_unique($items));
+}
+
+function gallery_slides(string $gallery, string $alt): array {
+    return array_map(fn(string $src): array => ['src' => $src, 'alt' => $alt], public_image_list($gallery));
+}
+
+function catalog_chalets(array $fallback = []): array {
+    $pdo = site_db();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM chalets WHERE is_active=1 ORDER BY sort_order ASC, name ASC');
+            if ($rows) {
+                $items = $rows->fetchAll();
+                if ($items) return $items;
+            }
+        } catch (Throwable $e) {}
+    }
+    return $fallback;
+}
+
+function catalog_experiences(array $fallback = []): array {
+    $pdo = site_db();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM experiences WHERE is_active=1 ORDER BY sort_order ASC, title ASC');
+            if ($rows) {
+                $items = $rows->fetchAll();
+                if ($items) return $items;
+            }
+        } catch (Throwable $e) {}
+    }
+    return $fallback;
+}
+
 // Navigation tree — clean, after revision
 $NAV = [
     ['label' => 'Início',         'href' => url('')],
