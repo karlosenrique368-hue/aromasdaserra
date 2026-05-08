@@ -55,7 +55,7 @@ function send_security_headers(): void {
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'");
+    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.plyr.io https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.plyr.io; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://i.ytimg.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com");
 }
 
 send_security_headers();
@@ -128,6 +128,25 @@ function gallery_slides(string $gallery, string $alt): array {
     return array_map(fn(string $src): array => ['src' => $src, 'alt' => $alt], public_image_list($gallery));
 }
 
+function youtube_embed_url(string $url): string {
+    $url = trim($url);
+    if ($url === '') return '';
+    $parts = parse_url($url);
+    $host = strtolower((string)($parts['host'] ?? ''));
+    $path = trim((string)($parts['path'] ?? ''), '/');
+    $id = '';
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $id = explode('/', $path)[0] ?? '';
+    } elseif (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com'], true)) {
+        parse_str((string)($parts['query'] ?? ''), $query);
+        if (!empty($query['v'])) $id = (string)$query['v'];
+        elseif (str_starts_with($path, 'shorts/')) $id = explode('/', substr($path, 7))[0] ?? '';
+        elseif (str_starts_with($path, 'embed/')) $id = explode('/', substr($path, 6))[0] ?? '';
+    }
+    $id = preg_replace('/[^A-Za-z0-9_-]/', '', $id) ?? '';
+    return $id !== '' ? 'https://www.youtube.com/embed/' . $id : '';
+}
+
 function catalog_chalets(array $fallback = []): array {
     $pdo = site_db();
     if ($pdo) {
@@ -156,14 +175,55 @@ function catalog_experiences(array $fallback = []): array {
     return $fallback;
 }
 
+function catalog_products(array $fallback = []): array {
+    $pdo = site_db();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM products WHERE is_active=1 ORDER BY sort_order ASC, title ASC');
+            if ($rows) {
+                $items = $rows->fetchAll();
+                if ($items) return $items;
+            }
+        } catch (Throwable $e) {}
+    }
+    return $fallback;
+}
+
+function catalog_testimonials(array $fallback = []): array {
+    $pdo = site_db();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM testimonials WHERE is_active=1 ORDER BY sort_order ASC, author ASC');
+            if ($rows) {
+                $items = $rows->fetchAll();
+                if ($items) return $items;
+            }
+        } catch (Throwable $e) {}
+    }
+    return $fallback;
+}
+
+function product_flavor_items(string $flavors): array {
+    $items = [];
+    foreach (preg_split('/\R+/', $flavors) ?: [] as $item) {
+        $item = trim($item);
+        if ($item !== '') $items[] = $item;
+    }
+    return $items;
+}
+
 // Navigation tree — clean, after revision
 $NAV = [
     ['label' => 'Início',         'href' => url('')],
-    ['label' => 'A Pousada',      'href' => url('a-pousada.php')],
+    ['label' => 'A Pousada',      'href' => url('a-pousada.php'), 'children' => [
+        ['label' => 'Nossa história', 'href' => url('a-pousada.php')],
+        ['label' => 'Depoimentos',    'href' => url('depoimentos.php')],
+    ]],
     ['label' => 'Chalés',         'href' => url('chales.php')],
     ['label' => 'Gastronomia',    'href' => url('gastronomia.php'),    'children' => [
         ['label' => 'Cozinha Mediterrânea', 'href' => url('gastronomia.php')],
         ['label' => 'Taberna do Monge',     'href' => url('taberna.php')],
+        ['label' => 'Produtos Artesanais',  'href' => url('produtos.php')],
     ]],
     ['label' => 'Experiências',   'href' => url('experiencias.php')],
     ['label' => 'Localização',    'href' => url('localizacao.php'),    'children' => [

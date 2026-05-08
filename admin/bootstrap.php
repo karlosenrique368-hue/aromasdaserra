@@ -19,7 +19,7 @@ function admin_security_headers(): void {
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'");
+    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.plyr.io https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.plyr.io; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://i.ytimg.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com");
 }
 
 admin_security_headers();
@@ -182,6 +182,28 @@ function bootstrap_db(): void {
         sort_order INTEGER DEFAULT 0,
         created_at $date
     )");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS testimonials (
+        id $pk,
+        author TEXT NOT NULL,
+        quote TEXT NOT NULL,
+        context $short,
+        rating INTEGER DEFAULT 5,
+        is_active INTEGER DEFAULT 1,
+        sort_order INTEGER DEFAULT 0,
+        updated_at $date
+    )");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS products (
+        id $pk,
+        slug $short UNIQUE NOT NULL,
+        title TEXT NOT NULL,
+        category $short,
+        description TEXT,
+        flavors TEXT,
+        cover TEXT,
+        is_active INTEGER DEFAULT 1,
+        sort_order INTEGER DEFAULT 0,
+        updated_at $date
+    )");
     $pdo->exec("CREATE TABLE IF NOT EXISTS settings (
         `key` $short PRIMARY KEY,
         value TEXT
@@ -196,6 +218,8 @@ function bootstrap_db(): void {
         sort_order INTEGER DEFAULT 0,
         UNIQUE(page, block_key)
     )");
+    ensure_column($pdo, 'chalets', 'video_url', 'TEXT');
+    ensure_column($pdo, 'chalets', 'video_label', 'TEXT');
 
     // Seed default admin if empty
     $count = (int)$pdo->query('SELECT COUNT(*) FROM admins')->fetchColumn();
@@ -265,6 +289,21 @@ function bootstrap_db(): void {
       ['experiencias','hero_title','html','Hero · título','Rituais que <em>tocam a alma.</em>'],
       ['experiencias','hero_subtitle','html','Hero · subtítulo','Experiências autorais — desenhadas para o reencontro com o tempo, com a natureza e com você mesmo.'],
       ['experiencias','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=2000&q=80'],
+
+    ['produtos','hero_eyebrow','text','Hero · etiqueta','Mostruário artesanal'],
+    ['produtos','hero_title','html','Hero · título','Produtos que levam <em>aromas para casa.</em>'],
+    ['produtos','hero_subtitle','html','Hero · subtítulo','Geleias, pães, temperos e delicadezas produzidas em pequenos lotes, apenas como catálogo de apresentação.'],
+    ['produtos','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=2000&q=80'],
+    ['produtos','intro_eyebrow','text','Introdução · etiqueta','Mostruário da casa'],
+    ['produtos','intro_title','html','Introdução · título','Pequenos lotes, <em>muito cuidado.</em>'],
+    ['produtos','intro_body','html','Introdução · texto','Os produtos artesanais da Aromas da Serra nascem da mesma cozinha afetiva que acolhe nossos hóspedes: ingredientes selecionados, ervas aromáticas e receitas preparadas com tempo. Consulte disponibilidade durante a sua estadia ou pelo WhatsApp.'],
+
+    ['depoimentos','hero_eyebrow','text','Hero · etiqueta','Depoimentos'],
+    ['depoimentos','hero_title','html','Hero · título','Histórias que ficam <em>na memória.</em>'],
+    ['depoimentos','hero_subtitle','html','Hero · subtítulo','Relatos de quem viveu a pousada com calma, afeto, gastronomia e reconexão.'],
+    ['depoimentos','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=2000&q=80'],
+    ['depoimentos','intro_eyebrow','text','Introdução · etiqueta','Vozes dos hóspedes'],
+    ['depoimentos','intro_title','html','Introdução · título','A experiência contada por <em>quem esteve aqui.</em>'],
 
       ['localizacao','hero_eyebrow','text','Hero · etiqueta','Onde estamos'],
       ['localizacao','hero_title','html','Hero · título','Mar Vermelho, <em>Alagoas.</em>'],
@@ -487,10 +526,13 @@ function bootstrap_db(): void {
     ];
     $experienceCheck = $pdo->prepare('SELECT 1 FROM experiences WHERE slug=?');
     $experienceInsert = $pdo->prepare('INSERT INTO experiences (slug,title,icon,description,cover,gallery,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?)');
-    foreach ($experiences as [$slug,$title,$icon,$description,$gallery,$order]) {
+    foreach ([] as [$slug,$title,$icon,$description,$gallery,$order]) {
         $experienceCheck->execute([$slug]);
         if (!$experienceCheck->fetchColumn()) $experienceInsert->execute([$slug,$title,$icon,$description,$gallery[0] ?? '',sanitize_public_image_items($gallery),1,$order]);
     }
+
+    seed_catalog_revision_20260508($pdo);
+    seed_catalog_revision_20260508_label_cleanup($pdo);
 }
 
 function block(string $page, string $key, string $default = ''): string {
@@ -548,6 +590,15 @@ function sanitize_public_image_url(string $url): string {
     if (str_starts_with($url, '/') || str_starts_with($url, 'assets/') || str_starts_with($url, FRONT_BASE . '/assets/')) return $url;
     $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
     return in_array($scheme, ['http', 'https'], true) ? $url : '';
+}
+
+function sanitize_public_video_url(string $url): string {
+    $url = trim($url);
+    if ($url === '') return '';
+    $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
+    $host = strtolower((string)parse_url($url, PHP_URL_HOST));
+    $allowedHosts = ['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtu.be', 'www.youtu.be', 'youtube-nocookie.com', 'www.youtube-nocookie.com'];
+    return in_array($scheme, ['http', 'https'], true) && in_array($host, $allowedHosts, true) ? $url : '';
 }
 
 function sanitize_public_image_list(string $urls): string {
@@ -616,6 +667,220 @@ function upload_file(array $file, string $prefix = 'img'): ?string {
     $dest = UPLOAD_DIR . DIRECTORY_SEPARATOR . $name;
     if (!move_uploaded_file($tmp, $dest)) return null;
     return front_url('assets/uploads/' . $name);
+}
+
+function safe_identifier(string $name): string {
+    if (!preg_match('/^[a-z_][a-z0-9_]*$/i', $name)) throw new InvalidArgumentException('Invalid identifier');
+    return $name;
+}
+
+function has_column(PDO $pdo, string $table, string $column): bool {
+    $table = safe_identifier($table);
+    $column = safe_identifier($column);
+    if (db_driver() === 'mysql') {
+        $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$table}` LIKE ?");
+        $stmt->execute([$column]);
+        return (bool)$stmt->fetch();
+    }
+    $rows = $pdo->query("PRAGMA table_info({$table})")->fetchAll();
+    foreach ($rows as $row) {
+        if (strcasecmp((string)($row['name'] ?? ''), $column) === 0) return true;
+    }
+    return false;
+}
+
+function ensure_column(PDO $pdo, string $table, string $column, string $definition): void {
+    $table = safe_identifier($table);
+    $column = safe_identifier($column);
+    if (!has_column($pdo, $table, $column)) $pdo->exec("ALTER TABLE `{$table}` ADD COLUMN `{$column}` {$definition}");
+}
+
+function seed_upsert_block(PDO $pdo, string $page, string $key, string $type, string $label, string $value, int $sortOrder): void {
+    $stmt = $pdo->prepare('SELECT id FROM page_blocks WHERE page=? AND block_key=?');
+    $stmt->execute([$page, $key]);
+    $id = $stmt->fetchColumn();
+    if ($id) {
+        $upd = $pdo->prepare('UPDATE page_blocks SET type=?, label=?, value=?, sort_order=? WHERE id=?');
+        $upd->execute([$type, $label, $value, $sortOrder, (int)$id]);
+        return;
+    }
+    $ins = $pdo->prepare('INSERT INTO page_blocks (page,block_key,type,label,value,sort_order) VALUES (?,?,?,?,?,?)');
+    $ins->execute([$page, $key, $type, $label, $value, $sortOrder]);
+}
+
+function seed_upsert_chalet(PDO $pdo, array $data): void {
+    $stmt = $pdo->prepare('SELECT * FROM chalets WHERE slug=?');
+    $stmt->execute([$data['slug']]);
+    $row = $stmt->fetch();
+    $cover = $row['cover'] ?? ($data['cover'] ?? '');
+    $gallery = $row['gallery'] ?? ($data['gallery'] ?? '');
+    if ($row) {
+        $upd = $pdo->prepare('UPDATE chalets SET name=?, category=?, view=?, description=?, cover=?, gallery=?, video_url=?, video_label=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
+        $upd->execute([$data['name'], $data['category'], $data['view'], $data['description'], $cover, $gallery, $data['video_url'] ?? '', $data['video_label'] ?? '', $data['sort_order'], (int)$row['id']]);
+        return;
+    }
+    $ins = $pdo->prepare('INSERT INTO chalets (slug,name,category,view,description,cover,gallery,video_url,video_label,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
+    $ins->execute([$data['slug'], $data['name'], $data['category'], $data['view'], $data['description'], $cover, $gallery, $data['video_url'] ?? '', $data['video_label'] ?? '', 1, $data['sort_order']]);
+}
+
+function seed_upsert_experience(PDO $pdo, array $data, array $legacySlugs = []): void {
+    $slugs = array_values(array_unique(array_merge([$data['slug']], $legacySlugs)));
+    $row = null;
+    foreach ($slugs as $slug) {
+        $stmt = $pdo->prepare('SELECT * FROM experiences WHERE slug=?');
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        if ($row) break;
+    }
+    $cover = $row['cover'] ?? ($data['cover'] ?? '');
+    $gallery = $row['gallery'] ?? ($data['gallery'] ?? '');
+    if ($row) {
+        $upd = $pdo->prepare('UPDATE experiences SET slug=?, title=?, icon=?, description=?, cover=?, gallery=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
+        $upd->execute([$data['slug'], $data['title'], $data['icon'], $data['description'], $cover, $gallery, $data['sort_order'], (int)$row['id']]);
+        foreach ($legacySlugs as $legacySlug) {
+            if ($legacySlug !== $data['slug']) $pdo->prepare('DELETE FROM experiences WHERE slug=?')->execute([$legacySlug]);
+        }
+        return;
+    }
+    $ins = $pdo->prepare('INSERT INTO experiences (slug,title,icon,description,cover,gallery,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?)');
+    $ins->execute([$data['slug'], $data['title'], $data['icon'], $data['description'], $cover, $gallery, 1, $data['sort_order']]);
+}
+
+function seed_upsert_product(PDO $pdo, array $data): void {
+    $stmt = $pdo->prepare('SELECT id FROM products WHERE slug=?');
+    $stmt->execute([$data['slug']]);
+    $id = $stmt->fetchColumn();
+    if ($id) {
+        $upd = $pdo->prepare('UPDATE products SET title=?, category=?, description=?, flavors=?, cover=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
+        $upd->execute([$data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], $data['sort_order'], (int)$id]);
+        return;
+    }
+    $ins = $pdo->prepare('INSERT INTO products (slug,title,category,description,flavors,cover,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?)');
+    $ins->execute([$data['slug'], $data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], 1, $data['sort_order']]);
+}
+
+function seed_upsert_testimonial(PDO $pdo, array $data): void {
+    $stmt = $pdo->prepare('SELECT id FROM testimonials WHERE author=?');
+    $stmt->execute([$data['author']]);
+    $id = $stmt->fetchColumn();
+    if ($id) {
+        $upd = $pdo->prepare('UPDATE testimonials SET quote=?, context=?, rating=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
+        $upd->execute([$data['quote'], $data['context'], $data['rating'], $data['sort_order'], (int)$id]);
+        return;
+    }
+    $ins = $pdo->prepare('INSERT INTO testimonials (author,quote,context,rating,is_active,sort_order) VALUES (?,?,?,?,?,?)');
+    $ins->execute([$data['author'], $data['quote'], $data['context'], $data['rating'], 1, $data['sort_order']]);
+}
+
+function seed_catalog_revision_20260508(PDO $pdo): void {
+    foreach (['cha-de-boas-vindas' => 'ritual-do-cha-da-tarde', 'mandala' => 'mandala-horta-organica'] as $currentSlug => $legacySlug) {
+        $stmt = $pdo->prepare('SELECT id FROM experiences WHERE slug=?');
+        $stmt->execute([$currentSlug]);
+        if ($stmt->fetchColumn()) $pdo->prepare('DELETE FROM experiences WHERE slug=?')->execute([$legacySlug]);
+    }
+
+    $revisionKey = 'content_revision_20260508_catalog_v2';
+    $stmt = $pdo->prepare('SELECT value FROM settings WHERE `key`=?');
+    $stmt->execute([$revisionKey]);
+    if ($stmt->fetchColumn() === '1') return;
+
+    $standardDescription = 'O Chalé Standard oferece uma estada confortável e aconchegante em meio à natureza. Com estrutura completa, decoração charmosa e vista para o nosso jardim perfumado, é o refúgio perfeito para momentos relaxantes e especiais. Seja bem-vindo e sinta-se em casa.';
+    $standardVideo = 'https://www.youtube.com/shorts/P-aOeHb1gNE';
+    $standardGallery = sanitize_public_image_items([
+        'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80',
+        'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=900&q=80',
+    ]);
+    seed_upsert_chalet($pdo, [
+        'slug' => 'lavanda',
+        'name' => 'Chalé Lavanda',
+        'category' => 'Luxo Varanda · Vista panorâmica',
+        'view' => 'Varanda privativa com vista para a natureza',
+        'description' => 'O Chalé Luxo Varanda da Pousada Aromas da Serra é a escolha perfeita para quem deseja uma hospedagem inesquecível. Com vista ampla para a natureza ao redor, decoração charmosa e aconchegante, oferece conforto, privacidade e uma varanda que convida ao descanso. É um refúgio para contemplar a paisagem, respirar o clima da serra e criar memórias especiais em meio à beleza natural.',
+        'cover' => 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85',
+        'gallery' => '',
+        'video_url' => 'https://www.youtube.com/shorts/N0FYYh8OmMo?feature=share',
+        'video_label' => 'Ver vídeo do Chalé Lavanda',
+        'sort_order' => 10,
+    ]);
+    seed_upsert_chalet($pdo, [
+        'slug' => 'manjericao',
+        'name' => 'Chalé Manjericão',
+        'category' => 'Luxo VIP · Vivência Sabática',
+        'view' => 'Vista para o jardim e estrutura para permanências prolongadas',
+        'description' => 'O Chalé Luxo VIP Manjericão é um refúgio charmoso e sofisticado para quem busca descanso, silêncio e reconexão. Com estrutura completa e copa própria, foi pensado para uma Vivência Sabática: um período de pausa, realização pessoal, novas experiências e amadurecimento espiritual ou profissional. É um convite ao bem-estar, à presença e à felicidade.',
+        'cover' => 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85',
+        'gallery' => '',
+        'video_url' => 'https://www.youtube.com/shorts/XJ6yeT99HYc',
+        'video_label' => 'Ver vídeo do Chalé Manjericão',
+        'sort_order' => 20,
+    ]);
+    $standardChalets = ['alecrim' => 'Alecrim', 'capim-cidreira' => 'Capim Cidreira', 'calendula' => 'Calêndula', 'erva-doce' => 'Erva Doce', 'melissa' => 'Melissa', 'jasmim' => 'Jasmim'];
+    $standardIndex = 0;
+    foreach ($standardChalets as $slug => $name) {
+        seed_upsert_chalet($pdo, [
+            'slug' => $slug,
+            'name' => 'Chalé ' . $name,
+            'category' => 'Standard · Vista jardim',
+            'view' => 'Vista para o jardim perfumado',
+            'description' => $standardDescription,
+            'cover' => 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80',
+            'gallery' => $standardGallery,
+            'video_url' => $standardVideo,
+            'video_label' => 'Ver vídeo do Chalé Standard',
+            'sort_order' => 30 + ($standardIndex * 10),
+        ]);
+        $standardIndex++;
+    }
+
+    $experienceGallery = sanitize_public_image_items([
+        'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
+    ]);
+    $experiences = [
+        ['cha-de-boas-vindas', ['ritual-do-cha-da-tarde'], 'Chá de Boas-Vindas', 'coffee', 'Inspirado em uma prática milenar de origem japonesa, o Chá de Boas-Vindas marca a chegada com respeito, presença e paz de espírito. Na Aromas da Serra, ele ganha personalidade aromática, com ervas selecionadas por suas propriedades de cuidado e relaxamento, convidando corpo e mente a desacelerar.', 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85', 10],
+        ['ritual-da-fogueira', [], 'Ritual da Fogueira · Magia do Fogo', 'flame', 'O fogo é nosso aliado sagrado: ilumina, aquece, acolhe e transmuta. Ao redor da fogueira celebramos fé, renovação e encontro, reconhecendo os muitos significados que esse elemento carrega para diferentes povos. Bem-vindo ao nosso encontro místico da fogueira.', 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85', 20],
+        ['experiencia-gastronomica', [], 'Experiência Gastronômica', 'utensils', 'As receitas da pousada nascem de uma vivência cultural pela Suíça, pelo sul da França, pela Itália e pela região mediterrânea. Ingredientes frescos, ervas colhidas na horta e técnicas adaptadas ao estilo brasileiro resultam em pratos autorais, delicados e cheios de aromas.', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85', 30],
+        ['fondue-de-queijo-moitie-moitie', [], 'Fondue de Queijo Moitié-Moitié', 'cooking-pot', 'Inspirado nos Alpes Suíços, o Fondue de Queijo Moitié-Moitié combina a delicadeza de queijos mais suaves com a intensidade de queijos marcantes. Preparado artesanalmente e servido à mesa, é o grande protagonista da temporada de inverno: uma forma de se sentir nos Alpes sem sair de Mar Vermelho.', 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=85', 40],
+        ['taberna-do-monge', [], 'Taberna do Monge', 'wine', 'Inspirada nas antigas tabernas medievais, a Taberna do Monge combina decoração rústica, atmosfera acolhedora e uma lareira central que aquece o ambiente. É um espaço intimista para comer bem, conversar sem pressa e celebrar os sabores da serra. Bon appétit.', 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85', 50],
+        ['espaco-contemplacao', [], 'Espaço Contemplação', 'mountain', 'Um ambiente pensado para meditação, silêncio e respiração profunda, com vista privilegiada para as montanhas e para a vegetação ao redor. É o lugar ideal para desacelerar do ritmo da vida moderna e reencontrar presença.', 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85', 60],
+        ['espaco-gourmet', [], 'Espaço Gourmet', 'chef-hat', 'Palco de bons encontros e experiências gastronômicas compartilhadas, o Espaço Gourmet convida hóspedes a criar, inovar e apresentar suas vivências culinárias com novos temperos, aromas e harmonizações especiais. Venha desfrutar desse momento e traga seus amigos.', 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85', 70],
+        ['caminho-das-pedras', [], 'Caminho das Pedras', 'footprints', 'Inspirado nos cinco pilares de Sebastian Kneipp — água, movimento, alimentação, plantas medicinais e estilo de vida — o Caminho das Pedras propõe equilíbrio e presença. A experiência convida o corpo a despertar seus recursos naturais de cuidado.', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85', 80],
+        ['nossa-piscina', [], 'Nossa Piscina', 'waves', 'Um pequeno oásis de tranquilidade e beleza natural. Com águas cristalinas e vista deslumbrante, a piscina é perfeita para relaxar, refrescar-se e contemplar a natureza exuberante ao redor.', 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85', 90],
+        ['mandala', ['mandala-horta-organica'], 'Mandala', 'flower-2', 'A Mandala representa o universo, a essência e a jornada espiritual de cada pessoa. Seus círculos simbolizam continuidade, conexão e harmonia. Na pousada, ela também expressa a arte de plantar, cultivar e colher aromas para a cozinha, além de inspirar tranquilidade, serenidade e concentração plena.', 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85', 100],
+        ['espaco-leitura', [], 'Espaço Leitura', 'book-open', 'Ler estimula o raciocínio, expande a imaginação e cria outros mundos dentro de nós. O Espaço Leitura é um convite para pausar, silenciar e se conectar com novas ideias em meio ao clima sereno da pousada.', 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=85', 110],
+    ];
+    foreach ($experiences as [$slug,$legacy,$title,$icon,$description,$cover,$order]) {
+        seed_upsert_experience($pdo, ['slug'=>$slug,'title'=>$title,'icon'=>$icon,'description'=>$description,'cover'=>$cover,'gallery'=>$experienceGallery,'sort_order'=>$order], $legacy);
+    }
+
+    seed_upsert_product($pdo, ['slug'=>'geleias-especiais','title'=>'Geleias Especiais','category'=>'Geleias artesanais','description'=>'Geleias preparadas em pequenos lotes, com frutas selecionadas e combinações que transitam entre o doce, o cítrico e o levemente picante.','flavors'=>"Jaboticaba\nAcerola com hibisco\nLaranja\nAmora\nManga com maracujá, cachaça e pimenta",'cover'=>'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=1000&q=85','sort_order'=>10]);
+    seed_upsert_product($pdo, ['slug'=>'paes-artesanais','title'=>'Pães Artesanais','category'=>'Pães da casa','description'=>'Pães de fermentação cuidadosa, pensados para acompanhar cafés, tábuas, entradas e momentos de partilha à mesa.','flavors'=>"Pão de ervas frescas\nPão sem glúten\nPão de multigrãos\nPão de azeitona\nPão ciabatta",'cover'=>'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=85','sort_order'=>20]);
+    seed_upsert_product($pdo, ['slug'=>'vinagre-aromatizado','title'=>'Vinagre Aromatizado','category'=>'Temperos autorais','description'=>'Vinagre aromático para finalizar saladas, legumes e preparos especiais com um toque fresco da casa.','flavors'=>'Mostruário sujeito à disponibilidade da produção artesanal.','cover'=>'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=1000&q=85','sort_order'=>30]);
+    seed_upsert_product($pdo, ['slug'=>'sal-de-salvia-e-laranja','title'=>'Sal de Sálvia e Laranja','category'=>'Temperos autorais','description'=>'Sal aromatizado com sálvia e notas cítricas de laranja, ideal para realçar carnes, legumes, pães e finalizações.','flavors'=>'Sálvia e laranja','cover'=>'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?auto=format&fit=crop&w=1000&q=85','sort_order'=>40]);
+    seed_upsert_product($pdo, ['slug'=>'biscoito-quero-quero','title'=>'Biscoito Quero-Quero','category'=>'Delicadezas da casa','description'=>'Biscoito artesanal para acompanhar cafés, chás e pausas doces durante a estadia.','flavors'=>'Receita da casa','cover'=>'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1000&q=85','sort_order'=>50]);
+
+    seed_upsert_testimonial($pdo, ['author'=>'Maíra Almeida','context'=>'Estadia na pousada','quote'=>'Ficamos muito felizes com a nossa estadia na pousada. Tudo feito com muito bom gosto e carinho, atendimento impecável, acomodação excelente e uma culinária maravilhosa. A proposta social e ambiental da pousada também é um ponto de destaque. Recomendamos.','rating'=>5,'sort_order'=>10]);
+    seed_upsert_testimonial($pdo, ['author'=>'Fabíolla Mello','context'=>'Hospedagem e gastronomia','quote'=>'Uma hospedagem surpreendente. Esperávamos uma boa experiência, mas a pousada, capitaneada por Jürg e Cristina, arrebatou nossos corações pela acolhida amorosa, comida delicada e saborosa, conversas animadas, paz, sossego e uma paisagem exuberante. Uma combinação perfeita para acalmar corpo e mente e voltar já com saudade. Também destaco a receptividade carinhosa da ágil Andressa. Super recomendo.','rating'=>5,'sort_order'=>20]);
+    seed_upsert_testimonial($pdo, ['author'=>'Marina Fiuza','context'=>'Experiência completa','quote'=>'A experiência como um todo foi uma grata surpresa: os cuidados conosco, a gastronomia, o chá e a fogueira. Obrigada pela recepção e disponibilidade.','rating'=>5,'sort_order'=>30]);
+
+    seed_upsert_block($pdo, 'chales', 'intro_standard', 'html', 'Introdução · Standard', 'O Chalé Standard oferece uma estada confortável e aconchegante em meio à natureza. Com estrutura completa, decoração charmosa e vista para o nosso lindo e perfumado jardim, é o refúgio perfeito para momentos relaxantes e especiais.<br><br>Chalés Alecrim, Capim Cidreira, Calêndula, Erva Doce, Melissa e Jasmim.', 204);
+    seed_upsert_block($pdo, 'chales', 'standard_note', 'text', 'Aromáticos · observação', 'Mínimo 2 noites · Café da manhã · Acomoda 2 pessoas · Exclusivo para adultos.', 205);
+    seed_upsert_block($pdo, 'experiencias', 'rituals_eyebrow', 'text', 'Experiências · etiqueta', 'Vivências da pousada', 210);
+    seed_upsert_block($pdo, 'experiencias', 'rituals_title', 'html', 'Experiências · título', 'Rituais, sabores e espaços para <em>desacelerar.</em>', 211);
+    seed_upsert_block($pdo, 'experiencias', 'rituals_hint', 'text', 'Experiências · dica mobile', 'Nas fotos, toque para ampliar e navegar pelo lightbox.', 212);
+
+    set_setting($revisionKey, '1');
+}
+
+function seed_catalog_revision_20260508_label_cleanup(PDO $pdo): void {
+    $revisionKey = 'content_revision_20260508_label_cleanup_v1';
+    $stmt = $pdo->prepare('SELECT value FROM settings WHERE `key`=?');
+    $stmt->execute([$revisionKey]);
+    if ($stmt->fetchColumn() === '1') return;
+
+    seed_upsert_block($pdo, 'produtos', 'intro_eyebrow', 'text', 'Introdução · etiqueta', 'Mostruário da casa', 206);
+    set_setting($revisionKey, '1');
 }
 
 bootstrap_db();

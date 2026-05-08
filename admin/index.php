@@ -10,6 +10,8 @@ $stats = [
     'msg_unread' => (int)$pdo->query("SELECT COUNT(*) FROM messages WHERE is_read=0")->fetchColumn(),
     'chalets'    => (int)$pdo->query("SELECT COUNT(*) FROM chalets WHERE is_active=1")->fetchColumn(),
     'exps'       => (int)$pdo->query("SELECT COUNT(*) FROM experiences WHERE is_active=1")->fetchColumn(),
+    'products'   => (int)$pdo->query("SELECT COUNT(*) FROM products WHERE is_active=1")->fetchColumn(),
+    'testimonials'=> (int)$pdo->query("SELECT COUNT(*) FROM testimonials WHERE is_active=1")->fetchColumn(),
     'gallery'    => (int)$pdo->query("SELECT COUNT(*) FROM gallery")->fetchColumn(),
 ];
 $recentLeads = $pdo->query("SELECT * FROM leads ORDER BY created_at DESC LIMIT 6")->fetchAll();
@@ -31,6 +33,8 @@ require __DIR__ . '/partials/layout_top.php';
   <div class="stat"><span class="ico"><i data-lucide="mail"></i></span><div class="label">Mensagens não lidas</div><div class="value"><?= $stats['msg_unread'] ?></div></div>
   <div class="stat"><span class="ico"><i data-lucide="home"></i></span><div class="label">Chalés ativos</div><div class="value"><?= $stats['chalets'] ?></div></div>
   <div class="stat"><span class="ico"><i data-lucide="sparkles"></i></span><div class="label">Experiências</div><div class="value"><?= $stats['exps'] ?></div></div>
+  <div class="stat"><span class="ico"><i data-lucide="shopping-bag"></i></span><div class="label">Produtos</div><div class="value"><?= $stats['products'] ?></div></div>
+  <div class="stat"><span class="ico"><i data-lucide="quote"></i></span><div class="label">Depoimentos</div><div class="value"><?= $stats['testimonials'] ?></div></div>
   <div class="stat"><span class="ico"><i data-lucide="image"></i></span><div class="label">Imagens galeria</div><div class="value"><?= $stats['gallery'] ?></div></div>
 </div>
 

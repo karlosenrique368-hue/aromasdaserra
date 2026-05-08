@@ -15,6 +15,15 @@ function chalet_view_slides(array $row): array {
     return $slides;
 }
 
+function chalet_video_button(array $row, bool $dark, string $extraClass = ''): string {
+  $embed = youtube_embed_url((string)($row['video_url'] ?? ''));
+  if ($embed === '') return '';
+  $label = trim((string)($row['video_label'] ?? '')) ?: 'Ver vídeo do chalé';
+  $class = $dark ? 'btn-ghost-light' : 'btn-ghost';
+  $extraClass = trim($extraClass);
+  return '<a href="' . e($embed) . '" class="glightbox ' . $class . ' magnetic' . ($extraClass !== '' ? ' ' . e($extraClass) : '') . '" data-type="video" data-width="900" data-height="506"><i data-lucide="play" class="w-4 h-4"></i> ' . e($label) . '</a>';
+}
+
 $fallbackChalets = [
     [
         'slug'=>'lavanda', 'name'=>'Chalé Lavanda', 'category'=>'Luxo · Vista panorâmica', 'view'=>'Vista panorâmica para a serra',
@@ -65,7 +74,7 @@ $standard = array_values(array_filter($chalets, fn($row) => stripos((string)($ro
         <h2 class="font-editorial text-5xl md:text-6xl <?= $dark ? 'text-cream-50' : 'text-forest-900' ?> mt-3 leading-tight"><?= e((string)$row['name']) ?></h2>
         <?php if (!empty($row['view'])): ?><span class="inline-block mt-4 px-3 py-1 <?= $dark ? 'bg-gold-500 text-ink-900' : 'bg-cream-200 text-ink-800' ?> text-[10px] tracking-eyebrow uppercase rounded-full"><?= e((string)$row['view']) ?></span><?php endif; ?>
         <div class="mt-6 space-y-4 text-[16px] leading-[1.85] <?= $dark ? 'text-cream-100/85' : 'text-ink-700/90' ?>">
-          <p><?= e((string)$row['description']) ?></p>
+          <p><?= nl2br(e((string)$row['description'])) ?></p>
         </div>
         <ul class="mt-7 grid grid-cols-2 gap-3 text-[14px]">
           <li class="flex items-center gap-2"><i data-lucide="moon" class="w-4 h-4 <?= $dark ? 'text-gold-500' : 'text-terracota-500' ?>"></i> <?= e(block('chales','amenity_min_stay','Mínimo 2 noites')) ?></li>
@@ -73,7 +82,10 @@ $standard = array_values(array_filter($chalets, fn($row) => stripos((string)($ro
           <li class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 <?= $dark ? 'text-gold-500' : 'text-terracota-500' ?>"></i> <?= e(block('chales','amenity_capacity','Acomoda 2 pessoas')) ?></li>
           <li class="flex items-center gap-2"><i data-lucide="trees" class="w-4 h-4 <?= $dark ? 'text-gold-500' : 'text-terracota-500' ?>"></i> <?= e((string)($row['view'] ?: 'Vista jardim')) ?></li>
         </ul>
-        <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="<?= $dark ? 'btn-gold' : 'btn-primary' ?> magnetic mt-8"><i data-lucide="calendar-heart" class="w-4 h-4"></i> Reservar <?= e(str_replace('Chalé ', '', (string)$row['name'])) ?></a>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="<?= $dark ? 'btn-gold' : 'btn-primary' ?> magnetic"><i data-lucide="calendar-heart" class="w-4 h-4"></i> Reservar <?= e(str_replace('Chalé ', '', (string)$row['name'])) ?></a>
+          <?= chalet_video_button($row, $dark) ?>
+        </div>
       </div>
     </div>
   </section>
@@ -94,7 +106,8 @@ $standard = array_values(array_filter($chalets, fn($row) => stripos((string)($ro
           <?php embla_carousel(chalet_view_slides($row), ['ratio'=>'4/3','autoplay'=>false,'arrows'=>true,'dots'=>true,'lightbox'=>true,'group'=>'standard-' . chalet_slug_id((string)$row['slug'])]); ?>
           <div class="p-6">
             <h3 class="font-editorial text-2xl text-forest-900"><?= e((string)$row['name']) ?></h3>
-            <p class="mt-2 text-[14px] text-ink-700/75"><?= e((string)$row['description']) ?></p>
+            <p class="mt-2 text-[14px] text-ink-700/75 leading-relaxed"><?= nl2br(e((string)$row['description'])) ?></p>
+            <?= chalet_video_button($row, false, 'mt-5') ?>
           </div>
         </article>
       <?php endforeach; ?>

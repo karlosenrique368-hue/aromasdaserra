@@ -12,6 +12,8 @@ $NAV = [
   ['pages.php',       'Páginas',      'file-text'],
   ['chalets.php',     'Chalés',       'home'],
   ['experiences.php', 'Experiências', 'sparkles'],
+  ['products.php',    'Produtos',     'shopping-bag'],
+  ['testimonials.php','Depoimentos',  'quote'],
   ['gallery.php',     'Galeria',      'image'],
   ['leads.php',       'Reservas',     'calendar-heart'],
   ['messages.php',    'Mensagens',    'mail'],

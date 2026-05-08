@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'description' => trim($_POST['description'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
             'gallery'     => sanitize_public_image_items(array_merge((array)($_POST['gallery_urls'] ?? []), upload_gallery_files('gallery_files', 'chalet_gallery'))),
+            'video_url'   => sanitize_public_video_url((string)($_POST['video_url'] ?? '')),
+            'video_label' => trim($_POST['video_label'] ?? ''),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];
@@ -26,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
         }
         $pid = (int)($_POST['id'] ?? 0);
         if ($pid) {
-            $stmt = $pdo->prepare('UPDATE chalets SET slug=:slug,name=:name,category=:category,view=:view,description=:description,cover=:cover,gallery=:gallery,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
+          $stmt = $pdo->prepare('UPDATE chalets SET slug=:slug,name=:name,category=:category,view=:view,description=:description,cover=:cover,gallery=:gallery,video_url=:video_url,video_label=:video_label,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
             $stmt->execute(array_merge($data, ['id'=>$pid]));
             flash('Chalé atualizado.');
         } else {
-            $stmt = $pdo->prepare('INSERT INTO chalets (slug,name,category,view,description,cover,gallery,is_active,sort_order) VALUES (:slug,:name,:category,:view,:description,:cover,:gallery,:is_active,:sort_order)');
+          $stmt = $pdo->prepare('INSERT INTO chalets (slug,name,category,view,description,cover,gallery,video_url,video_label,is_active,sort_order) VALUES (:slug,:name,:category,:view,:description,:cover,:gallery,:video_url,:video_label,:is_active,:sort_order)');
             $stmt->execute($data);
             flash('Chalé criado.');
         }
@@ -46,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
 require __DIR__ . '/partials/layout_top.php';
 
 if ($action==='edit' || $action==='new') {
-    $row = ['id'=>0,'slug'=>'','name'=>'','category'=>'Standard · Vista jardim','view'=>'','description'=>'','cover'=>'','gallery'=>'','is_active'=>1,'sort_order'=>0];
+  $row = ['id'=>0,'slug'=>'','name'=>'','category'=>'Standard · Vista jardim','view'=>'','description'=>'','cover'=>'','gallery'=>'','video_url'=>'','video_label'=>'','is_active'=>1,'sort_order'=>0];
     if ($id) {
         $stmt = $pdo->prepare('SELECT * FROM chalets WHERE id=?'); $stmt->execute([$id]);
         $row = $stmt->fetch() ?: $row;
@@ -76,6 +78,10 @@ if ($action==='edit' || $action==='new') {
         <label><span class="lbl">Tipo de vista</span><input type="text" name="view" value="<?= ee($row['view']) ?>" placeholder="Panorâmica para a serra"></label>
       </div>
       <label><span class="lbl">Descrição</span><textarea name="description"><?= ee($row['description']) ?></textarea></label>
+      <div class="row-2">
+        <label><span class="lbl">Vídeo do chalé</span><input type="text" name="video_url" value="<?= ee($row['video_url'] ?? '') ?>" placeholder="https://www.youtube.com/shorts/..."></label>
+        <label><span class="lbl">Texto do botão de vídeo</span><input type="text" name="video_label" value="<?= ee($row['video_label'] ?? '') ?>" placeholder="Ver vídeo do chalé"></label>
+      </div>
 
       <label><span class="lbl">Capa do chalé</span></label>
       <?php $name='cover_file'; $current=$row['cover']; $multiple=false; $hint='JPG, PNG ou WEBP — recomendado 1600×1200'; require __DIR__ . '/partials/upload_zone.php'; ?>

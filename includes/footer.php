@@ -46,9 +46,11 @@
       <h4 class="footer-title">Navegação</h4>
       <ul class="space-y-2 text-[14px]">
         <li><a class="footer-link" href="<?= url('a-pousada.php') ?>">A Pousada</a></li>
+        <li><a class="footer-link" href="<?= url('depoimentos.php') ?>">Depoimentos</a></li>
         <li><a class="footer-link" href="<?= url('chales.php') ?>">Chalés</a></li>
         <li><a class="footer-link" href="<?= url('gastronomia.php') ?>">Gastronomia</a></li>
         <li><a class="footer-link" href="<?= url('taberna.php') ?>">Taberna do Monge</a></li>
+        <li><a class="footer-link" href="<?= url('produtos.php') ?>">Produtos Artesanais</a></li>
         <li><a class="footer-link" href="<?= url('experiencias.php') ?>">Experiências</a></li>
         <li><a class="footer-link" href="<?= url('localizacao.php') ?>">Localização</a></li>
         <li><a class="footer-link" href="<?= url('itinerario.php') ?>">Itinerário</a></li>

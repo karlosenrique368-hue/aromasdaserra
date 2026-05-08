@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Experiências';
-$pageDesc  = 'Rituais e vivências exclusivas: Fogueira, Chá da Tarde, Mandala e Caminho das Pedras.';
+$pageDesc  = 'Vivências exclusivas da Pousada Aromas da Serra: chá de boas-vindas, fogueira, gastronomia, fondue, mandala e espaços de contemplação.';
 $pageSlug  = 'experiencias';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
@@ -15,31 +15,22 @@ function exp_view_slides(array $row): array {
     return $slides;
 }
 
+$fallbackGallery = implode("\n", [
+  'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85',
+  'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
+]);
 $fallbackExperiences = [
-    [
-        'slug'=>'ritual-da-fogueira', 'title'=>'Ritual da Fogueira', 'icon'=>'flame',
-        'description'=>'Encontros à beira do fogo, com música, conversas e gastronomia em ambiente íntimo e ancestral.',
-        'cover'=>'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85',
-        'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85']),
-    ],
-    [
-        'slug'=>'ritual-do-cha-da-tarde', 'title'=>'Ritual do Chá da Tarde', 'icon'=>'coffee',
-        'description'=>'Bolos artesanais, pães rústicos e chás especiais ao final do dia, em frente à serra.',
-        'cover'=>'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85',
-        'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1545665277-5937489579f2?auto=format&fit=crop&w=1200&q=85']),
-    ],
-    [
-        'slug'=>'mandala-horta-organica', 'title'=>'Mandala — horta orgânica', 'icon'=>'sprout',
-        'description'=>'Ervas, flores comestíveis e temperos colhidos diretamente para a sua mesa.',
-        'cover'=>'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85',
-        'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&w=1200&q=85']),
-    ],
-    [
-        'slug'=>'caminho-das-pedras', 'title'=>'Caminho das Pedras', 'icon'=>'mountain',
-        'description'=>'Trajeto contemplativo pelo bosque da pousada, com silêncio, presença e a serra à vista.',
-        'cover'=>'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85',
-        'gallery'=>implode("\n", ['https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85','https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=85']),
-    ],
+  ['slug'=>'cha-de-boas-vindas','title'=>'Chá de Boas-Vindas','icon'=>'coffee','description'=>'Inspirado em uma prática milenar de origem japonesa, o Chá de Boas-Vindas marca a chegada com respeito, presença e paz de espírito. Na Aromas da Serra, ele ganha personalidade aromática, com ervas selecionadas por suas propriedades de cuidado e relaxamento, convidando corpo e mente a desacelerar.','cover'=>'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'ritual-da-fogueira','title'=>'Ritual da Fogueira · Magia do Fogo','icon'=>'flame','description'=>'O fogo é nosso aliado sagrado: ilumina, aquece, acolhe e transmuta. Ao redor da fogueira celebramos fé, renovação e encontro, reconhecendo os muitos significados que esse elemento carrega para diferentes povos. Bem-vindo ao nosso encontro místico da fogueira.','cover'=>'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'experiencia-gastronomica','title'=>'Experiência Gastronômica','icon'=>'utensils','description'=>'As receitas da pousada nascem de uma vivência cultural pela Suíça, pelo sul da França, pela Itália e pela região mediterrânea. Ingredientes frescos, ervas colhidas na horta e técnicas adaptadas ao estilo brasileiro resultam em pratos autorais, delicados e cheios de aromas.','cover'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'fondue-de-queijo-moitie-moitie','title'=>'Fondue de Queijo Moitié-Moitié','icon'=>'cooking-pot','description'=>'Inspirado nos Alpes Suíços, o Fondue de Queijo Moitié-Moitié combina a delicadeza de queijos mais suaves com a intensidade de queijos marcantes. Preparado artesanalmente e servido à mesa, é o grande protagonista da temporada de inverno: uma forma de se sentir nos Alpes sem sair de Mar Vermelho.','cover'=>'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'taberna-do-monge','title'=>'Taberna do Monge','icon'=>'wine','description'=>'Inspirada nas antigas tabernas medievais, a Taberna do Monge combina decoração rústica, atmosfera acolhedora e uma lareira central que aquece o ambiente. É um espaço intimista para comer bem, conversar sem pressa e celebrar os sabores da serra. Bon appétit.','cover'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'espaco-contemplacao','title'=>'Espaço Contemplação','icon'=>'mountain','description'=>'Um ambiente pensado para meditação, silêncio e respiração profunda, com vista privilegiada para as montanhas e para a vegetação ao redor. É o lugar ideal para desacelerar do ritmo da vida moderna e reencontrar presença.','cover'=>'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'espaco-gourmet','title'=>'Espaço Gourmet','icon'=>'chef-hat','description'=>'Palco de bons encontros e experiências gastronômicas compartilhadas, o Espaço Gourmet convida hóspedes a criar, inovar e apresentar suas vivências culinárias com novos temperos, aromas e harmonizações especiais. Venha desfrutar desse momento e traga seus amigos.','cover'=>'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'caminho-das-pedras','title'=>'Caminho das Pedras','icon'=>'footprints','description'=>'Inspirado nos cinco pilares de Sebastian Kneipp — água, movimento, alimentação, plantas medicinais e estilo de vida — o Caminho das Pedras propõe equilíbrio e presença. A experiência convida o corpo a despertar seus recursos naturais de cuidado.','cover'=>'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'nossa-piscina','title'=>'Nossa Piscina','icon'=>'waves','description'=>'Um pequeno oásis de tranquilidade e beleza natural. Com águas cristalinas e vista deslumbrante, a piscina é perfeita para relaxar, refrescar-se e contemplar a natureza exuberante ao redor.','cover'=>'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'mandala','title'=>'Mandala','icon'=>'flower-2','description'=>'A Mandala representa o universo, a essência e a jornada espiritual de cada pessoa. Seus círculos simbolizam continuidade, conexão e harmonia. Na pousada, ela também expressa a arte de plantar, cultivar e colher aromas para a cozinha, além de inspirar tranquilidade, serenidade e concentração plena.','cover'=>'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
+  ['slug'=>'espaco-leitura','title'=>'Espaço Leitura','icon'=>'book-open','description'=>'Ler estimula o raciocínio, expande a imaginação e cria outros mundos dentro de nós. O Espaço Leitura é um convite para pausar, silenciar e se conectar com novas ideias em meio ao clima sereno da pousada.','cover'=>'https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=85','gallery'=>$fallbackGallery],
 ];
 $experiences = catalog_experiences($fallbackExperiences);
 ?>
@@ -56,7 +47,7 @@ $experiences = catalog_experiences($fallbackExperiences);
 <section class="section bg-cream-50">
   <div class="max-w-7xl mx-auto px-6">
     <header class="reveal max-w-3xl">
-      <span class="eyebrow"><?= e(block('experiencias','rituals_eyebrow','Os 4 rituais')) ?></span>
+      <span class="eyebrow"><?= e(block('experiencias','rituals_eyebrow','Vivências da pousada')) ?></span>
       <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-3 leading-tight"><?= block('experiencias','rituals_title','Cada experiência, um <em class="serif-italic text-terracota-500">presente.</em>') ?></h2>
       <p class="gallery-mobile-hint !justify-start"><i data-lucide="maximize-2" class="w-4 h-4"></i> <?= e(block('experiencias','rituals_hint','Nas fotos, toque para ampliar e navegar pelo lightbox.')) ?></p>
     </header>
@@ -70,7 +61,7 @@ $experiences = catalog_experiences($fallbackExperiences);
           </div>
           <div class="p-7">
             <h3 class="font-editorial text-2xl text-forest-900"><?= e((string)$row['title']) ?></h3>
-            <p class="mt-2 text-[15px] text-ink-700/80 leading-relaxed"><?= e((string)$row['description']) ?></p>
+            <p class="mt-2 text-[15px] text-ink-700/80 leading-relaxed"><?= nl2br(e((string)$row['description'])) ?></p>
           </div>
         </article>
       <?php endforeach; ?>
