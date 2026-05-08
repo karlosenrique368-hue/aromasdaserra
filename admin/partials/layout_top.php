@@ -62,7 +62,7 @@ $NAV = [
   <div class="adm-main">
     <div class="adm-top">
       <div style="display:flex; align-items:center; gap:.8rem;">
-        <button @click="side=!side" class="adm-burger" aria-label="Menu"><i data-lucide="menu"></i></button>
+        <button @click.stop="side=!side" class="adm-burger" aria-label="Menu"><i data-lucide="menu"></i></button>
         <h1><?= ee($pageEyebrow) ?> · <span><?= ee($pageTitle) ?></span></h1>
       </div>
       <div style="font-size:12px; color:var(--a-muted);"><?= date('d/m/Y · H:i') ?></div>
