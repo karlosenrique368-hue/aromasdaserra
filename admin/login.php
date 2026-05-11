@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="font-editorial text-5xl xl:text-6xl leading-[1.05] max-w-md">Painel de gestão da pousada.</h1>
         <p class="mt-5 max-w-sm text-cream-100/80 italic font-display text-lg">Tudo que acontece no refúgio — em um só lugar.</p>
       </div>
-      <span class="text-[11px] tracking-[.32em] uppercase text-cream-50/60">Mar Vermelho — Alagoas</span>
+      <span class="text-[11px] tracking-[.32em] uppercase text-cream-50/60">Mar Vermelho, Alagoas</span>
     </div>
   </div>
   <div class="flex items-center justify-center p-8">

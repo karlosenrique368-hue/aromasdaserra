@@ -236,7 +236,7 @@ function bootstrap_db(): void {
         'site_whatsapp'    => '5582993260415',
         'site_instagram'   => 'https://www.instagram.com/pousadaaromasdaserra/',
         'site_facebook'    => 'https://www.facebook.com/pousadaaromasdaserra',
-        'site_location'    => 'Mar Vermelho — Alagoas',
+        'site_location'    => 'Mar Vermelho, Alagoas',
         'hero_headline'    => 'Onde o silêncio da serra acolhe e transforma.',
         'about_intro'      => 'Localizada entre as serras de Alagoas, com culinária sofisticada de influência europeia.',
     ];
@@ -249,25 +249,25 @@ function bootstrap_db(): void {
 
     // Seed default page blocks (idempotent)
     $blocks = [
-      ['home','hero_eyebrow','text','Hero · etiqueta','— Seja bem-vindo —'],
+    ['home','hero_eyebrow','text','Hero · etiqueta','Seja bem-vindo'],
       ['home','hero_title','html','Hero · título','Onde o silêncio da serra<br><em>acolhe e transforma.</em>'],
-      ['home','hero_subtitle','html','Hero · subtítulo','Um refúgio exclusivo para adultos em meio à <strong>Suíça Alagoana</strong> — gastronomia mediterrânea, contemplação e tempo para si.'],
+    ['home','hero_subtitle','html','Hero · subtítulo','Um refúgio exclusivo para adultos em meio à <strong>Suíça Alagoana</strong>, com gastronomia mediterrânea, contemplação e tempo para si.'],
       ['home','hero_image','image','Hero · imagem de fundo','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=80'],
       ['home','manifesto_eyebrow','text','Manifesto · etiqueta','Sobre a pousada'],
       ['home','manifesto_title','html','Manifesto · título','Um destino para quem busca <em>tranquilidade e conforto.</em>'],
       ['home','manifesto_body','html','Manifesto · texto','Localizada entre as serras de Alagoas, com culinária sofisticada de influência europeia, a Aromas da Serra oferece uma viagem de <em>sabores, cores e bem-estar</em>.'],
-      ['home','manifesto_note','text','Manifesto · linha menor','Exclusivamente para adultos. Sem TVs nos quartos. Sem pressa. Apenas presença.'],
+    ['home','manifesto_note','text','Manifesto · linha menor','Exclusivamente para adultos. Sem pressa. Apenas presença.'],
       ['home','gastro_title','html','Gastronomia · título','Cozinha <em>Mediterrânea.</em>'],
       ['home','gastro_body','html','Gastronomia · texto','As receitas são fruto de uma jornada culinária pela Suíça, sul da França, Itália e Mediterrâneo. Cada prato é uma alquimia de sabores e aromas.'],
 
       ['a-pousada','hero_eyebrow','text','Hero · etiqueta','Sobre nós'],
       ['a-pousada','hero_title','html','Hero · título','A pousada <em>boutique</em> da Suíça Alagoana.'],
       ['a-pousada','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=2000&q=80'],
-      ['a-pousada','intro_body','html','Introdução','Refúgio boutique em Mar Vermelho — hospitalidade, gastronomia e contemplação.'],
+    ['a-pousada','intro_body','html','Introdução','Refúgio boutique em Mar Vermelho, com hospitalidade, gastronomia e contemplação.'],
 
       ['chales','hero_eyebrow','text','Hero · etiqueta','As nossas acomodações'],
       ['chales','hero_title','html','Hero · título','Chalés <em>com alma.</em>'],
-      ['chales','hero_subtitle','html','Hero · subtítulo','Cada detalhe pensado com carinho — aconchego, conforto e gentilezas em contato constante com a natureza.'],
+    ['chales','hero_subtitle','html','Hero · subtítulo','Cada detalhe pensado com carinho, aconchego, conforto e gentilezas em contato constante com a natureza.'],
       ['chales','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=2000&q=80'],
       ['chales','intro_standard','html','Introdução · Aromáticos','Com decoração charmosa e <strong>vista para o nosso lindo e perfumado jardim</strong>, são refúgios perfeitos para momentos relaxantes. Cada chalé acomoda apenas 2 pessoas.'],
 
@@ -280,14 +280,14 @@ function bootstrap_db(): void {
 
       ['taberna','hero_eyebrow','text','Hero · etiqueta','Restaurante boutique'],
       ['taberna','hero_title','html','Hero · título','Taberna <em>do Monge.</em>'],
-      ['taberna','hero_subtitle','html','Hero · subtítulo','Um convite à mesa farta — mediterrânea, generosa, harmonizada com vinhos especiais e a vista da serra.'],
+    ['taberna','hero_subtitle','html','Hero · subtítulo','Um convite à mesa farta, mediterrânea, generosa, harmonizada com vinhos especiais e a vista da serra.'],
       ['taberna','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=2000&q=80'],
       ['taberna','about_title','html','Sobre · título','Aberta ao <em>público.</em>'],
-      ['taberna','about_body','html','Sobre · texto','A Taberna do Monge é o restaurante boutique da pousada — aberto também a visitantes externos. Receitas autorais, vinhos selecionados e ambiente acolhedor com vista para a serra.'],
+    ['taberna','about_body','html','Sobre · texto','A Taberna do Monge é o restaurante boutique da pousada, aberto também a visitantes externos. Nasceu como um projeto afetivo dos diretores para reunir boa mesa, memória, conversa sem pressa e o clima acolhedor da serra. Receitas autorais, vinhos selecionados e uma lareira central fazem do espaço um dos encontros mais especiais da Aromas da Serra.'],
 
       ['experiencias','hero_eyebrow','text','Hero · etiqueta','Vivências na Serra'],
       ['experiencias','hero_title','html','Hero · título','Rituais que <em>tocam a alma.</em>'],
-      ['experiencias','hero_subtitle','html','Hero · subtítulo','Experiências autorais — desenhadas para o reencontro com o tempo, com a natureza e com você mesmo.'],
+    ['experiencias','hero_subtitle','html','Hero · subtítulo','Experiências autorais desenhadas para o reencontro com o tempo, com a natureza e com você mesmo.'],
       ['experiencias','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=2000&q=80'],
 
     ['produtos','hero_eyebrow','text','Hero · etiqueta','Mostruário artesanal'],
@@ -313,33 +313,33 @@ function bootstrap_db(): void {
       ['itinerario','hero_title','html','Hero · título','A viagem até a serra <em>já é parte da experiência.</em>'],
       ['itinerario','hero_image','image','Hero · imagem','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=80'],
 
-            ['global','cta_eyebrow','text','Rodapé CTA · etiqueta','— Reserve sua estadia —'],
+            ['global','cta_eyebrow','text','Rodapé CTA · etiqueta','Reserve sua estadia'],
             ['global','cta_title','html','Rodapé CTA · título','Frio da serra, gastronomia, requinte e <em>hospitalidade.</em>'],
             ['global','cta_body','html','Rodapé CTA · texto','Faça sua reserva e venha vivenciar momentos especiais em meio ao silêncio da natureza, acompanhado de uma cozinha mediterrânea cheia de aromas e sabores.'],
-            ['global','footer_about','html','Rodapé · texto institucional','Refúgio boutique em Mar Vermelho — Alagoas, na Suíça Alagoana. Hospedagem exclusiva para adultos, gastronomia mediterrânea e contemplação em meio à serra.'],
-            ['global','footer_signature','text','Rodapé · assinatura','Suíça Alagoana · Mar Vermelho — AL'],
+            ['global','footer_about','html','Rodapé · texto institucional','Refúgio boutique em Mar Vermelho, Alagoas, na Suíça Alagoana. Hospedagem exclusiva para adultos, gastronomia mediterrânea e contemplação em meio à serra.'],
+            ['global','footer_signature','text','Rodapé · assinatura','Suíça Alagoana · Mar Vermelho, AL'],
 
-            ['home','hero_kicker','text','Hero · linha superior','Pousada · Mar Vermelho — Alagoas'],
+            ['home','hero_kicker','text','Hero · linha superior','Pousada · Mar Vermelho, Alagoas'],
             ['home','features_eyebrow','text','Diferenciais · etiqueta','Diferenciais'],
             ['home','features_title','html','Diferenciais · título','O que nos faz <em>únicos.</em>'],
             ['home','feature_1_title','text','Diferencial 1 · título','Cozinha Mediterrânea'],
             ['home','feature_1_body','text','Diferencial 1 · texto','Receitas autorais inspiradas no sul da França, Itália e Mediterrâneo, harmonizadas com vinhos especiais.'],
             ['home','feature_2_title','text','Diferencial 2 · título','Ritual da Fogueira'],
-            ['home','feature_2_body','text','Diferencial 2 · texto','Noites de celebração à beira do fogo — música, conversas e gastronomia em um ambiente íntimo e ancestral.'],
+            ['home','feature_2_body','text','Diferencial 2 · texto','Noites de celebração à beira do fogo, com música, conversas e gastronomia em um ambiente íntimo e ancestral.'],
             ['home','feature_3_title','text','Diferencial 3 · título','Contemplação'],
-            ['home','feature_3_body','text','Diferencial 3 · texto','Espaços de leitura, redário, mandala e o caminho das pedras — feitos para o reencontro consigo.'],
+            ['home','feature_3_body','text','Diferencial 3 · texto','Espaços de leitura, redário, mandala e o Caminho das Pedras, feitos para o reencontro consigo.'],
             ['home','chalets_eyebrow','text','Chalés · etiqueta','Acomodações'],
             ['home','chalets_title','html','Chalés · título','Chalés que <em>abraçam o jardim.</em>'],
-            ['home','chalets_body','html','Chalés · texto','Cada detalhe foi pensado para proporcionar tranquilidade — aconchego, conforto, gentilezas e o contato constante com a natureza.'],
+            ['home','chalets_body','html','Chalés · texto','Cada detalhe foi pensado para proporcionar tranquilidade, aconchego, conforto, gentilezas e o contato constante com a natureza.'],
             ['home','gastro_body_2','html','Gastronomia · texto 2','Mesa farta, tempo desacelerado e harmonização com vinhos muito especiais. A gastronomia é o coração da experiência, não um adicional.'],
             ['home','itinerary_image','image','Itinerário teaser · imagem','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80'],
             ['home','itinerary_eyebrow','text','Itinerário teaser · etiqueta','Itinerário'],
             ['home','itinerary_title','html','Itinerário teaser · título','A viagem até a serra <em>já é parte da experiência.</em>'],
-            ['home','itinerary_body','html','Itinerário teaser · texto','Preparamos um roteiro afetuoso pelo trajeto até <strong>Mar Vermelho</strong>: paradas gastronômicas, artesanato local, cafés e experiências culturais que tornam o caminho tão especial quanto o destino.'],
+            ['home','itinerary_body','html','Itinerário teaser · texto','Preparamos um roteiro aconchegante pela serra, com paradas em Capela, Cajueiro e Viçosa antes da chegada a <strong>Mar Vermelho</strong>. Artesanato, cerâmica, caldinho e café transformam o caminho em parte da experiência.'],
 
             ['chales','standard_eyebrow','text','Aromáticos · etiqueta','Standard'],
             ['chales','standard_title','html','Aromáticos · título','Chalés <em>Aromáticos.</em>'],
-            ['chales','standard_note','text','Aromáticos · observação','Cada chalé acomoda apenas 2 pessoas — exclusivamente para adultos.'],
+            ['chales','standard_note','text','Aromáticos · observação','Cada chalé acomoda apenas 2 pessoas, exclusivamente para adultos.'],
             ['chales','amenity_min_stay','text','Comodidade · mínimo','Mínimo 2 noites'],
             ['chales','amenity_breakfast','text','Comodidade · café','Café da manhã'],
             ['chales','amenity_capacity','text','Comodidade · capacidade','Acomoda 2 pessoas'],
@@ -359,12 +359,12 @@ function bootstrap_db(): void {
             ['a-pousada','essence_eyebrow','text','Essência · etiqueta','Nossa essência'],
             ['a-pousada','essence_title','html','Essência · título','Sabores, cores e bem-estar entre as serras de Alagoas.'],
             ['a-pousada','intro_body_2','html','Introdução · parágrafo 2','Localizada entre as serras de Alagoas e com uma culinária sofisticada de influência europeia, a pousada oferece uma verdadeira viagem de sabores, cores e bem-estar.'],
-            ['a-pousada','intro_body_3','html','Introdução · parágrafo 3','A paisagem exuberante e a simplicidade do local criam um ambiente acolhedor, onde é possível sentir uma paz única e verdadeira. É um convite para quem deseja se conectar com amigos e consigo — em um lugar de cheiros, brisa do campo, vinho e música boa.'],
+            ['a-pousada','intro_body_3','html','Introdução · parágrafo 3','A paisagem exuberante e a simplicidade do local criam um ambiente acolhedor, onde é possível sentir uma paz única e verdadeira. É um convite para quem deseja se conectar com amigos e consigo em um lugar de cheiros, brisa do campo, vinho e música boa.'],
             ['a-pousada','intro_note','html','Introdução · observação','Importante: traga um bom calçado e agasalho para aproveitar o clima frio da nossa <span>"Suíça Alagoana"</span>.'],
             ['a-pousada','adults_image','image','Adultos · imagem','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=1100&q=80'],
             ['a-pousada','adults_eyebrow','text','Adultos · etiqueta','Para adultos'],
             ['a-pousada','adults_title','html','Adultos · título','Uma proposta de <em>relaxamento</em> em meio ao silêncio.'],
-            ['a-pousada','adults_body_1','html','Adultos · texto 1','Exclusivamente para adultos, não dispomos de atrativos infantis nem TVs nos quartos. Nossa culinária é exótica e experimental, sempre em harmonização com vinhos especiais.'],
+            ['a-pousada','adults_body_1','html','Adultos · texto 1','Exclusivamente para adultos, não dispomos de atrativos infantis. Nossa proposta privilegia silêncio, contemplação, descanso e uma culinária exótica e experimental, sempre em harmonização com vinhos especiais.'],
             ['a-pousada','adults_body_2','html','Adultos · texto 2','Digamos que nossos hóspedes fazem uma linda viagem para outros países sem precisar sair de nossa querida Alagoas.'],
 
             ['gastronomia','philosophy_eyebrow','text','Filosofia · etiqueta','A nossa filosofia'],
@@ -376,24 +376,24 @@ function bootstrap_db(): void {
             ['taberna','about_image_2','image','Galeria · imagem 2','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'],
             ['taberna','about_image_3','image','Galeria · imagem 3','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'],
 
-            ['localizacao','hero_subtitle','html','Hero · subtítulo','Região serrana de Alagoas — a chamada <em>Suíça Alagoana</em>.'],
+            ['localizacao','hero_subtitle','html','Hero · subtítulo','Região serrana de Alagoas, a chamada <em>Suíça Alagoana</em>.'],
             ['localizacao','address_eyebrow','text','Endereço · etiqueta','Endereço'],
-            ['localizacao','address_title','html','Endereço · título','Mar Vermelho<br><span>Alagoas — Brasil</span>'],
+            ['localizacao','address_title','html','Endereço · título','Mar Vermelho<br><span>Alagoas, Brasil</span>'],
             ['localizacao','region_eyebrow','text','Região · etiqueta','A região'],
             ['localizacao','region_title','html','Região · título','Um lugar de <em>beleza incomparável.</em>'],
             ['localizacao','region_body_1','html','Região · texto 1','Localizado na região serrana de Alagoas, no município de Mar Vermelho. Durante o nascer ou pôr do sol, os amantes da contemplação podem apreciar uma paisagem espetacular, com tons de verde e floral que se misturam em um céu deslumbrante.'],
-            ['localizacao','region_body_2','html','Região · texto 2','Mar Vermelho é um destino perfeito para quem busca momentos aconchegantes — chocolates quentes, fondues de queijo e bons vinhos em volta da lareira.'],
+            ['localizacao','region_body_2','html','Região · texto 2','Mar Vermelho é um destino perfeito para quem busca momentos aconchegantes, chocolates quentes, fondues de queijo e bons vinhos em volta da lareira.'],
 
             ['itinerario','hero_subtitle','html','Hero · subtítulo','O trajeto até a serra é parte da hospedagem.'],
-            ['itinerario','intro_eyebrow','text','Roteiro · etiqueta','Roteiro afetivo'],
-            ['itinerario','intro_title','html','Roteiro · título','Sabores, ofícios e <em>paisagens</em> pelo caminho.'],
-            ['itinerario','intro_body','html','Roteiro · texto','Saindo de Maceió, o trajeto até Mar Vermelho cruza paisagens que mudam — do litoral à serra, da agricultura à cultura popular. Sugerimos paradas que tornam a viagem inesquecível.'],
-            ['itinerario','quote','html','Frase final','"Transformamos o trajeto em parte da experiência — porque o caminho desacelera o coração antes mesmo da serra."'],
+            ['itinerario','intro_eyebrow','text','Roteiro · etiqueta','Roteiro aconchegante'],
+            ['itinerario','intro_title','html','Roteiro · título','Paradas especiais <em>pela serra.</em>'],
+            ['itinerario','intro_body','html','Roteiro · texto','O caminho até a pousada parte de Maceió e segue por Capela, Cajueiro e Viçosa antes da chegada a Mar Vermelho. A proposta é aproveitar o percurso com calma, fazendo pausas especiais indicadas pela Aromas da Serra.'],
+            ['itinerario','quote','html','Frase final','"Qualquer orientação, estamos à disposição."'],
 
             ['global','marquee_1','text','Marquee 1','Mar Vermelho · AL'],
             ['global','marquee_2','text','Marquee 2','Cozinha Mediterrânea'],
             ['global','marquee_3','text','Marquee 3','Ritual da Fogueira'],
-            ['global','marquee_4','text','Marquee 4','Ritual do Chá da Tarde'],
+            ['global','marquee_4','text','Marquee 4','Chá da Tarde'],
             ['global','marquee_5','text','Marquee 5','Temporada de Fondue'],
             ['global','marquee_6','text','Marquee 6','Suíça Alagoana'],
 
@@ -417,30 +417,22 @@ function bootstrap_db(): void {
             ['taberna','bullet_2','text','Bullet 2','Espaço íntimo · capacidade limitada'],
             ['taberna','bullet_3','text','Bullet 3','Temporada de fondues no inverno'],
 
-            ['itinerario','stop_1_title','text','Parada 1 · título','Saída de Maceió'],
-            ['itinerario','stop_1_body','html','Parada 1 · texto','Café da manhã reforçado antes da estrada — um bom ponto: padarias do bairro Jatiúca ou Ponta Verde.'],
-            ['itinerario','stop_1_icon','text','Parada 1 · ícone','coffee'],
+            ['itinerario','stop_1_title','text','Parada 1 · título','Capela · Artesanato e Caldinho'],
+            ['itinerario','stop_1_body','html','Parada 1 · texto','Ao chegar em Capela, façam duas paradas especiais: o artesanato do Sr. João de Barro e o tradicional Caldinho de Capela, que funciona até às 12h, quase uma pausa obrigatória para quem passa por lá.'],
+            ['itinerario','stop_1_icon','text','Parada 1 · ícone','hand-heart'],
             ['itinerario','stop_1_image','image','Parada 1 · imagem','https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80'],
-            ['itinerario','stop_2_title','text','Parada 2 · título','Marechal Deodoro · Centro Histórico'],
-            ['itinerario','stop_2_body','html','Parada 2 · texto','Igrejas barrocas, artesanato em palha e doces caseiros. Vale uma pausa de 30 a 45 minutos.'],
-            ['itinerario','stop_2_icon','text','Parada 2 · ícone','landmark'],
+            ['itinerario','stop_2_title','text','Parada 2 · título','Cajueiro · Cerâmica Caju Queimado'],
+            ['itinerario','stop_2_body','html','Parada 2 · texto','Seguindo para Cajueiro, aproveitem a Cerâmica Caju Queimado, a entrada é sinalizada.'],
+            ['itinerario','stop_2_icon','text','Parada 2 · ícone','palette'],
             ['itinerario','stop_2_image','image','Parada 2 · imagem','https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80'],
-            ['itinerario','stop_3_title','text','Parada 3 · título','Atalaia · Casa de Doces e Conservas'],
-            ['itinerario','stop_3_body','html','Parada 3 · texto','Doces de buriti, geleias artesanais e queijos da região — leve algumas para a estadia.'],
-            ['itinerario','stop_3_icon','text','Parada 3 · ícone','candy'],
+            ['itinerario','stop_3_title','text','Parada 3 · título','Viçosa · Padaria do Creso'],
+            ['itinerario','stop_3_body','html','Parada 3 · texto','Chegando em Viçosa, façam uma pausa na Padaria do Creso para um café acolhedor.'],
+            ['itinerario','stop_3_icon','text','Parada 3 · ícone','coffee'],
             ['itinerario','stop_3_image','image','Parada 3 · imagem','https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80'],
-            ['itinerario','stop_4_title','text','Parada 4 · título','Quebrangulo · Mata Atlântica'],
-            ['itinerario','stop_4_body','html','Parada 4 · texto','Mirante natural e vegetação preservada. Ideal para esticar as pernas e respirar fundo.'],
-            ['itinerario','stop_4_icon','text','Parada 4 · ícone','trees'],
-            ['itinerario','stop_4_image','image','Parada 4 · imagem','https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80'],
-            ['itinerario','stop_5_title','text','Parada 5 · título','Palmeira dos Índios · Cultura e Memória'],
-            ['itinerario','stop_5_body','html','Parada 5 · texto','Visite o Museu Xucurus — história indígena e cultura local que enriquecem a viagem.'],
-            ['itinerario','stop_5_icon','text','Parada 5 · ícone','book-open'],
-            ['itinerario','stop_5_image','image','Parada 5 · imagem','https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?auto=format&fit=crop&w=800&q=80'],
-            ['itinerario','stop_6_title','text','Parada 6 · título','Mar Vermelho · Chegada à Pousada'],
-            ['itinerario','stop_6_body','html','Parada 6 · texto','Bem-vindo à Suíça Alagoana. Um chá quente espera por você na Taberna do Monge.'],
-            ['itinerario','stop_6_icon','text','Parada 6 · ícone','home'],
-            ['itinerario','stop_6_image','image','Parada 6 · imagem','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80'],
+            ['itinerario','stop_4_title','text','Parada 4 · título','Mar Vermelho · Chegada à Pousada'],
+            ['itinerario','stop_4_body','html','Parada 4 · texto','Depois, sigam para Mar Vermelho para viver o descanso e aconchego conosco.'],
+            ['itinerario','stop_4_icon','text','Parada 4 · ícone','home'],
+            ['itinerario','stop_4_image','image','Parada 4 · imagem','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80'],
     ];
     $bcheck = $pdo->prepare('SELECT 1 FROM page_blocks WHERE page=? AND block_key=?');
     $bins   = $pdo->prepare('INSERT INTO page_blocks (page,block_key,type,label,value,sort_order) VALUES (?,?,?,?,?,?)');
@@ -508,7 +500,7 @@ function bootstrap_db(): void {
             'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
             'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
         ],10],
-        ['ritual-do-cha-da-tarde','Ritual do Chá da Tarde','coffee','Bolos artesanais, pães rústicos e chás especiais ao final do dia, em frente à serra.',[
+        ['cha-da-tarde','Chá da Tarde','coffee','Bolos artesanais, pães rústicos e chás especiais ao final do dia, em frente à serra.',[
             'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85',
             'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85',
             'https://images.unsplash.com/photo-1545665277-5937489579f2?auto=format&fit=crop&w=1200&q=85',
@@ -533,6 +525,7 @@ function bootstrap_db(): void {
 
     seed_catalog_revision_20260508($pdo);
     seed_catalog_revision_20260508_label_cleanup($pdo);
+    seed_content_revision_20260511_refinements($pdo);
 }
 
 function block(string $page, string $key, string $default = ''): string {
@@ -773,7 +766,7 @@ function seed_upsert_testimonial(PDO $pdo, array $data): void {
 }
 
 function seed_catalog_revision_20260508(PDO $pdo): void {
-    foreach (['cha-de-boas-vindas' => 'ritual-do-cha-da-tarde', 'mandala' => 'mandala-horta-organica'] as $currentSlug => $legacySlug) {
+    foreach (['drink-de-boas-vindas' => 'cha-de-boas-vindas', 'cha-da-tarde' => 'ritual-do-cha-da-tarde', 'mandala' => 'mandala-horta-organica'] as $currentSlug => $legacySlug) {
         $stmt = $pdo->prepare('SELECT id FROM experiences WHERE slug=?');
         $stmt->execute([$currentSlug]);
         if ($stmt->fetchColumn()) $pdo->prepare('DELETE FROM experiences WHERE slug=?')->execute([$legacySlug]);
@@ -838,17 +831,18 @@ function seed_catalog_revision_20260508(PDO $pdo): void {
         'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
     ]);
     $experiences = [
-        ['cha-de-boas-vindas', ['ritual-do-cha-da-tarde'], 'Chá de Boas-Vindas', 'coffee', 'Inspirado em uma prática milenar de origem japonesa, o Chá de Boas-Vindas marca a chegada com respeito, presença e paz de espírito. Na Aromas da Serra, ele ganha personalidade aromática, com ervas selecionadas por suas propriedades de cuidado e relaxamento, convidando corpo e mente a desacelerar.', 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&q=85', 10],
-        ['ritual-da-fogueira', [], 'Ritual da Fogueira · Magia do Fogo', 'flame', 'O fogo é nosso aliado sagrado: ilumina, aquece, acolhe e transmuta. Ao redor da fogueira celebramos fé, renovação e encontro, reconhecendo os muitos significados que esse elemento carrega para diferentes povos. Bem-vindo ao nosso encontro místico da fogueira.', 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85', 20],
-        ['experiencia-gastronomica', [], 'Experiência Gastronômica', 'utensils', 'As receitas da pousada nascem de uma vivência cultural pela Suíça, pelo sul da França, pela Itália e pela região mediterrânea. Ingredientes frescos, ervas colhidas na horta e técnicas adaptadas ao estilo brasileiro resultam em pratos autorais, delicados e cheios de aromas.', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85', 30],
-        ['fondue-de-queijo-moitie-moitie', [], 'Fondue de Queijo Moitié-Moitié', 'cooking-pot', 'Inspirado nos Alpes Suíços, o Fondue de Queijo Moitié-Moitié combina a delicadeza de queijos mais suaves com a intensidade de queijos marcantes. Preparado artesanalmente e servido à mesa, é o grande protagonista da temporada de inverno: uma forma de se sentir nos Alpes sem sair de Mar Vermelho.', 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=85', 40],
-        ['taberna-do-monge', [], 'Taberna do Monge', 'wine', 'Inspirada nas antigas tabernas medievais, a Taberna do Monge combina decoração rústica, atmosfera acolhedora e uma lareira central que aquece o ambiente. É um espaço intimista para comer bem, conversar sem pressa e celebrar os sabores da serra. Bon appétit.', 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85', 50],
-        ['espaco-contemplacao', [], 'Espaço Contemplação', 'mountain', 'Um ambiente pensado para meditação, silêncio e respiração profunda, com vista privilegiada para as montanhas e para a vegetação ao redor. É o lugar ideal para desacelerar do ritmo da vida moderna e reencontrar presença.', 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85', 60],
-        ['espaco-gourmet', [], 'Espaço Gourmet', 'chef-hat', 'Palco de bons encontros e experiências gastronômicas compartilhadas, o Espaço Gourmet convida hóspedes a criar, inovar e apresentar suas vivências culinárias com novos temperos, aromas e harmonizações especiais. Venha desfrutar desse momento e traga seus amigos.', 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85', 70],
-        ['caminho-das-pedras', [], 'Caminho das Pedras', 'footprints', 'Inspirado nos cinco pilares de Sebastian Kneipp — água, movimento, alimentação, plantas medicinais e estilo de vida — o Caminho das Pedras propõe equilíbrio e presença. A experiência convida o corpo a despertar seus recursos naturais de cuidado.', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85', 80],
-        ['nossa-piscina', [], 'Nossa Piscina', 'waves', 'Um pequeno oásis de tranquilidade e beleza natural. Com águas cristalinas e vista deslumbrante, a piscina é perfeita para relaxar, refrescar-se e contemplar a natureza exuberante ao redor.', 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85', 90],
-        ['mandala', ['mandala-horta-organica'], 'Mandala', 'flower-2', 'A Mandala representa o universo, a essência e a jornada espiritual de cada pessoa. Seus círculos simbolizam continuidade, conexão e harmonia. Na pousada, ela também expressa a arte de plantar, cultivar e colher aromas para a cozinha, além de inspirar tranquilidade, serenidade e concentração plena.', 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85', 100],
-        ['espaco-leitura', [], 'Espaço Leitura', 'book-open', 'Ler estimula o raciocínio, expande a imaginação e cria outros mundos dentro de nós. O Espaço Leitura é um convite para pausar, silenciar e se conectar com novas ideias em meio ao clima sereno da pousada.', 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=85', 110],
+        ['drink-de-boas-vindas', ['cha-de-boas-vindas'], 'Drink de Boas-Vindas', 'glass-water', 'O drink de boas-vindas marca a chegada com frescor, delicadeza e presença. Preparado para receber cada hóspede com cuidado, ele abre a estadia de forma leve e acolhedora, como um primeiro brinde ao descanso na serra.', 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=85', 10],
+        ['cha-da-tarde', ['ritual-do-cha-da-tarde'], 'Chá da Tarde', 'coffee', 'O chá da tarde é uma experiência própria da hospedagem, pensada para desacelerar o dia com bolos artesanais, pães, infusões e conversas tranquilas. É uma pausa afetuosa, sem pressa, para saborear a serra em outro ritmo.', 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85', 20],
+        ['ritual-da-fogueira', [], 'Ritual da Fogueira · Magia do Fogo', 'flame', 'O fogo é nosso aliado sagrado: ilumina, aquece, acolhe e transmuta. Ao redor da fogueira celebramos fé, renovação e encontro, reconhecendo os muitos significados que esse elemento carrega para diferentes povos. Bem-vindo ao nosso encontro místico da fogueira.', 'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85', 30],
+        ['experiencia-gastronomica', [], 'Experiência Gastronômica', 'utensils', 'As receitas da pousada nascem de uma vivência cultural pela Suíça, pelo sul da França, pela Itália e pela região mediterrânea. Ingredientes frescos, ervas colhidas na horta e técnicas adaptadas ao estilo brasileiro resultam em pratos autorais, delicados e cheios de aromas.', 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85', 40],
+        ['fondue-de-queijo', ['fondue-de-queijo-moitie-moitie'], 'Fondue de Queijo', 'cooking-pot', 'Inspirado no clima dos Alpes Suíços, o fondue de queijo é preparado artesanalmente e servido à mesa como protagonista da temporada de inverno. Cremoso, generoso e perfeito para compartilhar, ele traduz o aconchego de Mar Vermelho em uma experiência gastronômica especial.', 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=85', 50],
+        ['taberna-do-monge', [], 'Taberna do Monge', 'wine', 'A Taberna do Monge nasceu como um projeto afetivo dos diretores, inspirado no imaginário das antigas tabernas e na vontade de criar um lugar de encontro verdadeiro. A decoração rústica, a lareira central, os vinhos selecionados e a cozinha autoral constroem uma atmosfera íntima, feita para comer bem, conversar sem pressa e celebrar os sabores da serra.', 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85', 60],
+        ['espaco-contemplacao', [], 'Espaço Contemplação', 'mountain', 'Um ambiente pensado para meditação, silêncio e respiração profunda, com vista privilegiada para as montanhas e para a vegetação ao redor. É o lugar ideal para desacelerar do ritmo da vida moderna e reencontrar presença.', 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85', 70],
+        ['espaco-gourmet', [], 'Espaço Gourmet', 'chef-hat', 'Palco de bons encontros e experiências gastronômicas compartilhadas, o Espaço Gourmet convida hóspedes a criar, inovar e apresentar suas vivências culinárias com novos temperos, aromas e harmonizações especiais. Venha desfrutar desse momento e traga seus amigos.', 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85', 80],
+        ['caminho-das-pedras', [], 'Caminho das Pedras', 'footprints', 'O Caminho das Pedras é um percurso de cuidado criado para conduzir o hóspede a uma presença mais profunda. Inspirado nos cinco pilares de Sebastian Kneipp, água, movimento, alimentação, plantas medicinais e estilo de vida, ele une contato com a natureza, silêncio e intenção. Mais do que um trajeto pelo bosque, é um convite para sentir o corpo, acalmar a mente e reconhecer pequenos rituais de equilíbrio no cotidiano.', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85', 90],
+        ['nossa-piscina', [], 'Nossa Piscina', 'waves', 'Um pequeno oásis de tranquilidade e beleza natural. Com águas cristalinas e vista deslumbrante, a piscina é perfeita para relaxar, refrescar-se e contemplar a natureza exuberante ao redor.', 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85', 100],
+        ['mandala', ['mandala-horta-organica'], 'Mandala', 'flower-2', 'A Mandala representa o universo, a essência e a jornada espiritual de cada pessoa. Seus círculos simbolizam continuidade, conexão e harmonia. Na pousada, ela também expressa a arte de plantar, cultivar e colher aromas para a cozinha, além de inspirar tranquilidade, serenidade e concentração plena.', 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85', 110],
+        ['espaco-leitura', [], 'Espaço Leitura', 'book-open', 'Ler estimula o raciocínio, expande a imaginação e cria outros mundos dentro de nós. O Espaço Leitura é um convite para pausar, silenciar e se conectar com novas ideias em meio ao clima sereno da pousada.', 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=85', 120],
     ];
     foreach ($experiences as [$slug,$legacy,$title,$icon,$description,$cover,$order]) {
         seed_upsert_experience($pdo, ['slug'=>$slug,'title'=>$title,'icon'=>$icon,'description'=>$description,'cover'=>$cover,'gallery'=>$experienceGallery,'sort_order'=>$order], $legacy);
@@ -869,6 +863,94 @@ function seed_catalog_revision_20260508(PDO $pdo): void {
     seed_upsert_block($pdo, 'experiencias', 'rituals_eyebrow', 'text', 'Experiências · etiqueta', 'Vivências da pousada', 210);
     seed_upsert_block($pdo, 'experiencias', 'rituals_title', 'html', 'Experiências · título', 'Rituais, sabores e espaços para <em>desacelerar.</em>', 211);
     seed_upsert_block($pdo, 'experiencias', 'rituals_hint', 'text', 'Experiências · dica mobile', 'Nas fotos, toque para ampliar e navegar pelo lightbox.', 212);
+
+    set_setting($revisionKey, '1');
+}
+
+function seed_content_revision_20260511_refinements(PDO $pdo): void {
+    $revisionKey = 'content_revision_20260511_refinements_v1';
+    $stmt = $pdo->prepare('SELECT value FROM settings WHERE `key`=?');
+    $stmt->execute([$revisionKey]);
+    if ($stmt->fetchColumn() === '1') return;
+
+    set_setting('site_location', 'Mar Vermelho, Alagoas');
+
+    seed_upsert_block($pdo, 'home', 'hero_eyebrow', 'text', 'Hero · etiqueta', 'Seja bem-vindo', 1);
+    seed_upsert_block($pdo, 'home', 'hero_kicker', 'text', 'Hero · linha superior', 'Pousada · Mar Vermelho, Alagoas', 100);
+    seed_upsert_block($pdo, 'home', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Um refúgio exclusivo para adultos em meio à <strong>Suíça Alagoana</strong>, com gastronomia mediterrânea, contemplação e tempo para si.', 3);
+    seed_upsert_block($pdo, 'home', 'manifesto_note', 'text', 'Manifesto · linha menor', 'Exclusivamente para adultos. Sem pressa. Apenas presença.', 7);
+    seed_upsert_block($pdo, 'home', 'feature_2_body', 'text', 'Diferencial 2 · texto', 'Noites de celebração à beira do fogo, com música, conversas e gastronomia em um ambiente íntimo e ancestral.', 111);
+    seed_upsert_block($pdo, 'home', 'feature_3_body', 'text', 'Diferencial 3 · texto', 'Espaços de leitura, redário, mandala e o Caminho das Pedras, feitos para o reencontro consigo.', 113);
+    seed_upsert_block($pdo, 'home', 'chalets_body', 'html', 'Chalés · texto', 'Cada detalhe foi pensado para proporcionar tranquilidade, aconchego, conforto, gentilezas e o contato constante com a natureza.', 116);
+    seed_upsert_block($pdo, 'home', 'itinerary_body', 'html', 'Itinerário teaser · texto', 'Preparamos um roteiro aconchegante pela serra, com paradas em Capela, Cajueiro e Viçosa antes da chegada a <strong>Mar Vermelho</strong>. Artesanato, cerâmica, caldinho e café transformam o caminho em parte da experiência.', 120);
+
+    seed_upsert_block($pdo, 'a-pousada', 'intro_body', 'html', 'Introdução', 'Refúgio boutique em Mar Vermelho, com hospitalidade, gastronomia e contemplação.', 14);
+    seed_upsert_block($pdo, 'a-pousada', 'intro_body_3', 'html', 'Introdução · parágrafo 3', 'A paisagem exuberante e a simplicidade do local criam um ambiente acolhedor, onde é possível sentir uma paz única e verdadeira. É um convite para quem deseja se conectar com amigos e consigo em um lugar de cheiros, brisa do campo, vinho e música boa.', 143);
+    seed_upsert_block($pdo, 'a-pousada', 'adults_body_1', 'html', 'Adultos · texto 1', 'Exclusivamente para adultos, não dispomos de atrativos infantis. Nossa proposta privilegia silêncio, contemplação, descanso e uma culinária exótica e experimental, sempre em harmonização com vinhos especiais.', 148);
+
+    seed_upsert_block($pdo, 'chales', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Cada detalhe pensado com carinho, aconchego, conforto e gentilezas em contato constante com a natureza.', 18);
+    seed_upsert_block($pdo, 'chales', 'standard_note', 'text', 'Aromáticos · observação', 'Mínimo 2 noites · Café da manhã · Acomoda 2 pessoas · Exclusivo para adultos.', 205);
+
+    seed_upsert_block($pdo, 'experiencias', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Experiências autorais desenhadas para o reencontro com o tempo, com a natureza e com você mesmo.', 29);
+    seed_upsert_block($pdo, 'experiencias', 'rituals_title', 'html', 'Experiências · título', 'Rituais, sabores e espaços para <em>desacelerar.</em>', 211);
+
+    seed_upsert_block($pdo, 'taberna', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Um convite à mesa farta, mediterrânea, generosa, harmonizada com vinhos especiais e a vista da serra.', 26);
+    seed_upsert_block($pdo, 'taberna', 'about_body', 'html', 'Sobre · texto', 'A Taberna do Monge é o restaurante boutique da pousada, aberto também a visitantes externos. Nasceu como um projeto afetivo dos diretores para reunir boa mesa, memória, conversa sem pressa e o clima acolhedor da serra. Receitas autorais, vinhos selecionados e uma lareira central fazem do espaço um dos encontros mais especiais da Aromas da Serra.', 28);
+
+    seed_upsert_block($pdo, 'localizacao', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Região serrana de Alagoas, a chamada <em>Suíça Alagoana</em>.', 154);
+    seed_upsert_block($pdo, 'localizacao', 'address_title', 'html', 'Endereço · título', 'Mar Vermelho<br><span>Alagoas, Brasil</span>', 156);
+    seed_upsert_block($pdo, 'localizacao', 'region_body_2', 'html', 'Região · texto 2', 'Mar Vermelho é um destino perfeito para quem busca momentos aconchegantes, chocolates quentes, fondues de queijo e bons vinhos em volta da lareira.', 160);
+
+    seed_upsert_block($pdo, 'itinerario', 'hero_eyebrow', 'text', 'Hero · etiqueta', 'Roteiro aconchegante', 33);
+    seed_upsert_block($pdo, 'itinerario', 'hero_title', 'html', 'Hero · título', 'Roteiro aconchegante <em>pela serra.</em>', 34);
+    seed_upsert_block($pdo, 'itinerario', 'hero_subtitle', 'html', 'Hero · subtítulo', 'Da saída de Maceió à chegada em Mar Vermelho, o caminho também acolhe.', 161);
+    seed_upsert_block($pdo, 'itinerario', 'intro_eyebrow', 'text', 'Roteiro · etiqueta', 'Roteiro aconchegante', 162);
+    seed_upsert_block($pdo, 'itinerario', 'intro_title', 'html', 'Roteiro · título', 'Paradas especiais <em>pela serra.</em>', 163);
+    seed_upsert_block($pdo, 'itinerario', 'intro_body', 'html', 'Roteiro · texto', 'O caminho até a pousada parte de Maceió e segue por Capela, Cajueiro e Viçosa antes da chegada a Mar Vermelho. A proposta é aproveitar o percurso com calma, fazendo pausas especiais indicadas pela Aromas da Serra.', 164);
+    seed_upsert_block($pdo, 'itinerario', 'quote', 'html', 'Frase final', '"Qualquer orientação, estamos à disposição."', 165);
+    seed_upsert_block($pdo, 'itinerario', 'stop_1_title', 'text', 'Parada 1 · título', 'Capela · Artesanato e Caldinho', 180);
+    seed_upsert_block($pdo, 'itinerario', 'stop_1_body', 'html', 'Parada 1 · texto', 'Ao chegar em Capela, façam duas paradas especiais: o artesanato do Sr. João de Barro e o tradicional Caldinho de Capela, que funciona até às 12h, quase uma pausa obrigatória para quem passa por lá.', 181);
+    seed_upsert_block($pdo, 'itinerario', 'stop_1_icon', 'text', 'Parada 1 · ícone', 'hand-heart', 182);
+    seed_upsert_block($pdo, 'itinerario', 'stop_2_title', 'text', 'Parada 2 · título', 'Cajueiro · Cerâmica Caju Queimado', 184);
+    seed_upsert_block($pdo, 'itinerario', 'stop_2_body', 'html', 'Parada 2 · texto', 'Seguindo para Cajueiro, aproveitem a Cerâmica Caju Queimado, a entrada é sinalizada.', 185);
+    seed_upsert_block($pdo, 'itinerario', 'stop_2_icon', 'text', 'Parada 2 · ícone', 'palette', 186);
+    seed_upsert_block($pdo, 'itinerario', 'stop_3_title', 'text', 'Parada 3 · título', 'Viçosa · Padaria do Creso', 188);
+    seed_upsert_block($pdo, 'itinerario', 'stop_3_body', 'html', 'Parada 3 · texto', 'Chegando em Viçosa, façam uma pausa na Padaria do Creso para um café acolhedor.', 189);
+    seed_upsert_block($pdo, 'itinerario', 'stop_3_icon', 'text', 'Parada 3 · ícone', 'coffee', 190);
+    seed_upsert_block($pdo, 'itinerario', 'stop_4_title', 'text', 'Parada 4 · título', 'Mar Vermelho · Chegada à Pousada', 192);
+    seed_upsert_block($pdo, 'itinerario', 'stop_4_body', 'html', 'Parada 4 · texto', 'Depois, sigam para Mar Vermelho para viver o descanso e aconchego conosco.', 193);
+    seed_upsert_block($pdo, 'itinerario', 'stop_4_icon', 'text', 'Parada 4 · ícone', 'home', 194);
+    seed_upsert_block($pdo, 'itinerario', 'stop_4_image', 'image', 'Parada 4 · imagem', 'https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80', 195);
+
+    $deleteBlock = $pdo->prepare('DELETE FROM page_blocks WHERE page=? AND block_key=?');
+    foreach ([5, 6] as $oldStop) {
+        foreach (['title', 'body', 'icon', 'image'] as $suffix) $deleteBlock->execute(['itinerario', "stop_{$oldStop}_{$suffix}"]);
+    }
+
+    seed_upsert_block($pdo, 'global', 'cta_eyebrow', 'text', 'Rodapé CTA · etiqueta', 'Reserve sua estadia', 90);
+    seed_upsert_block($pdo, 'global', 'footer_about', 'html', 'Rodapé · texto institucional', 'Refúgio boutique em Mar Vermelho, Alagoas, na Suíça Alagoana. Hospedagem exclusiva para adultos, gastronomia mediterrânea e contemplação em meio à serra.', 93);
+    seed_upsert_block($pdo, 'global', 'footer_signature', 'text', 'Rodapé · assinatura', 'Suíça Alagoana · Mar Vermelho, AL', 94);
+    seed_upsert_block($pdo, 'global', 'marquee_4', 'text', 'Marquee 4', 'Chá da Tarde', 104);
+
+    $experienceGallery = sanitize_public_image_items([
+        'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85',
+        'https://images.unsplash.com/photo-1455218873509-8097305ee378?auto=format&fit=crop&w=1200&q=85',
+    ]);
+    seed_upsert_experience($pdo, ['slug'=>'drink-de-boas-vindas','title'=>'Drink de Boas-Vindas','icon'=>'glass-water','description'=>'O drink de boas-vindas marca a chegada com frescor, delicadeza e presença. Preparado para receber cada hóspede com cuidado, ele abre a estadia de forma leve e acolhedora, como um primeiro brinde ao descanso na serra.','cover'=>'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>10], ['cha-de-boas-vindas']);
+    seed_upsert_experience($pdo, ['slug'=>'cha-da-tarde','title'=>'Chá da Tarde','icon'=>'coffee','description'=>'O chá da tarde é uma experiência própria da hospedagem, pensada para desacelerar o dia com bolos artesanais, pães, infusões e conversas tranquilas. É uma pausa afetuosa, sem pressa, para saborear a serra em outro ritmo.','cover'=>'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>20], ['ritual-do-cha-da-tarde']);
+    seed_upsert_experience($pdo, ['slug'=>'ritual-da-fogueira','title'=>'Ritual da Fogueira · Magia do Fogo','icon'=>'flame','description'=>'O fogo é nosso aliado sagrado: ilumina, aquece, acolhe e transmuta. Ao redor da fogueira celebramos fé, renovação e encontro, reconhecendo os muitos significados que esse elemento carrega para diferentes povos. Bem-vindo ao nosso encontro místico da fogueira.','cover'=>'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>30], []);
+    seed_upsert_experience($pdo, ['slug'=>'experiencia-gastronomica','title'=>'Experiência Gastronômica','icon'=>'utensils','description'=>'As receitas da pousada nascem de uma vivência cultural pela Suíça, pelo sul da França, pela Itália e pela região mediterrânea. Ingredientes frescos, ervas colhidas na horta e técnicas adaptadas ao estilo brasileiro resultam em pratos autorais, delicados e cheios de aromas.','cover'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>40], []);
+    seed_upsert_experience($pdo, ['slug'=>'fondue-de-queijo','title'=>'Fondue de Queijo','icon'=>'cooking-pot','description'=>'Inspirado no clima dos Alpes Suíços, o fondue de queijo é preparado artesanalmente e servido à mesa como protagonista da temporada de inverno. Cremoso, generoso e perfeito para compartilhar, ele traduz o aconchego de Mar Vermelho em uma experiência gastronômica especial.','cover'=>'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>50], ['fondue-de-queijo-moitie-moitie']);
+    seed_upsert_experience($pdo, ['slug'=>'taberna-do-monge','title'=>'Taberna do Monge','icon'=>'wine','description'=>'A Taberna do Monge nasceu como um projeto afetivo dos diretores, inspirado no imaginário das antigas tabernas e na vontade de criar um lugar de encontro verdadeiro. A decoração rústica, a lareira central, os vinhos selecionados e a cozinha autoral constroem uma atmosfera íntima, feita para comer bem, conversar sem pressa e celebrar os sabores da serra.','cover'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>60], []);
+    seed_upsert_experience($pdo, ['slug'=>'espaco-contemplacao','title'=>'Espaço Contemplação','icon'=>'mountain','description'=>'Um ambiente pensado para meditação, silêncio e respiração profunda, com vista privilegiada para as montanhas e para a vegetação ao redor. É o lugar ideal para desacelerar do ritmo da vida moderna e reencontrar presença.','cover'=>'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>70], []);
+    seed_upsert_experience($pdo, ['slug'=>'espaco-gourmet','title'=>'Espaço Gourmet','icon'=>'chef-hat','description'=>'Palco de bons encontros e experiências gastronômicas compartilhadas, o Espaço Gourmet convida hóspedes a criar, inovar e apresentar suas vivências culinárias com novos temperos, aromas e harmonizações especiais. Venha desfrutar desse momento e traga seus amigos.','cover'=>'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>80], []);
+    seed_upsert_experience($pdo, ['slug'=>'caminho-das-pedras','title'=>'Caminho das Pedras','icon'=>'footprints','description'=>'O Caminho das Pedras é um percurso de cuidado criado para conduzir o hóspede a uma presença mais profunda. Inspirado nos cinco pilares de Sebastian Kneipp, água, movimento, alimentação, plantas medicinais e estilo de vida, ele une contato com a natureza, silêncio e intenção. Mais do que um trajeto pelo bosque, é um convite para sentir o corpo, acalmar a mente e reconhecer pequenos rituais de equilíbrio no cotidiano.','cover'=>'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>90], []);
+    seed_upsert_experience($pdo, ['slug'=>'nossa-piscina','title'=>'Nossa Piscina','icon'=>'waves','description'=>'Um pequeno oásis de tranquilidade e beleza natural. Com águas cristalinas e vista deslumbrante, a piscina é perfeita para relaxar, refrescar-se e contemplar a natureza exuberante ao redor.','cover'=>'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>100], []);
+    seed_upsert_experience($pdo, ['slug'=>'mandala','title'=>'Mandala','icon'=>'flower-2','description'=>'A Mandala representa o universo, a essência e a jornada espiritual de cada pessoa. Seus círculos simbolizam continuidade, conexão e harmonia. Na pousada, ela também expressa a arte de plantar, cultivar e colher aromas para a cozinha, além de inspirar tranquilidade, serenidade e concentração plena.','cover'=>'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>110], ['mandala-horta-organica']);
+    seed_upsert_experience($pdo, ['slug'=>'espaco-leitura','title'=>'Espaço Leitura','icon'=>'book-open','description'=>'Ler estimula o raciocínio, expande a imaginação e cria outros mundos dentro de nós. O Espaço Leitura é um convite para pausar, silenciar e se conectar com novas ideias em meio ao clima sereno da pousada.','cover'=>'https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=1200&q=85','gallery'=>$experienceGallery,'sort_order'=>120], []);
+
+    seed_upsert_product($pdo, ['slug'=>'tempero-da-casa','title'=>'Tempero da Casa','category'=>'Temperos autorais','description'=>'Mistura autoral de ervas e especiarias preparada pela cozinha da pousada para dar acabamento a pratos, entradas e receitas afetivas. Um produto da casa para levar um pouco dos aromas da serra para a sua mesa.','flavors'=>'Receita da casa','cover'=>'https://images.unsplash.com/photo-1506368249639-73a05d6f6488?auto=format&fit=crop&w=1000&q=85','sort_order'=>50]);
+    seed_upsert_product($pdo, ['slug'=>'biscoito-quero-quero','title'=>'Biscoito Quero-Quero','category'=>'Delicadezas da casa','description'=>'Biscoito artesanal para acompanhar cafés, chás e pausas doces durante a estadia.','flavors'=>'Receita da casa','cover'=>'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1000&q=85','sort_order'=>60]);
 
     set_setting($revisionKey, '1');
 }

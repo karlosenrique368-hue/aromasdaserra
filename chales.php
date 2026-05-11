@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Chalés';
-$pageDesc  = 'Chalés Lavanda, Manjericão e Aromáticos — acomodações exclusivas em Mar Vermelho, AL.';
+$pageDesc  = 'Chalés Lavanda, Manjericão e Aromáticos, hospedagem exclusiva em Mar Vermelho, AL.';
 $pageSlug  = 'chales';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
@@ -58,7 +58,7 @@ $standard = array_values(array_filter($chalets, fn($row) => stripos((string)($ro
   <div class="relative z-[1] max-w-6xl mx-auto px-6 pb-16 text-cream-50">
     <span class="text-cream-50/80 tracking-eyebrow uppercase text-[11px]"><?= e(block('chales','hero_eyebrow','As nossas acomodações')) ?></span>
     <h1 class="font-editorial text-5xl md:text-7xl mt-3 leading-[1.05] text-reveal"><?= block('chales','hero_title','Chalés <em class="serif-italic text-gold-500">com alma.</em>') ?></h1>
-    <p class="mt-4 max-w-xl text-cream-100/85 text-lg reveal"><?= block('chales','hero_subtitle','Cada detalhe pensado com carinho — aconchego, conforto e gentilezas em contato constante com a natureza.') ?></p>
+    <p class="mt-4 max-w-xl text-cream-100/85 text-lg reveal"><?= block('chales','hero_subtitle','Cada detalhe pensado com carinho, aconchego, conforto e gentilezas em contato constante com a natureza.') ?></p>
   </div>
 </section>
 
@@ -113,7 +113,7 @@ $standard = array_values(array_filter($chalets, fn($row) => stripos((string)($ro
       <?php endforeach; ?>
     </div>
 
-    <p class="mt-10 text-center text-[14px] text-ink-700/60 serif-italic"><?= e(block('chales','standard_note','Cada chalé acomoda apenas 2 pessoas — exclusivamente para adultos.')) ?></p>
+    <p class="mt-10 text-center text-[14px] text-ink-700/60 serif-italic"><?= e(block('chales','standard_note','Cada chalé acomoda apenas 2 pessoas, exclusivamente para adultos.')) ?></p>
   </div>
 </section>
 <?php endif; ?>

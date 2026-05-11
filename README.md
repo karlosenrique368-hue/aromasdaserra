@@ -31,7 +31,7 @@ No XAMPP, o painel usa SQLite local em `data/aromas.sqlite`, criado automaticame
 | A Pousada | `a-pousada.php` | ✅ |
 | Chalés (Lavanda · Manjericão · Aromáticos) | `chales.php` | ✅ |
 | Gastronomia Mediterrânea + Fondue | `gastronomia.php` | ✅ |
-| Taberna do Monge + Ritual do Chá da Tarde | `taberna.php` | ✅ |
+| Taberna do Monge + Chá da Tarde | `taberna.php` | ✅ |
 | Experiências (Ritual da Fogueira, Mandala, etc.) | `experiencias.php` | ✅ |
 | Localização — Mar Vermelho, AL | `localizacao.php` | ✅ |
 | **Itinerário até a Serra (NOVO)** | `itinerario.php` | ✅ |
@@ -43,7 +43,7 @@ No XAMPP, o painel usa SQLite local em `data/aromas.sqlite`, criado automaticame
 - ❌ Removido: cachoeira, bicicletas, trilhas, tour do café
 - ✅ **Localização correta**: Mar Vermelho — Alagoas (não mais Viçosa)
 - ✅ "Fogueira ao entardecer" → **"Ritual da Fogueira"**
-- ✅ Destaque para **"Ritual do Chá da Tarde"** (página dedicada)
+- ✅ Destaque para **"Chá da Tarde"** (experiência dedicada)
 - ✅ "gastronomia sensorial" → **"Gastronomia Mediterrânea"**
 - ✅ Adicionada **temporada de Fondue** como destaque
 - ✅ Chalés:

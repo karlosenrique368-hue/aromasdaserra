@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/config.php';
 $pageTitle = $pageTitle ?? SITE_NAME;
-$pageDesc  = $pageDesc  ?? 'Refúgio boutique em Mar Vermelho — Suíça Alagoana. Gastronomia mediterrânea, contemplação e hospitalidade exclusiva para adultos.';
+$pageDesc  = $pageDesc  ?? 'Refúgio boutique em Mar Vermelho, na Suíça Alagoana. Gastronomia mediterrânea, contemplação e hospitalidade exclusiva para adultos.';
 $pageSlug  = $pageSlug  ?? 'home';
 ?><!DOCTYPE html>
 <html lang="pt-BR">

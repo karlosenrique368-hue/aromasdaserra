@@ -1,5 +1,5 @@
 <?php
-$pageTitle='Gastronomia'; $pageDesc='Cozinha mediterrânea autoral em Mar Vermelho — sabores da Suíça, sul da França, Itália e Mediterrâneo.'; $pageSlug='gastronomia';
+$pageTitle='Gastronomia'; $pageDesc='Cozinha mediterrânea autoral em Mar Vermelho, com sabores da Suíça, sul da França, Itália e Mediterrâneo.'; $pageSlug='gastronomia';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
 ?>

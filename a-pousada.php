@@ -1,5 +1,5 @@
 <?php
-$pageTitle='A Pousada'; $pageDesc='Conheça a história e a essência da Pousada Aromas da Serra, refúgio em Mar Vermelho — Alagoas.'; $pageSlug='a-pousada';
+$pageTitle='A Pousada'; $pageDesc='Conheça a história e a essência da Pousada Aromas da Serra, refúgio em Mar Vermelho, Alagoas.'; $pageSlug='a-pousada';
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-hero">
@@ -18,9 +18,9 @@ require __DIR__ . '/includes/header.php';
       <p class="font-editorial text-3xl text-forest-900 mt-4 leading-tight"><?= block('a-pousada','essence_title','Sabores, cores e bem-estar entre as serras de Alagoas.') ?></p>
     </aside>
     <div class="space-y-5 text-[17px] leading-[1.9] text-ink-700/90">
-      <p><?= block('a-pousada','intro_body','Na Pousada <strong class="text-forest-800">Aromas da Serra</strong>, os hóspedes são transportados para um lugar onde é possível desfrutar de uma experiência única — onde a natureza e a contemplação são os ingredientes principais.') ?></p>
+      <p><?= block('a-pousada','intro_body','Na Pousada <strong class="text-forest-800">Aromas da Serra</strong>, os hóspedes são transportados para um lugar onde é possível desfrutar de uma experiência única, com a natureza e a contemplação como ingredientes principais.') ?></p>
       <p><?= block('a-pousada','intro_body_2','Localizada entre as serras de Alagoas e com uma culinária sofisticada de influência europeia, a pousada oferece uma verdadeira viagem de sabores, cores e bem-estar.') ?></p>
-      <p><?= block('a-pousada','intro_body_3','A paisagem exuberante e a simplicidade do local criam um ambiente acolhedor, onde é possível sentir uma paz única e verdadeira. É um convite para quem deseja se conectar com amigos e consigo — em um lugar de cheiros, brisa do campo, vinho e música boa.') ?></p>
+      <p><?= block('a-pousada','intro_body_3','A paisagem exuberante e a simplicidade do local criam um ambiente acolhedor, onde é possível sentir uma paz única e verdadeira. É um convite para quem deseja se conectar com amigos e consigo em um lugar de cheiros, brisa do campo, vinho e música boa.') ?></p>
       <p class="serif-italic text-forest-800 text-[19px]"><?= block('a-pousada','intro_note','Importante: traga um bom calçado e agasalho para aproveitar o clima frio da nossa <span class="text-terracota-500">"Suíça Alagoana"</span>.') ?></p>
     </div>
   </div>
@@ -33,7 +33,7 @@ require __DIR__ . '/includes/header.php';
       <div>
         <span class="eyebrow"><?= e(block('a-pousada','adults_eyebrow','Para adultos')) ?></span>
         <h2 class="font-editorial text-4xl md:text-5xl text-forest-900 mt-4 leading-tight"><?= block('a-pousada','adults_title','Uma proposta de <em class="serif-italic text-terracota-500">relaxamento</em> em meio ao silêncio.') ?></h2>
-        <p class="mt-6 text-[17px] leading-[1.9] text-ink-700/90"><?= block('a-pousada','adults_body_1','Exclusivamente para adultos, não dispomos de atrativos infantis nem TVs nos quartos. Nossa culinária é exótica e experimental, sempre em harmonização com vinhos especiais.') ?></p>
+        <p class="mt-6 text-[17px] leading-[1.9] text-ink-700/90"><?= block('a-pousada','adults_body_1','Exclusivamente para adultos, não dispomos de atrativos infantis. Nossa proposta privilegia silêncio, contemplação, descanso e uma culinária exótica e experimental, sempre em harmonização com vinhos especiais.') ?></p>
         <p class="mt-4 text-[17px] leading-[1.9] text-ink-700/90 serif-italic"><?= block('a-pousada','adults_body_2','Digamos que nossos hóspedes fazem uma linda viagem para outros países sem precisar sair de nossa querida Alagoas.') ?></p>
       </div>
     </div>

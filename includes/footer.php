@@ -2,7 +2,7 @@
 
 <!-- Marquee bar -->
 <div class="marquee-bar" aria-hidden="true">
-  <?php $marquee = [block('global','marquee_1','Mar Vermelho · AL'), block('global','marquee_2','Cozinha Mediterrânea'), block('global','marquee_3','Ritual da Fogueira'), block('global','marquee_4','Ritual do Chá da Tarde'), block('global','marquee_5','Temporada de Fondue'), block('global','marquee_6','Suíça Alagoana')]; ?>
+  <?php $marquee = [block('global','marquee_1','Mar Vermelho · AL'), block('global','marquee_2','Cozinha Mediterrânea'), block('global','marquee_3','Ritual da Fogueira'), block('global','marquee_4','Chá da Tarde'), block('global','marquee_5','Temporada de Fondue'), block('global','marquee_6','Suíça Alagoana')]; ?>
   <span>
     <?php foreach ($marquee as $item): ?><span><?= e($item) ?></span><i data-lucide="leaf" class="w-4 h-4"></i><?php endforeach; ?>
   </span>
@@ -15,7 +15,7 @@
 <section class="relative overflow-hidden bg-forest-900 text-cream-100 noise">
   <div class="absolute inset-0 opacity-[0.08] bg-[radial-gradient(circle_at_30%_50%,#c4a46c_0,transparent_60%)]"></div>
   <div class="relative max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
-    <span class="eyebrow text-gold-500/80"><?= e(block('global','cta_eyebrow','— Reserve sua estadia —')) ?></span>
+    <span class="eyebrow text-gold-500/80"><?= e(block('global','cta_eyebrow','Reserve sua estadia')) ?></span>
     <h2 class="font-editorial text-4xl md:text-6xl text-cream-50 mt-4 leading-[1.05]"><?= block('global','cta_title','Frio da serra, gastronomia, requinte e <em class="serif-italic text-gold-500">hospitalidade.</em>') ?></h2>
     <p class="mt-5 max-w-2xl mx-auto text-cream-100/80 text-lg leading-relaxed">
       <?= block('global','cta_body','Faça sua reserva e venha vivenciar momentos especiais em meio ao silêncio da natureza, acompanhado de uma cozinha mediterrânea cheia de aromas e sabores.') ?>
@@ -68,7 +68,7 @@
   <div class="border-t border-cream-100/10">
     <div class="max-w-8xl mx-auto px-6 py-5 text-[12px] flex flex-wrap items-center justify-between gap-3">
       <span>© <?= date('Y') ?> Pousada Aromas da Serra · Todos os direitos reservados.</span>
-      <span class="text-cream-100/50"><?= e(block('global','footer_signature','Suíça Alagoana · Mar Vermelho — AL')) ?></span>
+      <span class="text-cream-100/50"><?= e(block('global','footer_signature','Suíça Alagoana · Mar Vermelho, AL')) ?></span>
     </div>
   </div>
 </footer>

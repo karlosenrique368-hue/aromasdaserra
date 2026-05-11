@@ -13,7 +13,7 @@ if ($basePath === '' || $basePath === '/') $basePath = '';
 define('SITE_BASE', $basePath);
 define('SITE_NAME', 'Pousada Aromas da Serra');
 define('SITE_TAGLINE', 'Refúgio na Suíça Alagoana');
-define('SITE_LOCATION', 'Mar Vermelho — Alagoas');
+define('SITE_LOCATION', 'Mar Vermelho, Alagoas');
 define('SITE_PHONE_DISPLAY', '(82) 99326-0415');
 define('SITE_PHONE_RAW', '5582993260415');
 define('SITE_WHATSAPP', 'https://api.whatsapp.com/send?phone=5582993260415&text=' . rawurlencode('Olá! Gostaria de fazer uma reserva na Pousada Aromas da Serra.'));

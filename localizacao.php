@@ -1,5 +1,5 @@
 <?php
-$pageTitle='Localização'; $pageDesc='Mar Vermelho — Alagoas. Localizada na região serrana, conhecida como Suíça Alagoana.'; $pageSlug='localizacao';
+$pageTitle='Localização'; $pageDesc='Mar Vermelho, Alagoas. Localizada na região serrana, conhecida como Suíça Alagoana.'; $pageSlug='localizacao';
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="page-hero">
@@ -7,8 +7,8 @@ require __DIR__ . '/includes/header.php';
   <div class="page-hero-grad"></div>
   <div class="relative z-[1] max-w-6xl mx-auto px-6 pb-16 text-cream-50">
     <span class="text-cream-50/80 tracking-eyebrow uppercase text-[11px]"><?= e(block('localizacao','hero_eyebrow','A nossa')) ?></span>
-    <h1 class="font-editorial text-5xl md:text-7xl mt-3 leading-[1.05]"><?= block('localizacao','hero_title','Localização <em class="serif-italic text-gold-500">— Mar Vermelho.</em>') ?></h1>
-    <p class="mt-4 max-w-xl text-cream-100/85 text-lg"><?= block('localizacao','hero_subtitle','Região serrana de Alagoas — a chamada <em class="serif-italic">Suíça Alagoana</em>.') ?></p>
+    <h1 class="font-editorial text-5xl md:text-7xl mt-3 leading-[1.05]"><?= block('localizacao','hero_title','Localização <em class="serif-italic text-gold-500">em Mar Vermelho.</em>') ?></h1>
+    <p class="mt-4 max-w-xl text-cream-100/85 text-lg"><?= block('localizacao','hero_subtitle','Região serrana de Alagoas, a chamada <em class="serif-italic">Suíça Alagoana</em>.') ?></p>
   </div>
 </section>
 
@@ -17,7 +17,7 @@ require __DIR__ . '/includes/header.php';
     <aside class="reveal space-y-6">
       <div>
         <span class="eyebrow"><?= e(block('localizacao','address_eyebrow','Endereço')) ?></span>
-        <p class="font-editorial text-3xl text-forest-900 mt-3"><?= block('localizacao','address_title','Mar Vermelho<br><span class="serif-italic text-terracota-500">Alagoas — Brasil</span>') ?></p>
+        <p class="font-editorial text-3xl text-forest-900 mt-3"><?= block('localizacao','address_title','Mar Vermelho<br><span class="serif-italic text-terracota-500">Alagoas, Brasil</span>') ?></p>
       </div>
       <div class="grid gap-3 text-[15px]">
         <div class="flex items-start gap-3"><i data-lucide="phone" class="w-4 h-4 mt-1 text-gold-600"></i><a href="tel:+<?= SITE_PHONE_RAW ?>" class="hover:text-forest-800"><?= e(SITE_PHONE_DISPLAY) ?></a></div>
@@ -48,7 +48,7 @@ require __DIR__ . '/includes/header.php';
       <?= block('localizacao','region_body_1','Localizado na região serrana de Alagoas, no município de Mar Vermelho. Durante o nascer ou pôr do sol, os amantes da contemplação podem apreciar uma paisagem espetacular, com tons de verde e floral que se misturam em um céu deslumbrante.') ?>
     </p>
     <p class="mt-4 text-[17px] leading-[1.9] text-ink-700/90">
-      <?= block('localizacao','region_body_2','Mar Vermelho é um destino perfeito para quem busca momentos aconchegantes — chocolates quentes, fondues de queijo e bons vinhos em volta da lareira.') ?>
+      <?= block('localizacao','region_body_2','Mar Vermelho é um destino perfeito para quem busca momentos aconchegantes, chocolates quentes, fondues de queijo e bons vinhos em volta da lareira.') ?>
     </p>
   </div>
 </section>
