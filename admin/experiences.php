@@ -54,7 +54,7 @@ if ($action==='edit' || $action==='new') {
       <?= csrf_field() ?><input type="hidden" name="op" value="save"><input type="hidden" name="id" value="<?= $row['id'] ?>">
       <div class="row-2">
         <label><span class="lbl">Título</span><input type="text" name="title" required value="<?= ee($row['title']) ?>"></label>
-        <label><span class="lbl">Ícone Lucide</span><input type="text" name="icon" value="<?= ee($row['icon']) ?>" placeholder="flame, coffee, sprout..."></label>
+        <div><span class="lbl">Ícone</span><?php $iconName='icon'; $iconValue=$row['icon'] ?: 'sparkles'; require __DIR__ . '/partials/icon_picker.php'; ?></div>
       </div>
       <label><span class="lbl">Slug (opcional)</span><input type="text" name="slug" value="<?= ee($row['slug']) ?>"></label>
       <label><span class="lbl">Descrição</span><textarea name="description"><?= ee($row['description']) ?></textarea></label>
@@ -86,7 +86,7 @@ if ($action==='edit' || $action==='new') {
           <tr>
             <td><?php if ($r['cover']): ?><img class="thumb" src="<?= ee($r['cover']) ?>" alt=""><?php else: ?><div class="thumb" style="background:#f4ece0;"></div><?php endif; ?></td>
             <td><strong><?= ee($r['title']) ?></strong><div style="font-size:12px; color:var(--a-muted);">/<?= ee($r['slug']) ?></div></td>
-            <td><code><?= ee($r['icon']) ?></code></td>
+            <td><span class="icon-pill" title="<?= ee($r['icon'] ?: 'sparkles') ?>"><i data-lucide="<?= ee($r['icon'] ?: 'sparkles') ?>"></i></span></td>
             <td><span class="badge <?= $r['is_active']?'success':'muted' ?>"><?= $r['is_active']?'ativo':'oculto' ?></span></td>
             <td style="text-align:right; white-space:nowrap;">
               <a href="<?= ee(admin_url('experiences.php?action=edit&id='.$r['id'])) ?>" class="btn-icon"><i data-lucide="pencil"></i></a>

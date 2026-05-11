@@ -100,7 +100,10 @@ require __DIR__ . '/partials/layout_top.php';
           <small style="display:block; color:var(--a-muted); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-top:.15rem;"><?= ee($key) ?> · <?= ee($type) ?></small>
         </label>
 
-        <?php if ($type === 'text'): ?>
+        <?php if ($type === 'text' && (str_ends_with((string)$key, '_icon') || stripos((string)$lbl, 'ícone') !== false || stripos((string)$lbl, 'icone') !== false)): ?>
+          <?php $iconName='block[' . $id . ']'; $iconValue=$val ?: 'sparkles'; require __DIR__ . '/partials/icon_picker.php'; ?>
+
+        <?php elseif ($type === 'text'): ?>
           <input type="text" name="block[<?= $id ?>]" value="<?= ee($val) ?>" class="input">
 
         <?php elseif ($type === 'html'): ?>
@@ -113,6 +116,7 @@ require __DIR__ . '/partials/layout_top.php';
           <div class="img-pick" data-img-pick>
             <div class="img-pick__thumb">
               <?php if ($val): ?><img src="<?= ee($val) ?>" alt=""><?php else: ?><img src="" alt=""><?php endif; ?>
+              <button type="button" class="img-pick__remove" data-img-pick-remove aria-label="Remover imagem"><i data-lucide="x"></i></button>
             </div>
             <div class="img-pick__txt">
               <strong>Imagem atual</strong>

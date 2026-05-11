@@ -31,14 +31,16 @@ body{font-feature-settings:"ss01","liga","kern"; overflow-x:hidden;}
 .eyebrow::before, .eyebrow::after{content:""; width:28px; height:1px; background:currentColor; opacity:.5;}
 
 /* Buttons */
-.btn-primary{display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.5rem; background:var(--forest-800); color:var(--cream); font-size:13px; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s; font-weight:500;}
+.btn-primary{display:inline-flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:.5rem; padding:.75rem 1.5rem; background:var(--forest-800); color:var(--cream); font-size:13px; line-height:1; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s; font-weight:500; white-space:nowrap; max-width:100%;}
 .btn-primary:hover{background:var(--forest-900); transform:translateY(-1px); box-shadow:0 14px 30px -14px rgba(31,48,25,.6);}
-.btn-gold{display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.7rem; background:var(--gold); color:var(--ink-900); font-size:13px; letter-spacing:.2em; text-transform:uppercase; border-radius:999px; font-weight:600; transition:all .3s;}
+.btn-gold{display:inline-flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:.5rem; padding:.85rem 1.7rem; background:var(--gold); color:var(--ink-900); font-size:13px; line-height:1; letter-spacing:.2em; text-transform:uppercase; border-radius:999px; font-weight:600; transition:all .3s; white-space:nowrap; max-width:100%;}
 .btn-gold:hover{background:var(--gold-soft); transform:translateY(-1px); box-shadow:0 14px 30px -10px rgba(196,164,108,.55);}
-.btn-ghost{display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.5rem; border:1px solid var(--forest-800); color:var(--forest-800); font-size:13px; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s;}
+.btn-ghost{display:inline-flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:.5rem; padding:.75rem 1.5rem; border:1px solid var(--forest-800); color:var(--forest-800); font-size:13px; line-height:1; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s; white-space:nowrap; max-width:100%;}
 .btn-ghost:hover{background:var(--forest-800); color:var(--cream);}
-.btn-ghost-light{display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.5rem; border:1px solid rgba(244,236,224,.3); color:var(--cream-100); font-size:13px; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s;}
+.btn-ghost-light{display:inline-flex; align-items:center; justify-content:center; flex-wrap:nowrap; gap:.5rem; padding:.75rem 1.5rem; border:1px solid rgba(244,236,224,.3); color:var(--cream-100); font-size:13px; line-height:1; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; transition:all .3s; white-space:nowrap; max-width:100%;}
+.btn-primary svg,.btn-gold svg,.btn-ghost svg,.btn-ghost-light svg{flex:0 0 auto;}
 .btn-ghost-light:hover{border-color:var(--gold); color:var(--gold);}
+@media (max-width:480px){.btn-primary,.btn-gold,.btn-ghost,.btn-ghost-light{gap:.35rem; padding-left:.85rem; padding-right:.85rem; font-size:11px; letter-spacing:0;}}
 
 /* Footer */
 .footer-title{font-family:"Italiana", serif; color:var(--cream); font-size:1.05rem; letter-spacing:.18em; text-transform:uppercase; margin-bottom:1rem;}

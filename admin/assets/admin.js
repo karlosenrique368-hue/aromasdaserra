@@ -13,12 +13,19 @@
       const previews = zone.querySelector('.upz__previews');
       const multiple = zone.hasAttribute('data-multiple');
 
+      const clearCoverField = () => {
+        const form = zone.closest('form');
+        const coverField = form?.querySelector('input[name="cover"]');
+        if (coverField) coverField.value = '';
+      };
+
       const renderPreview = (file) => {
         const wrap = document.createElement('div');
         wrap.className = 'upz__preview';
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
-        const x = document.createElement('span');
+        const x = document.createElement('button');
+        x.type = 'button';
         x.className = 'x'; x.title = 'Remover';
         x.innerHTML = '<i data-lucide="x"></i>';
         x.addEventListener('click', (e) => {
@@ -35,8 +42,18 @@
 
       const rebuild = () => {
         previews.querySelectorAll('.upz__preview:not([data-current])').forEach(p => p.remove());
+        if (!multiple && input.files.length) previews.querySelectorAll('[data-current]').forEach(p => p.remove());
         Array.from(input.files).forEach(renderPreview);
       };
+
+      zone.addEventListener('click', e => {
+        const removeCurrent = e.target.closest('[data-upz-current-remove]');
+        if (!removeCurrent || !zone.contains(removeCurrent)) return;
+        e.preventDefault(); e.stopPropagation();
+        input.value = '';
+        clearCoverField();
+        removeCurrent.closest('[data-current]')?.remove();
+      });
 
       input.addEventListener('change', rebuild);
 
@@ -63,12 +80,30 @@
       if (box.__init) return; box.__init = true;
       const input = box.querySelector('input[type=file]');
       const thumb = box.querySelector('.img-pick__thumb img');
-      const btn   = box.querySelector('.img-pick__btn, .img-pick__thumb');
+      const triggers = box.querySelectorAll('.img-pick__btn, .img-pick__thumb');
+      const removeBtn = box.querySelector('[data-img-pick-remove]');
+      const urlField = box.querySelector('input[type=text]');
+      const statusText = box.querySelector('.img-pick__txt small');
 
-      btn && btn.addEventListener('click', e => { e.preventDefault(); input.click(); });
+      triggers.forEach(trigger => {
+        trigger.addEventListener('click', e => {
+          if (e.target.closest('[data-img-pick-remove]')) return;
+          e.preventDefault(); input.click();
+        });
+      });
+      removeBtn && removeBtn.addEventListener('click', e => {
+        e.preventDefault(); e.stopPropagation();
+        input.value = '';
+        if (urlField) urlField.value = '';
+        if (thumb) thumb.removeAttribute('src');
+        if (statusText) statusText.textContent = 'Nenhuma imagem';
+        box.classList.add('is-empty');
+      });
       input.addEventListener('change', () => {
         const f = input.files[0]; if (!f) return;
         if (thumb) thumb.src = URL.createObjectURL(f);
+        if (statusText) statusText.textContent = f.name;
+        box.classList.remove('is-empty');
       });
       ['dragenter','dragover'].forEach(ev =>
         box.addEventListener(ev, e => { e.preventDefault(); box.classList.add('is-drag'); }));
@@ -80,6 +115,34 @@
         const dt = new DataTransfer(); dt.items.add(f);
         input.files = dt.files;
         if (thumb) thumb.src = URL.createObjectURL(f);
+        if (statusText) statusText.textContent = f.name;
+        box.classList.remove('is-empty');
+      });
+    });
+  }
+
+  // ===== Visual Lucide Icon Picker =====
+  function initIconPicker(){
+    document.querySelectorAll('[data-icon-picker]').forEach(picker => {
+      if (picker.__init) return; picker.__init = true;
+      const input = picker.querySelector('[data-icon-value]');
+      const preview = picker.querySelector('.icon-picker__preview span');
+      const setIcon = (value) => {
+        if (!input || !value) return;
+        input.value = value;
+        picker.querySelectorAll('[data-icon-choice]').forEach(btn => {
+          const selected = btn.dataset.iconChoice === value;
+          btn.classList.toggle('is-selected', selected);
+          btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+        if (preview) preview.innerHTML = `<i data-lucide="${value}"></i>`;
+        refreshIcons();
+      };
+      picker.addEventListener('click', e => {
+        const btn = e.target.closest('[data-icon-choice]');
+        if (!btn || !picker.contains(btn)) return;
+        e.preventDefault();
+        setIcon(btn.dataset.iconChoice);
       });
     });
   }
@@ -94,12 +157,32 @@
       const addBtn = picker.querySelector('[data-gallery-add]');
       const inputName = picker.dataset.inputName || 'gallery_urls[]';
 
+      const removeItem = (item) => {
+        if (!item) return;
+        if (item.__fileRef && fileInput) {
+          const dt = new DataTransfer();
+          Array.from(fileInput.files).forEach(file => { if (file !== item.__fileRef) dt.items.add(file); });
+          fileInput.files = dt.files;
+        }
+        item.remove();
+      };
+
       const makeItem = (src, hiddenValue, fileRef) => {
         const item = document.createElement('div');
         item.className = 'gallery-picker__item';
         item.dataset.galleryItem = 'true';
         if (fileRef) item.dataset.filePreview = 'true';
-        item.innerHTML = `<img src="${src}" alt=""><button type="button" data-gallery-remove aria-label="Remover imagem"><i data-lucide="x"></i></button>`;
+        item.__fileRef = fileRef || null;
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.setAttribute('data-gallery-remove', '');
+        remove.setAttribute('aria-label', 'Remover imagem');
+        remove.innerHTML = '<i data-lucide="x"></i>';
+        item.appendChild(img);
+        item.appendChild(remove);
         if (hiddenValue) {
           const hidden = document.createElement('input');
           hidden.type = 'hidden';
@@ -107,14 +190,6 @@
           hidden.value = hiddenValue;
           item.appendChild(hidden);
         }
-        item.querySelector('[data-gallery-remove]').addEventListener('click', () => {
-          if (fileRef && fileInput) {
-            const dt = new DataTransfer();
-            Array.from(fileInput.files).forEach(file => { if (file !== fileRef) dt.items.add(file); });
-            fileInput.files = dt.files;
-          }
-          item.remove();
-        });
         list.appendChild(item);
         refreshIcons();
       };
@@ -125,6 +200,12 @@
       };
 
       fileInput && fileInput.addEventListener('change', renderFiles);
+      picker.addEventListener('click', e => {
+        const btn = e.target.closest('[data-gallery-remove]');
+        if (!btn || !picker.contains(btn)) return;
+        e.preventDefault(); e.stopPropagation();
+        removeItem(btn.closest('[data-gallery-item]'));
+      });
       addBtn && addBtn.addEventListener('click', () => {
         const value = (urlInput?.value || '').trim();
         if (!value) return;
@@ -181,6 +262,7 @@
     refreshIcons();
     initUpload();
     initImgPick();
+    initIconPicker();
     initGalleryPick();
     initEditors();
   });

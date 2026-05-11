@@ -25,7 +25,10 @@ $uid       = 'upz_' . bin2hex(random_bytes(3));
   </div>
   <div class="upz__previews">
     <?php if ($current): ?>
-      <div class="upz__preview" data-current><img src="<?= ee($current) ?>" alt=""></div>
+      <div class="upz__preview" data-current>
+        <img src="<?= ee($current) ?>" alt="">
+        <button type="button" class="x" data-upz-current-remove aria-label="Remover foto principal"><i data-lucide="x"></i></button>
+      </div>
     <?php endif; ?>
   </div>
   <div class="upz__progress"><i></i></div>
