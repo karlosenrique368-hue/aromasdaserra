@@ -55,7 +55,7 @@ function send_security_headers(): void {
     header('X-Content-Type-Options: nosniff');
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.plyr.io https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.plyr.io; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://i.ytimg.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com");
+    header("Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net https://cdn.plyr.io https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdn.plyr.io; img-src 'self' data: blob: https://images.unsplash.com https://*.unsplash.com https://i.ytimg.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com");
 }
 
 send_security_headers();
@@ -205,6 +205,20 @@ function catalog_experiences(array $fallback = []): array {
         } catch (Throwable $e) {}
     }
     return $fallback;
+}
+
+function home_featured_experiences(array $fallback = []): array {
+    $pdo = site_db();
+    if ($pdo) {
+        try {
+            $rows = $pdo->query('SELECT * FROM experiences WHERE is_active=1 AND featured_home=1 ORDER BY sort_order ASC, title ASC');
+            if ($rows) {
+                $items = $rows->fetchAll();
+                if ($items) return $items;
+            }
+        } catch (Throwable $e) {}
+    }
+    return catalog_experiences($fallback);
 }
 
 function catalog_products(array $fallback = []): array {

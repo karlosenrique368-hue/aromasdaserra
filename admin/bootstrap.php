@@ -135,6 +135,7 @@ function bootstrap_db(): void {
         description TEXT,
         cover TEXT,
         gallery TEXT,
+        featured_home INTEGER DEFAULT 0,
         is_active INTEGER DEFAULT 1,
         sort_order INTEGER DEFAULT 0,
         updated_at $date
@@ -222,6 +223,7 @@ function bootstrap_db(): void {
     ensure_column($pdo, 'chalets', 'video_url', 'TEXT');
     ensure_column($pdo, 'chalets', 'video_label', 'TEXT');
     ensure_column($pdo, 'products', 'gallery', 'TEXT');
+    ensure_column($pdo, 'experiences', 'featured_home', 'INTEGER DEFAULT 0');
 
     // Seed default admin if empty
     $count = (int)$pdo->query('SELECT COUNT(*) FROM admins')->fetchColumn();
@@ -255,6 +257,12 @@ function bootstrap_db(): void {
       ['home','hero_title','html','Hero · título','Onde o silêncio da serra<br><em>acolhe e transforma.</em>'],
     ['home','hero_subtitle','html','Hero · subtítulo','Um refúgio exclusivo para adultos em meio à <strong>Suíça Alagoana</strong>, com gastronomia mediterrânea, contemplação e tempo para si.'],
       ['home','hero_image','image','Hero · imagem de fundo','https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=80'],
+            ['home','gastro_gallery','gallery','Home · galeria gastronomia',sanitize_public_image_items([
+                ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=80','caption'=>'Mesa mediterrânea'],
+                ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1100&q=80','caption'=>'Fondue'],
+                ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1100&q=80','caption'=>'Prato autoral'],
+                ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1100&q=80','caption'=>'Massa caseira'],
+            ])],
       ['home','manifesto_eyebrow','text','Manifesto · etiqueta','Sobre a pousada'],
       ['home','manifesto_title','html','Manifesto · título','Um destino para quem busca <em>tranquilidade e conforto.</em>'],
       ['home','manifesto_body','html','Manifesto · texto','Localizada entre as serras de Alagoas, com culinária sofisticada de influência europeia, a Aromas da Serra oferece uma viagem de <em>sabores, cores e bem-estar</em>.'],
@@ -334,6 +342,9 @@ function bootstrap_db(): void {
             ['home','chalets_title','html','Chalés · título','Chalés que <em>abraçam o jardim.</em>'],
             ['home','chalets_body','html','Chalés · texto','Cada detalhe foi pensado para proporcionar tranquilidade, aconchego, conforto, gentilezas e o contato constante com a natureza.'],
             ['home','gastro_body_2','html','Gastronomia · texto 2','Mesa farta, tempo desacelerado e harmonização com vinhos muito especiais. A gastronomia é o coração da experiência, não um adicional.'],
+            ['home','itinerary_gallery','gallery','Home · galeria itinerário',sanitize_public_image_items([
+                ['src'=>'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80','caption'=>'Estrada para Mar Vermelho'],
+            ])],
             ['home','itinerary_image','image','Itinerário teaser · imagem','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80'],
             ['home','itinerary_eyebrow','text','Itinerário teaser · etiqueta','Itinerário'],
             ['home','itinerary_title','html','Itinerário teaser · título','A viagem até a serra <em>já é parte da experiência.</em>'],

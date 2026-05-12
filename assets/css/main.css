@@ -42,6 +42,9 @@ body{font-feature-settings:"ss01","liga","kern"; overflow-x:hidden;}
 .btn-ghost-light:hover{border-color:var(--gold); color:var(--gold);}
 @media (max-width:480px){.btn-primary,.btn-gold,.btn-ghost,.btn-ghost-light{gap:.35rem; padding-left:.85rem; padding-right:.85rem; font-size:11px; letter-spacing:0;}}
 
+a.btn-primary,button.btn-primary,a.btn-gold,button.btn-gold,a.btn-ghost,button.btn-ghost,a.btn-ghost-light,button.btn-ghost-light{display:inline-flex !important; flex-direction:row !important; align-items:center !important; justify-content:center !important; flex-wrap:nowrap !important; white-space:nowrap !important;}
+a.btn-primary svg,button.btn-primary svg,a.btn-gold svg,button.btn-gold svg,a.btn-ghost svg,button.btn-ghost svg,a.btn-ghost-light svg,button.btn-ghost-light svg{display:block; flex:0 0 auto;}
+
 /* Footer */
 .footer-title{font-family:"Italiana", serif; color:var(--cream); font-size:1.05rem; letter-spacing:.18em; text-transform:uppercase; margin-bottom:1rem;}
 .footer-link{color:rgba(244,236,224,.7); transition:color .3s;}

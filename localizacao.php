@@ -1,6 +1,8 @@
 <?php
 $pageTitle='Localização'; $pageDesc='Mar Vermelho, Alagoas. Localizada na região serrana, conhecida como Suíça Alagoana.'; $pageSlug='localizacao';
 require __DIR__ . '/includes/header.php';
+$googleMapsUrl = 'https://www.google.com/maps?cid=9107031615726867054&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=pt-BR&source=embed';
+$googleMapsEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14592.61669676716!2d-36.4016562!3d-9.4792667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x706931d57333097%3A0x7e62ad00dda6d26e!2sPousada%20Aromas%20da%20Serra!5e0!3m2!1spt-BR!2sbr!4v1778600000000!5m2!1spt-BR!2sbr';
 ?>
 <section class="page-hero">
   <img class="page-hero-img" src="<?= e(block('localizacao','hero_image','https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80')) ?>" alt="Vista da serra">
@@ -24,14 +26,14 @@ require __DIR__ . '/includes/header.php';
         <div class="flex items-start gap-3"><i data-lucide="mail" class="w-4 h-4 mt-1 text-gold-600"></i><a href="mailto:<?= e(SITE_EMAIL) ?>" class="hover:text-forest-800"><?= e(SITE_EMAIL) ?></a></div>
         <div class="flex items-start gap-3"><i data-lucide="message-circle" class="w-4 h-4 mt-1 text-gold-600"></i><a href="<?= e(SITE_WHATSAPP) ?>" target="_blank" rel="noopener" class="hover:text-forest-800">WhatsApp para reservas</a></div>
       </div>
-      <a href="https://www.google.com/maps/search/?api=1&query=Mar+Vermelho+Alagoas" target="_blank" rel="noopener" class="btn-primary"><i data-lucide="map" class="w-4 h-4"></i> Abrir no Google Maps</a>
-      <a href="<?= url('itinerario.php') ?>" class="btn-ghost block w-fit"><i data-lucide="route" class="w-4 h-4"></i> Ver itinerário até a Serra</a>
+      <a href="<?= e($googleMapsUrl) ?>" target="_blank" rel="noopener" class="btn-primary"><i data-lucide="map" class="w-4 h-4"></i> Abrir no Google Maps</a>
+      <a href="<?= url('itinerario.php') ?>" class="btn-ghost w-fit"><i data-lucide="route" class="w-4 h-4"></i> Ver itinerário até a Serra</a>
     </aside>
 
     <div class="reveal">
       <div class="rounded-md overflow-hidden shadow-xl border border-cream-200">
         <iframe
-          src="https://www.google.com/maps?q=Mar+Vermelho,+Alagoas&output=embed"
+          src="<?= e($googleMapsEmbedUrl) ?>"
           width="100%" height="480" style="border:0" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           title="Mapa Mar Vermelho - Alagoas"></iframe>

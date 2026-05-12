@@ -4,6 +4,15 @@ $pageDesc  = 'Pousada Aromas da Serra, refúgio boutique em Mar Vermelho (AL). G
 $pageSlug  = 'home';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
+$defaultHomeGastroGallery = json_encode([
+  ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=80','caption'=>'Mesa mediterrânea'],
+  ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1100&q=80','caption'=>'Fondue'],
+  ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1100&q=80','caption'=>'Prato autoral'],
+  ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1100&q=80','caption'=>'Massa caseira'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '';
+$defaultHomeItineraryGallery = json_encode([
+  ['src'=>'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80','caption'=>'Estrada para Mar Vermelho'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '';
 ?>
 
 <!-- ============ HERO ============ -->
@@ -149,12 +158,7 @@ require __DIR__ . '/includes/partials.php';
     </div>
     <div class="order-1 lg:order-2 reveal">
       <div class="rounded-md overflow-hidden shadow-2xl">
-        <?php embla_carousel([
-          ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=80', 'alt'=>'Mesa mediterrânea'],
-          ['src'=>'https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=1100&q=80', 'alt'=>'Fondue'],
-          ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1100&q=80', 'alt'=>'Prato'],
-          ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1100&q=80', 'alt'=>'Massa'],
-        ], ['ratio'=>'4/5','autoplay'=>true]); ?>
+        <?php embla_carousel(gallery_slides(block('home','gastro_gallery',$defaultHomeGastroGallery), 'Gastronomia'), ['ratio'=>'4/5','autoplay'=>true]); ?>
       </div>
     </div>
   </div>
@@ -171,7 +175,7 @@ require __DIR__ . '/includes/partials.php';
 
     <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-5 reveal-stagger">
       <?php
-      $tiles = array_slice(catalog_experiences([
+      $tiles = array_slice(home_featured_experiences([
         ['title'=>'Drink de Boas-Vindas','cover'=>'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'],
         ['title'=>'Chá da Tarde','cover'=>'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'],
         ['title'=>'Ritual da Fogueira','cover'=>'https://images.unsplash.com/photo-1542367592-8849eb950fd8?auto=format&fit=crop&w=900&q=80'],
@@ -199,7 +203,9 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-100 paper relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal">
-      <img src="<?= e(repair_image_url(block('home','itinerary_image','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1100&q=80'))) ?>" alt="Estrada para Mar Vermelho" class="w-full aspect-[5/4] object-cover rounded-md shadow-xl">
+      <div class="rounded-md overflow-hidden shadow-xl">
+        <?php embla_carousel(gallery_slides(block('home','itinerary_gallery',block('home','itinerary_image',$defaultHomeItineraryGallery)), 'Estrada para Mar Vermelho'), ['ratio'=>'5/4','autoplay'=>true,'lightbox'=>true,'group'=>'home-itinerary']); ?>
+      </div>
     </div>
     <div class="reveal">
       <span class="eyebrow"><?= e(block('home','itinerary_eyebrow','Itinerário')) ?></span>

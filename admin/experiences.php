@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'description' => trim($_POST['description'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
             'gallery'     => gallery_items_from_post('gallery_urls', 'gallery_files', 'experience_gallery', 'gallery_file_captions'),
+            'featured_home' => isset($_POST['featured_home']) ? 1 : 0,
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];
@@ -25,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
         }
         $pid = (int)($_POST['id'] ?? 0);
         if ($pid) {
-            $stmt = $pdo->prepare('UPDATE experiences SET slug=:slug,title=:title,icon=:icon,description=:description,cover=:cover,gallery=:gallery,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
+          $stmt = $pdo->prepare('UPDATE experiences SET slug=:slug,title=:title,icon=:icon,description=:description,cover=:cover,gallery=:gallery,featured_home=:featured_home,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
             $stmt->execute(array_merge($data, ['id'=>$pid])); flash('Experiência atualizada.');
         } else {
-            $stmt = $pdo->prepare('INSERT INTO experiences (slug,title,icon,description,cover,gallery,is_active,sort_order) VALUES (:slug,:title,:icon,:description,:cover,:gallery,:is_active,:sort_order)');
+          $stmt = $pdo->prepare('INSERT INTO experiences (slug,title,icon,description,cover,gallery,featured_home,is_active,sort_order) VALUES (:slug,:title,:icon,:description,:cover,:gallery,:featured_home,:is_active,:sort_order)');
             $stmt->execute($data); flash('Experiência criada.');
         }
         header('Location: ' . admin_url('experiences.php')); exit;
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
 require __DIR__ . '/partials/layout_top.php';
 
 if ($action==='edit' || $action==='new') {
-    $row = ['id'=>0,'slug'=>'','title'=>'','icon'=>'flame','description'=>'','cover'=>'','gallery'=>'','is_active'=>1,'sort_order'=>0];
+    $row = ['id'=>0,'slug'=>'','title'=>'','icon'=>'flame','description'=>'','cover'=>'','gallery'=>'','featured_home'=>0,'is_active'=>1,'sort_order'=>0];
     if ($id) { $stmt = $pdo->prepare('SELECT * FROM experiences WHERE id=?'); $stmt->execute([$id]); $row = $stmt->fetch() ?: $row; }
     ?>
     <div class="page-head">
@@ -64,6 +65,9 @@ if ($action==='edit' || $action==='new') {
       <?php $items=$row['gallery']; $inputName='gallery_urls[]'; $uploadName='gallery_files[]'; $hint='Organize a galeria por cards. Remova o que não quiser manter e envie novas imagens.'; require __DIR__ . '/partials/gallery_picker.php'; ?>
       <div class="row-2">
         <label style="display:flex; align-items:center; gap:.6rem; padding-top:1.6rem;"><input type="checkbox" name="is_active" <?= $row['is_active']?'checked':'' ?>> Ativo</label>
+        <label style="display:flex; align-items:center; gap:.6rem; padding-top:1.6rem;"><input type="checkbox" name="featured_home" <?= !empty($row['featured_home'])?'checked':'' ?>> Destaque na home</label>
+      </div>
+      <div class="row-2">
         <label><span class="lbl">Ordem</span><input type="number" name="sort_order" value="<?= (int)$row['sort_order'] ?>"></label>
       </div>
       <div style="display:flex; gap:.6rem;"><button class="btn btn-primary" type="submit"><i data-lucide="save"></i> Salvar</button><a href="<?= ee(admin_url('experiences.php')) ?>" class="btn btn-ghost">Cancelar</a></div>
@@ -80,13 +84,14 @@ if ($action==='edit' || $action==='new') {
       <div class="adm-card"><div class="empty"><i data-lucide="sparkles"></i><h4>Nenhuma experiência cadastrada</h4><p>Adicione Ritual da Fogueira, Chá da Tarde, Mandala etc.</p></div></div>
     <?php else: ?>
       <table class="adm-table">
-        <thead><tr><th></th><th>Título</th><th>Ícone</th><th>Status</th><th></th></tr></thead>
+        <thead><tr><th></th><th>Título</th><th>Ícone</th><th>Destaque</th><th>Status</th><th></th></tr></thead>
         <tbody>
         <?php foreach ($rows as $r): ?>
           <tr>
             <td><?php if ($r['cover']): ?><img class="thumb" src="<?= ee($r['cover']) ?>" alt=""><?php else: ?><div class="thumb" style="background:#f4ece0;"></div><?php endif; ?></td>
             <td><strong><?= ee($r['title']) ?></strong><div style="font-size:12px; color:var(--a-muted);">/<?= ee($r['slug']) ?></div></td>
             <td><span class="icon-pill" title="<?= ee($r['icon'] ?: 'sparkles') ?>"><i data-lucide="<?= ee($r['icon'] ?: 'sparkles') ?>"></i></span></td>
+            <td><span class="badge <?= !empty($r['featured_home'])?'success':'muted' ?>"><?= !empty($r['featured_home'])?'home':'-' ?></span></td>
             <td><span class="badge <?= $r['is_active']?'success':'muted' ?>"><?= $r['is_active']?'ativo':'oculto' ?></span></td>
             <td style="text-align:right; white-space:nowrap;">
               <a href="<?= ee(admin_url('experiences.php?action=edit&id='.$r['id'])) ?>" class="btn-icon"><i data-lucide="pencil"></i></a>
