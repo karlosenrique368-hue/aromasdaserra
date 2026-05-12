@@ -84,11 +84,11 @@ tailwind.config = {
 </div>
 
 <!-- Header -->
-<header x-data="{ open:false, scrolled:false }"
+<div x-data="{ open:false, scrolled:false }" @scroll.window="scrolled = window.scrollY > 36">
+<header
   data-mobile-menu-root
-  @scroll.window="scrolled = window.scrollY > 24"
-  :class="scrolled ? 'shadow-[0_10px_30px_-24px_rgba(26,22,18,.35)] border-cream-200' : 'shadow-none border-transparent'"
-  class="sticky top-0 z-[100] bg-white border-b transition-shadow duration-300">
+  :class="scrolled ? 'fixed top-0 left-0 right-0 shadow-[0_10px_30px_-24px_rgba(26,22,18,.35)] border-cream-200' : 'relative shadow-none border-transparent'"
+  class="z-[100] bg-white border-b transition-shadow duration-300">
   <div class="max-w-8xl mx-auto px-6 h-20 flex items-center justify-between">
     <a href="<?= url('') ?>" class="flex items-center gap-3 group">
       <span class="brand-mark brand-mark--lg"><img src="<?= asset('img/logoserra.jpg') ?>" alt="<?= e(SITE_NAME) ?>"></span>
@@ -130,6 +130,8 @@ tailwind.config = {
   </div>
 
 </header>
+<div x-show="scrolled" class="h-20" aria-hidden="true" style="display:none;"></div>
+</div>
 
 <!-- Mobile menu off canvas -->
 <div id="mobile-menu" data-mobile-menu-panel aria-hidden="true" class="mobile-drawer lg:hidden">
