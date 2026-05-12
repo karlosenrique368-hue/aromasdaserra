@@ -42,42 +42,48 @@ function page_gallery_upload_items(int $id): array {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_check()) { flash('Sessão expirada. Tente novamente.', 'error'); header('Location: ' . admin_url('pages.php?page=' . urlencode($page))); exit; }
 
-  $metaRows = db()->query('SELECT id, type FROM page_blocks')->fetchAll();
-  $blockTypes = [];
-  foreach ($metaRows as $row) $blockTypes[(int)$row['id']] = $row['type'] ?? 'text';
+    $metaStmt = db()->prepare('SELECT id, type FROM page_blocks WHERE page=?');
+    $metaStmt->execute([$page]);
+    $metaRows = $metaStmt->fetchAll();
+    $blockTypes = [];
+    foreach ($metaRows as $row) $blockTypes[(int)$row['id']] = $row['type'] ?? 'text';
     $upd = db()->prepare('UPDATE page_blocks SET value=? WHERE id=?');
 
     foreach ($_POST['block'] ?? [] as $id => $val) {
         $id = (int)$id; if ($id <= 0) continue;
-    $type = $blockTypes[$id] ?? 'text';
-    if ($type === 'html') $val = sanitize_block_html((string)$val);
-    elseif ($type === 'image') $val = sanitize_public_image_url((string)$val);
-    elseif ($type === 'gallery') $val = sanitize_public_image_items((array)$val);
+        if (!isset($blockTypes[$id])) continue;
+        $type = $blockTypes[$id] ?? 'text';
+        if ($type === 'html') $val = sanitize_block_html((string)$val);
+        elseif ($type === 'image') $val = sanitize_public_image_url((string)$val);
+        elseif ($type === 'gallery') $val = sanitize_public_image_items((array)$val);
         $upd->execute([(string)$val, $id]);
     }
     // Image uploads
-    foreach ($_FILES['image_block'] ?? [] as $field => $infoMap) {
-        if ($field !== 'tmp_name') continue;
-    }
     if (!empty($_FILES['image_block']['name']) && is_array($_FILES['image_block']['name'])) {
         foreach ($_FILES['image_block']['name'] as $id => $name) {
+        $id = (int)$id;
+        if (!isset($blockTypes[$id]) || $blockTypes[$id] !== 'image') continue;
             if (empty($name)) continue;
             $file = [
                 'name'     => $name,
-                'tmp_name' => $_FILES['image_block']['tmp_name'][$id],
-                'error'    => $_FILES['image_block']['error'][$id],
-                'size'     => $_FILES['image_block']['size'][$id],
+          'tmp_name' => $_FILES['image_block']['tmp_name'][$id] ?? '',
+          'error'    => $_FILES['image_block']['error'][$id] ?? UPLOAD_ERR_NO_FILE,
+          'size'     => $_FILES['image_block']['size'][$id] ?? 0,
             ];
             $url = upload_file($file, 'block');
-            if ($url) $upd->execute([$url, (int)$id]);
+        if ($url) $upd->execute([$url, $id]);
         }
     }
-        foreach ($blockTypes as $id => $type) {
-          if ($type !== 'gallery') continue;
-          $items = (array)($_POST['block_gallery'][$id] ?? []);
-          $uploads = page_gallery_upload_items((int)$id);
-          $upd->execute([sanitize_public_image_items(merge_gallery_post_items($items, $uploads)), (int)$id]);
-        }
+
+    $postedGalleries = (array)($_POST['block_gallery'] ?? []);
+    $presentGalleries = array_fill_keys(array_map('intval', array_keys((array)($_POST['block_gallery_present'] ?? []))), true);
+    foreach ($blockTypes as $id => $type) {
+        if ($type !== 'gallery') continue;
+        $uploads = page_gallery_upload_items((int)$id);
+        if (!isset($presentGalleries[(int)$id]) && !array_key_exists((int)$id, $postedGalleries) && !$uploads) continue;
+        $items = (array)($postedGalleries[(int)$id] ?? []);
+        $upd->execute([sanitize_public_image_items(merge_gallery_post_items($items, $uploads)), (int)$id]);
+    }
     flash('Página atualizada com sucesso.');
     header('Location: ' . admin_url('pages.php?page=' . urlencode($page)));
     exit;
@@ -156,6 +162,7 @@ require __DIR__ . '/partials/layout_top.php';
             </div>
           </div>
         <?php elseif ($type === 'gallery'): ?>
+          <input type="hidden" name="block_gallery_present[<?= $id ?>]" value="1">
           <?php
             $items = $val;
             $inputName = 'block_gallery[' . $id . '][]';
