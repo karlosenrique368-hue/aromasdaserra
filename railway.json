@@ -4,6 +4,7 @@
     "builder": "DOCKERFILE"
   },
   "deploy": {
+    "requiredMountPath": "/var/www/html/assets/uploads",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
