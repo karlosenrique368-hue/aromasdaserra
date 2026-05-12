@@ -87,8 +87,8 @@ tailwind.config = {
 <header x-data="{ open:false, scrolled:false }"
   data-mobile-menu-root
   @scroll.window="scrolled = window.scrollY > 24"
-  :class="scrolled ? 'shadow-[0_1px_0_0_rgba(60,50,40,.08)]' : 'shadow-none'"
-  class="sticky top-0 z-[100] bg-cream-50/95 backdrop-blur transition-colors duration-300">
+  :class="scrolled ? 'shadow-[0_10px_30px_-24px_rgba(26,22,18,.35)] border-cream-200' : 'shadow-none border-transparent'"
+  class="sticky top-0 z-[100] bg-white border-b transition-shadow duration-300">
   <div class="max-w-8xl mx-auto px-6 h-20 flex items-center justify-between">
     <a href="<?= url('') ?>" class="flex items-center gap-3 group">
       <span class="brand-mark brand-mark--lg"><img src="<?= asset('img/logoserra.jpg') ?>" alt="<?= e(SITE_NAME) ?>"></span>
@@ -105,7 +105,7 @@ tailwind.config = {
               <?= e($item['label']) ?> <i data-nav-icon data-lucide="chevron-down" class="w-3.5 h-3.5 mt-px transition-transform duration-300"></i>
             </a>
             <div data-nav-panel class="absolute top-full left-0 min-w-[260px] pt-3 hidden">
-              <div class="bg-cream-50 border border-cream-200 shadow-2xl rounded-md py-2">
+              <div class="bg-white border border-cream-200 shadow-2xl rounded-md py-2">
                 <?php foreach ($item['children'] as $sub): ?>
                   <a href="<?= e($sub['href']) ?>" class="block px-5 py-2.5 text-[14px] text-ink-800 hover:bg-cream-100 hover:text-forest-800 transition"><?= e($sub['label']) ?></a>
                 <?php endforeach; ?>

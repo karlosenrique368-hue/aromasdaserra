@@ -526,6 +526,7 @@ function bootstrap_db(): void {
     seed_catalog_revision_20260508($pdo);
     seed_catalog_revision_20260508_label_cleanup($pdo);
     seed_content_revision_20260511_refinements($pdo);
+    seed_content_revision_20260512_standard_images_from_alecrim($pdo);
 }
 
 function block(string $page, string $key, string $default = ''): string {
@@ -962,6 +963,28 @@ function seed_catalog_revision_20260508_label_cleanup(PDO $pdo): void {
     if ($stmt->fetchColumn() === '1') return;
 
     seed_upsert_block($pdo, 'produtos', 'intro_eyebrow', 'text', 'Introdução · etiqueta', 'Mostruário da casa', 206);
+    set_setting($revisionKey, '1');
+}
+
+function seed_content_revision_20260512_standard_images_from_alecrim(PDO $pdo): void {
+    $revisionKey = 'content_revision_20260512_standard_images_from_alecrim_v1';
+    $stmt = $pdo->prepare('SELECT value FROM settings WHERE `key`=?');
+    $stmt->execute([$revisionKey]);
+    if ($stmt->fetchColumn() === '1') return;
+
+    $stmt = $pdo->prepare('SELECT cover,gallery FROM chalets WHERE slug=? LIMIT 1');
+    $stmt->execute(['alecrim']);
+    $alecrim = $stmt->fetch();
+    if (!$alecrim) return;
+
+    $cover = sanitize_public_image_url((string)($alecrim['cover'] ?? ''));
+    $galleryItems = image_list_to_array((string)($alecrim['gallery'] ?? ''));
+    if ($cover !== '') array_unshift($galleryItems, $cover);
+    $gallery = sanitize_public_image_items($galleryItems);
+    if ($cover === '' && $gallery === '') return;
+
+    $upd = $pdo->prepare('UPDATE chalets SET cover=?, gallery=?, updated_at=CURRENT_TIMESTAMP WHERE category=?');
+    $upd->execute([$cover, $gallery, 'Standard · Vista jardim']);
     set_setting($revisionKey, '1');
 }
 
