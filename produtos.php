@@ -3,6 +3,14 @@ $pageTitle = 'Produtos Artesanais';
 $pageDesc  = 'Mostruário de produtos artesanais da Pousada Aromas da Serra: geleias, pães, temperos e delicadezas da casa.';
 $pageSlug  = 'produtos';
 require __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/partials.php';
+
+function product_view_slides(array $product): array {
+  $title = (string)($product['title'] ?? 'Produto artesanal');
+  $slides = gallery_slides((string)($product['gallery'] ?? ''), $title);
+  if (!$slides && !empty($product['cover'])) $slides[] = ['src' => repair_image_url((string)$product['cover']), 'alt' => $title, 'caption' => ''];
+  return $slides;
+}
 
 $fallbackProducts = [
     ['title'=>'Geleias Especiais','category'=>'Geleias artesanais','description'=>'Geleias preparadas em pequenos lotes, com frutas selecionadas e combinações que transitam entre o doce, o cítrico e o levemente picante.','flavors'=>"Jaboticaba\nAcerola com hibisco\nLaranja\nAmora\nManga com maracujá, cachaça e pimenta",'cover'=>'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?auto=format&fit=crop&w=1000&q=85'],
@@ -34,10 +42,10 @@ $products = catalog_products($fallbackProducts);
 
     <div class="mt-12 grid md:grid-cols-2 xl:grid-cols-3 gap-6 reveal-stagger">
       <?php foreach ($products as $product): ?>
-        <?php $flavors = product_flavor_items((string)($product['flavors'] ?? '')); ?>
+        <?php $flavors = product_flavor_items((string)($product['flavors'] ?? '')); $slides = product_view_slides($product); ?>
         <article class="card-elevated overflow-hidden flex flex-col">
-          <div class="relative aspect-[4/3] overflow-hidden bg-cream-100">
-            <?php if (!empty($product['cover'])): ?><img src="<?= e(repair_image_url((string)$product['cover'])) ?>" alt="<?= e((string)$product['title']) ?>" class="w-full h-full object-cover transition duration-700 hover:scale-105" loading="lazy"><?php endif; ?>
+          <div class="relative overflow-hidden bg-cream-100">
+            <?php if ($slides): ?><?php embla_carousel($slides, ['ratio'=>'4/3','autoplay'=>false,'lightbox'=>true,'group'=>'produto-' . substr(md5((string)($product['slug'] ?? $product['title'] ?? 'produto')), 0, 8)]); ?><?php endif; ?>
             <span class="absolute top-4 left-4 bg-cream-50/95 text-terracota-500 text-[10px] tracking-eyebrow uppercase rounded-full px-3 py-1 shadow-sm"><?= e((string)($product['category'] ?? 'Produto artesanal')) ?></span>
           </div>
           <div class="p-7 flex flex-col flex-1">

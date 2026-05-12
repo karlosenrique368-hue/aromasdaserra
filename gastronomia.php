@@ -2,6 +2,32 @@
 $pageTitle='Gastronomia'; $pageDesc='Cozinha mediterrânea autoral em Mar Vermelho, com sabores da Suíça, sul da França, Itália e Mediterrâneo.'; $pageSlug='gastronomia';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
+$defaultCarouselGallery = json_encode([
+  ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','caption'=>'Café da manhã'],
+  ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','caption'=>'Fondue'],
+  ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85','caption'=>'Prato autoral'],
+  ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','caption'=>'Massa caseira'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '';
+$defaultFoodGallery = json_encode([
+  ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80','caption'=>'Café da manhã'],
+  ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80','caption'=>'Fondue'],
+  ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80','caption'=>'Prato autoral'],
+  ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80','caption'=>'Massa caseira'],
+  ['src'=>'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80','caption'=>'Pães rústicos'],
+  ['src'=>'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=900&q=80','caption'=>'Vinhos'],
+  ['src'=>'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80','caption'=>'Doces'],
+  ['src'=>'https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=900&q=80','caption'=>'Frutas frescas'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '';
+$carouselGallery = block('gastronomia','carousel_gallery','');
+if ($carouselGallery === '') {
+  $carouselGallery = json_encode([
+    ['src'=>block('gastronomia','carousel_image_1','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Café da manhã'],
+    ['src'=>block('gastronomia','carousel_image_2','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Fondue'],
+    ['src'=>block('gastronomia','carousel_image_3','https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Prato autoral'],
+    ['src'=>block('gastronomia','carousel_image_4','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Massa caseira'],
+  ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: $defaultCarouselGallery;
+}
+$foodGallery = block('gastronomia','food_gallery',$defaultFoodGallery);
 ?>
 <section class="page-hero">
   <img class="page-hero-img kenburns" src="<?= e(block('gastronomia','hero_image','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=80')) ?>" alt="Gastronomia">
@@ -27,12 +53,7 @@ require __DIR__ . '/includes/partials.php';
       </ul>
     </div>
     <div class="reveal rounded-md overflow-hidden shadow-xl">
-      <?php embla_carousel([
-        ['src'=>block('gastronomia','carousel_image_1','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Mesa farta','caption'=>'Café da manhã'],
-        ['src'=>block('gastronomia','carousel_image_2','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Fondue'],
-        ['src'=>block('gastronomia','carousel_image_3','https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Prato'],
-        ['src'=>block('gastronomia','carousel_image_4','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Massa'],
-      ], ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'gastro-hero']); ?>
+      <?php embla_carousel(gallery_slides($carouselGallery, 'Gastronomia'), ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'gastro-hero']); ?>
     </div>
   </div>
 </section>
@@ -45,17 +66,8 @@ require __DIR__ . '/includes/partials.php';
     </header>
     <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 reveal-stagger">
       <?php
-      $imgs=[
-        ['photo-1414235077428-338989a2e8c0','Café da manhã'],
-        ['photo-1559717865-a99cac1c95d8','Fondue'],
-        ['photo-1473093226795-af9932fe5856','Prato autoral'],
-        ['photo-1551183053-bf91a1d81141','Massa caseira'],
-        ['photo-1499636136210-6f4ee915583e','Pães rústicos'],
-        ['photo-1510626176961-4b57d4fbad03','Vinhos'],
-        ['photo-1490645935967-10de6ba17061','Doces'],
-        ['photo-1466637574441-749b8f19452f','Frutas frescas'],
-      ];
-      foreach($imgs as [$ph,$cap]): $src=repair_image_url("https://images.unsplash.com/$ph?auto=format&fit=crop&w=900&q=80"); ?>
+      $imgs = gallery_slides($foodGallery, 'Gastronomia');
+      foreach($imgs as $item): $src=repair_image_url((string)$item['src']); $cap=(string)($item['caption'] ?: $item['alt']); ?>
         <a href="<?= e($src) ?>" class="glightbox gallery-tile aspect-square block" data-gallery="gastro" data-type="image" data-description="<?= e($cap) ?>">
           <img src="<?= e($src) ?>" alt="<?= e($cap) ?>" class="w-full h-full object-cover" loading="lazy">
           <span class="gallery-action"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Abrir galeria</span>

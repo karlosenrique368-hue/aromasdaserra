@@ -200,6 +200,7 @@ function bootstrap_db(): void {
         description TEXT,
         flavors TEXT,
         cover TEXT,
+        gallery TEXT,
         is_active INTEGER DEFAULT 1,
         sort_order INTEGER DEFAULT 0,
         updated_at $date
@@ -220,6 +221,7 @@ function bootstrap_db(): void {
     )");
     ensure_column($pdo, 'chalets', 'video_url', 'TEXT');
     ensure_column($pdo, 'chalets', 'video_label', 'TEXT');
+    ensure_column($pdo, 'products', 'gallery', 'TEXT');
 
     // Seed default admin if empty
     $count = (int)$pdo->query('SELECT COUNT(*) FROM admins')->fetchColumn();
@@ -372,9 +374,11 @@ function bootstrap_db(): void {
             ['gastronomia','gallery_title','html','Galeria · título','Aromas, cores e <em>texturas.</em>'],
 
             ['taberna','about_eyebrow','text','Sobre · etiqueta','Sobre a casa'],
-            ['taberna','about_image_1','image','Galeria · imagem 1','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'],
-            ['taberna','about_image_2','image','Galeria · imagem 2','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'],
-            ['taberna','about_image_3','image','Galeria · imagem 3','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'],
+            ['taberna','about_gallery','gallery','Sobre · galeria',sanitize_public_image_items([
+                ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','caption'=>'Salão Taberna'],
+                ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','caption'=>'Mesa'],
+                ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','caption'=>'Prato'],
+            ])],
 
             ['localizacao','hero_subtitle','html','Hero · subtítulo','Região serrana de Alagoas, a chamada <em>Suíça Alagoana</em>.'],
             ['localizacao','address_eyebrow','text','Endereço · etiqueta','Endereço'],
@@ -408,10 +412,22 @@ function bootstrap_db(): void {
             ['gastronomia','bullet_2','text','Bullet 2','Carta de vinhos curada'],
             ['gastronomia','bullet_3','text','Bullet 3','Temporada de fondues'],
             ['gastronomia','bullet_4','text','Bullet 4','Ervas da Mandala'],
-            ['gastronomia','carousel_image_1','image','Carrossel · imagem 1','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'],
-            ['gastronomia','carousel_image_2','image','Carrossel · imagem 2','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'],
-            ['gastronomia','carousel_image_3','image','Carrossel · imagem 3','https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85'],
-            ['gastronomia','carousel_image_4','image','Carrossel · imagem 4','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'],
+            ['gastronomia','carousel_gallery','gallery','Carrossel · galeria',sanitize_public_image_items([
+                ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','caption'=>'Café da manhã'],
+                ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','caption'=>'Fondue'],
+                ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1200&q=85','caption'=>'Prato autoral'],
+                ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','caption'=>'Massa caseira'],
+            ])],
+            ['gastronomia','food_gallery','gallery','Galeria · pratos',sanitize_public_image_items([
+                ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80','caption'=>'Café da manhã'],
+                ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80','caption'=>'Fondue'],
+                ['src'=>'https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=900&q=80','caption'=>'Prato autoral'],
+                ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80','caption'=>'Massa caseira'],
+                ['src'=>'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80','caption'=>'Pães rústicos'],
+                ['src'=>'https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=900&q=80','caption'=>'Vinhos'],
+                ['src'=>'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80','caption'=>'Doces'],
+                ['src'=>'https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=900&q=80','caption'=>'Frutas frescas'],
+            ])],
 
             ['taberna','bullet_1','text','Bullet 1','Aberto para almoços e jantares · reservas recomendadas'],
             ['taberna','bullet_2','text','Bullet 2','Espaço íntimo · capacidade limitada'],
@@ -420,19 +436,19 @@ function bootstrap_db(): void {
             ['itinerario','stop_1_title','text','Parada 1 · título','Capela · Artesanato e Caldinho'],
             ['itinerario','stop_1_body','html','Parada 1 · texto','Ao chegar em Capela, façam duas paradas especiais: o artesanato do Sr. João de Barro e o tradicional Caldinho de Capela, que funciona até às 12h, quase uma pausa obrigatória para quem passa por lá.'],
             ['itinerario','stop_1_icon','text','Parada 1 · ícone','hand-heart'],
-            ['itinerario','stop_1_image','image','Parada 1 · imagem','https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80'],
+            ['itinerario','stop_1_image','gallery','Parada 1 · galeria','https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80'],
             ['itinerario','stop_2_title','text','Parada 2 · título','Cajueiro · Cerâmica Caju Queimado'],
             ['itinerario','stop_2_body','html','Parada 2 · texto','Seguindo para Cajueiro, aproveitem a Cerâmica Caju Queimado, a entrada é sinalizada.'],
             ['itinerario','stop_2_icon','text','Parada 2 · ícone','palette'],
-            ['itinerario','stop_2_image','image','Parada 2 · imagem','https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80'],
+            ['itinerario','stop_2_image','gallery','Parada 2 · galeria','https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80'],
             ['itinerario','stop_3_title','text','Parada 3 · título','Viçosa · Padaria do Creso'],
             ['itinerario','stop_3_body','html','Parada 3 · texto','Chegando em Viçosa, façam uma pausa na Padaria do Creso para um café acolhedor.'],
             ['itinerario','stop_3_icon','text','Parada 3 · ícone','coffee'],
-            ['itinerario','stop_3_image','image','Parada 3 · imagem','https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80'],
+            ['itinerario','stop_3_image','gallery','Parada 3 · galeria','https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80'],
             ['itinerario','stop_4_title','text','Parada 4 · título','Mar Vermelho · Chegada à Pousada'],
             ['itinerario','stop_4_body','html','Parada 4 · texto','Depois, sigam para Mar Vermelho para viver o descanso e aconchego conosco.'],
             ['itinerario','stop_4_icon','text','Parada 4 · ícone','home'],
-            ['itinerario','stop_4_image','image','Parada 4 · imagem','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80'],
+            ['itinerario','stop_4_image','gallery','Parada 4 · galeria','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80'],
     ];
     $bcheck = $pdo->prepare('SELECT 1 FROM page_blocks WHERE page=? AND block_key=?');
     $bins   = $pdo->prepare('INSERT INTO page_blocks (page,block_key,type,label,value,sort_order) VALUES (?,?,?,?,?,?)');
@@ -526,6 +542,7 @@ function bootstrap_db(): void {
     seed_catalog_revision_20260508($pdo);
     seed_catalog_revision_20260508_label_cleanup($pdo);
     seed_content_revision_20260511_refinements($pdo);
+    seed_content_revision_20260512_gallery_blocks($pdo);
     seed_content_revision_20260512_standard_images_from_alecrim($pdo);
 }
 
@@ -595,31 +612,131 @@ function sanitize_public_video_url(string $url): string {
     return in_array($scheme, ['http', 'https'], true) && in_array($host, $allowedHosts, true) ? $url : '';
 }
 
-function sanitize_public_image_list(string $urls): string {
-    $safe = [];
-    foreach (preg_split('/\R+/', $urls) ?: [] as $url) {
-        $clean = sanitize_public_image_url($url);
-        if ($clean !== '') $safe[] = $clean;
+function sanitize_gallery_caption(string $caption): string {
+    $caption = trim(strip_tags($caption));
+    $caption = preg_replace('/\s+/', ' ', $caption) ?? $caption;
+    if (function_exists('mb_substr')) return mb_substr($caption, 0, 120, 'UTF-8');
+    return substr($caption, 0, 120);
+}
+
+function normalize_public_image_item(mixed $item): ?array {
+    if (is_string($item)) {
+        $value = trim($item);
+        if ($value === '') return null;
+        if (($value[0] ?? '') === '{') {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) $item = $decoded;
+        }
     }
-    return implode("\n", $safe);
+
+    if (is_array($item)) {
+        $url = sanitize_public_image_url((string)($item['src'] ?? $item['url'] ?? $item['path'] ?? ''));
+        if ($url === '') return null;
+        return [
+            'src' => $url,
+            'caption' => sanitize_gallery_caption((string)($item['caption'] ?? $item['label'] ?? $item['title'] ?? '')),
+        ];
+    }
+
+    $url = sanitize_public_image_url((string)$item);
+    return $url !== '' ? ['src' => $url, 'caption' => ''] : null;
+}
+
+function image_items_to_array(string $value): array {
+    $value = trim($value);
+    if ($value === '') return [];
+
+    $rawItems = [];
+    $decoded = json_decode($value, true);
+    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+        $rawItems = array_is_list($decoded) ? $decoded : [$decoded];
+    } else {
+        $rawItems = preg_split('/\R+/', $value) ?: [];
+    }
+
+    $items = [];
+    $seen = [];
+    foreach ($rawItems as $rawItem) {
+        $item = normalize_public_image_item($rawItem);
+        if (!$item) continue;
+        if (isset($seen[$item['src']])) continue;
+        $seen[$item['src']] = true;
+        $items[] = $item;
+    }
+    return $items;
+}
+
+function sanitize_public_image_list(string $urls): string {
+    return sanitize_public_image_items(image_items_to_array($urls));
 }
 
 function image_list_to_array(string $urls): array {
-    $items = [];
-    foreach (preg_split('/\R+/', $urls) ?: [] as $url) {
-        $clean = sanitize_public_image_url($url);
-        if ($clean !== '') $items[] = $clean;
-    }
-    return array_values(array_unique($items));
+    return array_map(fn(array $item): string => $item['src'], image_items_to_array($urls));
 }
 
-function sanitize_public_image_items(array $urls): string {
+function sanitize_public_image_items(array $items): string {
     $safe = [];
-    foreach ($urls as $url) {
-        $clean = sanitize_public_image_url((string)$url);
-        if ($clean !== '') $safe[] = $clean;
+    $seen = [];
+    foreach ($items as $rawItem) {
+        $item = normalize_public_image_item($rawItem);
+        if (!$item) continue;
+        if (isset($seen[$item['src']])) continue;
+        $seen[$item['src']] = true;
+        $safe[] = $item;
     }
-    return implode("\n", array_values(array_unique($safe)));
+    return $safe ? (json_encode($safe, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '') : '';
+}
+
+function upload_gallery_file_items(string $field, string $prefix, string $captionField = ''): array {
+    if (empty($_FILES[$field]['name']) || !is_array($_FILES[$field]['name'])) return [];
+
+    $captions = $captionField !== '' ? (array)($_POST[$captionField] ?? []) : [];
+    $items = [];
+    $files = $_FILES[$field];
+    $total = count($files['name']);
+    for ($i = 0; $i < $total; $i++) {
+        if (empty($files['name'][$i])) continue;
+        $file = [
+            'name' => $files['name'][$i],
+            'tmp_name' => $files['tmp_name'][$i] ?? '',
+            'error' => $files['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+            'size' => $files['size'][$i] ?? 0,
+        ];
+        if ($path = upload_file($file, $prefix)) {
+            $items[] = ['src' => $path, 'caption' => sanitize_gallery_caption((string)($captions[$i] ?? ''))];
+        }
+    }
+    return $items;
+}
+
+function merge_gallery_post_items(array $postedItems, array $uploadedItems): array {
+    $items = [];
+    $uploadIndex = 0;
+    foreach ($postedItems as $rawItem) {
+        $decoded = is_string($rawItem) ? json_decode($rawItem, true) : (is_array($rawItem) ? $rawItem : null);
+        if (is_array($decoded) && !empty($decoded['upload'])) {
+            if (isset($uploadedItems[$uploadIndex])) {
+                if (($uploadedItems[$uploadIndex]['caption'] ?? '') === '' && !empty($decoded['caption'])) {
+                    $uploadedItems[$uploadIndex]['caption'] = sanitize_gallery_caption((string)$decoded['caption']);
+                }
+                $items[] = $uploadedItems[$uploadIndex];
+            }
+            $uploadIndex++;
+            continue;
+        }
+        $items[] = $rawItem;
+    }
+    while (isset($uploadedItems[$uploadIndex])) {
+        $items[] = $uploadedItems[$uploadIndex];
+        $uploadIndex++;
+    }
+    return $items;
+}
+
+function gallery_items_from_post(string $itemsField, string $fileField, string $prefix, string $captionField = ''): string {
+    $postedItems = (array)($_POST[$itemsField] ?? []);
+    $uploadedItems = upload_gallery_file_items($fileField, $prefix, $captionField);
+    return sanitize_public_image_items(merge_gallery_post_items($postedItems, $uploadedItems));
 }
 
 function upload_gallery_files(string $field, string $prefix): array {
@@ -741,16 +858,17 @@ function seed_upsert_experience(PDO $pdo, array $data, array $legacySlugs = []):
 }
 
 function seed_upsert_product(PDO $pdo, array $data): void {
-    $stmt = $pdo->prepare('SELECT id FROM products WHERE slug=?');
+    $stmt = $pdo->prepare('SELECT * FROM products WHERE slug=?');
     $stmt->execute([$data['slug']]);
-    $id = $stmt->fetchColumn();
-    if ($id) {
-        $upd = $pdo->prepare('UPDATE products SET title=?, category=?, description=?, flavors=?, cover=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
-        $upd->execute([$data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], $data['sort_order'], (int)$id]);
+    $row = $stmt->fetch();
+    $gallery = $row['gallery'] ?? ($data['gallery'] ?? '');
+    if ($row) {
+        $upd = $pdo->prepare('UPDATE products SET title=?, category=?, description=?, flavors=?, cover=?, gallery=?, is_active=1, sort_order=?, updated_at=CURRENT_TIMESTAMP WHERE id=?');
+        $upd->execute([$data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], $gallery, $data['sort_order'], (int)$row['id']]);
         return;
     }
-    $ins = $pdo->prepare('INSERT INTO products (slug,title,category,description,flavors,cover,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?)');
-    $ins->execute([$data['slug'], $data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], 1, $data['sort_order']]);
+    $ins = $pdo->prepare('INSERT INTO products (slug,title,category,description,flavors,cover,gallery,is_active,sort_order) VALUES (?,?,?,?,?,?,?,?,?)');
+    $ins->execute([$data['slug'], $data['title'], $data['category'], $data['description'], $data['flavors'], $data['cover'], $gallery, 1, $data['sort_order']]);
 }
 
 function seed_upsert_testimonial(PDO $pdo, array $data): void {
@@ -985,6 +1103,69 @@ function seed_content_revision_20260512_standard_images_from_alecrim(PDO $pdo): 
 
     $upd = $pdo->prepare('UPDATE chalets SET cover=?, gallery=?, updated_at=CURRENT_TIMESTAMP WHERE category=?');
     $upd->execute([$cover, $gallery, 'Standard · Vista jardim']);
+    set_setting($revisionKey, '1');
+}
+
+function seed_content_revision_20260512_gallery_blocks(PDO $pdo): void {
+    $revisionKey = 'content_revision_20260512_gallery_blocks_v1';
+    $stmt = $pdo->prepare('SELECT value FROM settings WHERE `key`=?');
+    $stmt->execute([$revisionKey]);
+    if ($stmt->fetchColumn() === '1') return;
+
+    $makeGallery = function(string $page, string $targetKey, string $label, array $sources, int $sortOrder) use ($pdo): void {
+        $items = [];
+        foreach ($sources as $sourceKey => $caption) {
+            $stmt = $pdo->prepare('SELECT value FROM page_blocks WHERE page=? AND block_key=? LIMIT 1');
+            $stmt->execute([$page, $sourceKey]);
+            $value = (string)($stmt->fetchColumn() ?: '');
+            foreach (image_items_to_array($value) as $item) {
+                if (($item['caption'] ?? '') === '') $item['caption'] = $caption;
+                $items[] = $item;
+            }
+        }
+        if (!$items) return;
+
+        $value = sanitize_public_image_items($items);
+        $stmt = $pdo->prepare('SELECT id,value FROM page_blocks WHERE page=? AND block_key=? LIMIT 1');
+        $stmt->execute([$page, $targetKey]);
+        $existing = $stmt->fetch();
+        if ($existing) {
+            $upd = $pdo->prepare('UPDATE page_blocks SET type=?, label=?, value=?, sort_order=? WHERE id=?');
+            $upd->execute(['gallery', $label, $value, $sortOrder, (int)$existing['id']]);
+        } else {
+            $ins = $pdo->prepare('INSERT INTO page_blocks (page,block_key,type,label,value,sort_order) VALUES (?,?,?,?,?,?)');
+            $ins->execute([$page, $targetKey, 'gallery', $label, $value, $sortOrder]);
+        }
+    };
+
+    $makeGallery('taberna', 'about_gallery', 'Sobre · galeria', [
+        'about_image_1' => 'Salão Taberna',
+        'about_image_2' => 'Mesa',
+        'about_image_3' => 'Prato',
+    ], 374);
+    $makeGallery('gastronomia', 'carousel_gallery', 'Carrossel · galeria', [
+        'carousel_image_1' => 'Café da manhã',
+        'carousel_image_2' => 'Fondue',
+        'carousel_image_3' => 'Prato autoral',
+        'carousel_image_4' => 'Massa caseira',
+    ], 411);
+
+    $delete = $pdo->prepare('DELETE FROM page_blocks WHERE page=? AND block_key=?');
+    foreach (['about_image_1','about_image_2','about_image_3'] as $key) $delete->execute(['taberna', $key]);
+    foreach (['carousel_image_1','carousel_image_2','carousel_image_3','carousel_image_4'] as $key) $delete->execute(['gastronomia', $key]);
+
+    for ($i = 1; $i <= 4; $i++) {
+        $key = "stop_{$i}_image";
+        $stmt = $pdo->prepare('SELECT id,value FROM page_blocks WHERE page=? AND block_key=? LIMIT 1');
+        $stmt->execute(['itinerario', $key]);
+        $row = $stmt->fetch();
+        if (!$row) continue;
+        $items = image_items_to_array((string)($row['value'] ?? ''));
+        $value = $items ? sanitize_public_image_items($items) : (string)($row['value'] ?? '');
+        $upd = $pdo->prepare('UPDATE page_blocks SET type=?, label=?, value=? WHERE id=?');
+        $upd->execute(['gallery', "Parada {$i} · galeria", $value, (int)$row['id']]);
+    }
+
     set_setting($revisionKey, '1');
 }
 

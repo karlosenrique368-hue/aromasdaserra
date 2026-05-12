@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'description' => trim($_POST['description'] ?? ''),
             'flavors'     => trim($_POST['flavors'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
+            'gallery'     => gallery_items_from_post('gallery_urls', 'gallery_files', 'product_gallery', 'gallery_file_captions'),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];
@@ -25,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
         }
         $pid = (int)($_POST['id'] ?? 0);
         if ($pid) {
-            $stmt = $pdo->prepare('UPDATE products SET slug=:slug,title=:title,category=:category,description=:description,flavors=:flavors,cover=:cover,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
+          $stmt = $pdo->prepare('UPDATE products SET slug=:slug,title=:title,category=:category,description=:description,flavors=:flavors,cover=:cover,gallery=:gallery,is_active=:is_active,sort_order=:sort_order,updated_at=CURRENT_TIMESTAMP WHERE id=:id');
             $stmt->execute(array_merge($data, ['id'=>$pid]));
             flash('Produto atualizado.');
         } else {
-            $stmt = $pdo->prepare('INSERT INTO products (slug,title,category,description,flavors,cover,is_active,sort_order) VALUES (:slug,:title,:category,:description,:flavors,:cover,:is_active,:sort_order)');
+          $stmt = $pdo->prepare('INSERT INTO products (slug,title,category,description,flavors,cover,gallery,is_active,sort_order) VALUES (:slug,:title,:category,:description,:flavors,:cover,:gallery,:is_active,:sort_order)');
             $stmt->execute($data);
             flash('Produto criado.');
         }
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
 require __DIR__ . '/partials/layout_top.php';
 
 if ($action==='edit' || $action==='new') {
-    $row = ['id'=>0,'slug'=>'','title'=>'','category'=>'','description'=>'','flavors'=>'','cover'=>'','is_active'=>1,'sort_order'=>0];
+    $row = ['id'=>0,'slug'=>'','title'=>'','category'=>'','description'=>'','flavors'=>'','cover'=>'','gallery'=>'','is_active'=>1,'sort_order'=>0];
     if ($id) { $stmt = $pdo->prepare('SELECT * FROM products WHERE id=?'); $stmt->execute([$id]); $row = $stmt->fetch() ?: $row; }
     ?>
     <div class="page-head">
@@ -64,6 +65,7 @@ if ($action==='edit' || $action==='new') {
       <label><span class="lbl">Imagem do produto</span></label>
       <?php $name='cover_file'; $current=$row['cover']; $multiple=false; $hint='JPG, PNG ou WEBP — recomendado 1200×900'; require __DIR__ . '/partials/upload_zone.php'; ?>
       <label style="margin-top:.6rem;"><span class="lbl" style="font-size:11px; color:var(--a-muted);">Ou cole uma URL externa</span><input type="text" name="cover" value="<?= ee($row['cover']) ?>" placeholder="https://..."></label>
+      <?php $items=$row['gallery'] ?? ''; $inputName='gallery_urls[]'; $uploadName='gallery_files[]'; $fileCaptionName='gallery_file_captions[]'; $hint='Envie uma ou mais imagens do produto. A primeira imagem arrastada vira destaque do card.'; require __DIR__ . '/partials/gallery_picker.php'; ?>
       <div class="row-2">
         <label style="display:flex; align-items:center; gap:.6rem; padding-top:1.6rem;"><input type="checkbox" name="is_active" <?= $row['is_active']?'checked':'' ?>> <span>Ativo (visível no site)</span></label>
         <label><span class="lbl">Ordem</span><input type="number" name="sort_order" value="<?= (int)$row['sort_order'] ?>"></label>

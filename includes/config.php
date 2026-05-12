@@ -115,17 +115,49 @@ function block(string $page, string $key, string $default = ''): string {
     return ($v !== null && $v !== '') ? $v : $default;
 }
 
-function public_image_list(string $urls): array {
-    $items = [];
-    foreach (preg_split('/\R+/', $urls) ?: [] as $url) {
-        $url = repair_image_url(trim($url));
-        if ($url !== '') $items[] = $url;
+function public_gallery_caption(string $caption): string {
+    $caption = trim(strip_tags($caption));
+    $caption = preg_replace('/\s+/', ' ', $caption) ?? $caption;
+    if (function_exists('mb_substr')) return mb_substr($caption, 0, 120, 'UTF-8');
+    return substr($caption, 0, 120);
+}
+
+function public_image_items(string $value): array {
+    $value = trim($value);
+    if ($value === '') return [];
+
+    $rawItems = [];
+    $decoded = json_decode($value, true);
+    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+        $rawItems = array_is_list($decoded) ? $decoded : [$decoded];
+    } else {
+        $rawItems = preg_split('/\R+/', $value) ?: [];
     }
-    return array_values(array_unique($items));
+
+    $items = [];
+    $seen = [];
+    foreach ($rawItems as $rawItem) {
+        if (is_array($rawItem)) {
+            $src = repair_image_url((string)($rawItem['src'] ?? $rawItem['url'] ?? $rawItem['path'] ?? ''));
+            $caption = public_gallery_caption((string)($rawItem['caption'] ?? $rawItem['label'] ?? $rawItem['title'] ?? ''));
+        } else {
+            $src = repair_image_url((string)$rawItem);
+            $caption = '';
+        }
+        $src = trim($src);
+        if ($src === '' || isset($seen[$src])) continue;
+        $seen[$src] = true;
+        $items[] = ['src' => $src, 'caption' => $caption];
+    }
+    return $items;
+}
+
+function public_image_list(string $urls): array {
+    return array_map(fn(array $item): string => $item['src'], public_image_items($urls));
 }
 
 function gallery_slides(string $gallery, string $alt): array {
-    return array_map(fn(string $src): array => ['src' => $src, 'alt' => $alt], public_image_list($gallery));
+    return array_map(fn(array $item): array => ['src' => $item['src'], 'alt' => $alt, 'caption' => $item['caption']], public_image_items($gallery));
 }
 
 function youtube_embed_url(string $url): string {

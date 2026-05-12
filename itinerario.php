@@ -1,6 +1,7 @@
 <?php
 $pageTitle='Itinerário até a Serra'; $pageDesc='Roteiro aconchegante pela serra, com paradas em Capela, Cajueiro e Viçosa no caminho até Mar Vermelho.'; $pageSlug='itinerario';
 require __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/partials.php';
 ?>
 <section class="page-hero">
   <img class="page-hero-img" src="<?= e(block('itinerario','hero_image','https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=80')) ?>" alt="Estrada de serra">
@@ -23,16 +24,23 @@ require __DIR__ . '/includes/header.php';
 
   <div class="max-w-4xl mx-auto px-6 mt-16 space-y-12">
     <?php $stops = [];
+    $defaultStopImages = [
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80',
+    ];
     for ($i = 1; $i <= 4; $i++) {
+      $title = block('itinerario', "stop_{$i}_title", ['Capela · Artesanato e Caldinho','Cajueiro · Cerâmica Caju Queimado','Viçosa · Padaria do Creso','Mar Vermelho · Chegada à Pousada'][$i - 1]);
       $stops[] = [
         (string)$i,
-        block('itinerario', "stop_{$i}_title", ['Capela · Artesanato e Caldinho','Cajueiro · Cerâmica Caju Queimado','Viçosa · Padaria do Creso','Mar Vermelho · Chegada à Pousada'][$i - 1]),
+        $title,
         block('itinerario', "stop_{$i}_body", ['Ao chegar em Capela, façam duas paradas especiais: o artesanato do Sr. João de Barro e o tradicional Caldinho de Capela, que funciona até às 12h, quase uma pausa obrigatória para quem passa por lá.','Seguindo para Cajueiro, aproveitem a Cerâmica Caju Queimado, a entrada é sinalizada.','Chegando em Viçosa, façam uma pausa na Padaria do Creso para um café acolhedor.','Depois, sigam para Mar Vermelho para viver o descanso e aconchego conosco.'][$i - 1]),
         block('itinerario', "stop_{$i}_icon", ['hand-heart','palette','coffee','home'][$i - 1]),
-        repair_image_url(block('itinerario', "stop_{$i}_image", ['https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1499678329028-101435549a4e?auto=format&fit=crop&w=800&q=80'][$i - 1])),
+        gallery_slides(block('itinerario', "stop_{$i}_image", $defaultStopImages[$i - 1]), $title),
       ];
     }
-    foreach($stops as [$n,$t,$d,$ic,$img]): ?>
+    foreach($stops as [$n,$t,$d,$ic,$slides]): ?>
       <article class="reveal grid md:grid-cols-[auto,1fr,1fr] gap-6 items-center">
         <div class="step-num"><?= e($n) ?></div>
         <div>
@@ -40,7 +48,9 @@ require __DIR__ . '/includes/header.php';
           <h3 class="font-editorial text-3xl text-forest-900 mt-2 leading-tight"><?= e($t) ?></h3>
           <p class="mt-3 text-[16px] leading-[1.8] text-ink-700/85"><?= $d ?></p>
         </div>
-        <img src="<?= e($img) ?>" alt="<?= e($t) ?>" class="rounded-md aspect-[4/3] object-cover w-full shadow-lg">
+        <div class="rounded-md overflow-hidden shadow-lg">
+          <?php embla_carousel($slides, ['ratio'=>'4/3','autoplay'=>false,'lightbox'=>true,'group'=>'itinerario-stop-' . $n]); ?>
+        </div>
       </article>
     <?php endforeach; ?>
   </div>

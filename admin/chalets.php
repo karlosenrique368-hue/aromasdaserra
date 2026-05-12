@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'view'        => trim($_POST['view'] ?? ''),
             'description' => trim($_POST['description'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
-            'gallery'     => sanitize_public_image_items(array_merge((array)($_POST['gallery_urls'] ?? []), upload_gallery_files('gallery_files', 'chalet_gallery'))),
+            'gallery'     => gallery_items_from_post('gallery_urls', 'gallery_files', 'chalet_gallery', 'gallery_file_captions'),
             'video_url'   => sanitize_public_video_url((string)($_POST['video_url'] ?? '')),
             'video_label' => trim($_POST['video_label'] ?? ''),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,

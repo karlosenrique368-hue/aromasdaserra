@@ -2,6 +2,19 @@
 $pageTitle='Taberna do Monge'; $pageDesc='Restaurante boutique aberto ao público, com gastronomia mediterrânea e vista para a serra.'; $pageSlug='taberna';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/partials.php';
+$defaultAboutGallery = json_encode([
+  ['src'=>'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85','caption'=>'Salão Taberna'],
+  ['src'=>'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85','caption'=>'Mesa'],
+  ['src'=>'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85','caption'=>'Prato'],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: '';
+$aboutGallery = block('taberna','about_gallery','');
+if ($aboutGallery === '') {
+  $aboutGallery = json_encode([
+    ['src'=>block('taberna','about_image_1','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Salão Taberna'],
+    ['src'=>block('taberna','about_image_2','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Mesa'],
+    ['src'=>block('taberna','about_image_3','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'caption'=>'Prato'],
+  ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?: $defaultAboutGallery;
+}
 ?>
 <section class="page-hero">
   <img class="page-hero-img kenburns" src="<?= e(repair_image_url(block('taberna','hero_image','https://images.unsplash.com/photo-1559717865-a99cac1c95d8?auto=format&fit=crop&w=2000&q=80'))) ?>" alt="Taberna do Monge">
@@ -16,11 +29,7 @@ require __DIR__ . '/includes/partials.php';
 <section class="section bg-cream-50">
   <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal rounded-md overflow-hidden shadow-xl">
-      <?php embla_carousel([
-        ['src'=>block('taberna','about_image_1','https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Salão Taberna'],
-        ['src'=>block('taberna','about_image_2','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Mesa'],
-        ['src'=>block('taberna','about_image_3','https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85'),'alt'=>'Prato'],
-      ], ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'taberna-hero']); ?>
+      <?php embla_carousel(gallery_slides($aboutGallery, 'Taberna do Monge'), ['ratio'=>'4/5','autoplay'=>true,'lightbox'=>true,'group'=>'taberna-hero']); ?>
     </div>
     <div class="reveal">
       <span class="eyebrow"><?= e(block('taberna','about_eyebrow','Sobre a casa')) ?></span>

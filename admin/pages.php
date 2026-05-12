@@ -18,6 +18,26 @@ $pages = [
 $page    = $_GET['page'] ?? 'home';
 if (!isset($pages[$page])) $page = 'home';
 
+function page_gallery_upload_items(int $id): array {
+  if (empty($_FILES['gallery_block_files']['name'][$id]) || !is_array($_FILES['gallery_block_files']['name'][$id])) return [];
+
+  $captions = (array)($_POST['gallery_block_file_captions'][$id] ?? []);
+  $items = [];
+  foreach ($_FILES['gallery_block_files']['name'][$id] as $index => $name) {
+    if (empty($name)) continue;
+    $file = [
+      'name' => $name,
+      'tmp_name' => $_FILES['gallery_block_files']['tmp_name'][$id][$index] ?? '',
+      'error' => $_FILES['gallery_block_files']['error'][$id][$index] ?? UPLOAD_ERR_NO_FILE,
+      'size' => $_FILES['gallery_block_files']['size'][$id][$index] ?? 0,
+    ];
+    if ($url = upload_file($file, 'block_gallery')) {
+      $items[] = ['src' => $url, 'caption' => sanitize_gallery_caption((string)($captions[$index] ?? ''))];
+    }
+  }
+  return $items;
+}
+
 // Save handler
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!csrf_check()) { flash('Sessão expirada. Tente novamente.', 'error'); header('Location: ' . admin_url('pages.php?page=' . urlencode($page))); exit; }
@@ -32,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $blockTypes[$id] ?? 'text';
     if ($type === 'html') $val = sanitize_block_html((string)$val);
     elseif ($type === 'image') $val = sanitize_public_image_url((string)$val);
+    elseif ($type === 'gallery') $val = sanitize_public_image_items((array)$val);
         $upd->execute([(string)$val, $id]);
     }
     // Image uploads
@@ -51,6 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($url) $upd->execute([$url, (int)$id]);
         }
     }
+        foreach ($blockTypes as $id => $type) {
+          if ($type !== 'gallery') continue;
+          $items = (array)($_POST['block_gallery'][$id] ?? []);
+          $uploads = page_gallery_upload_items((int)$id);
+          $upd->execute([sanitize_public_image_items(merge_gallery_post_items($items, $uploads)), (int)$id]);
+        }
     flash('Página atualizada com sucesso.');
     header('Location: ' . admin_url('pages.php?page=' . urlencode($page)));
     exit;
@@ -128,6 +155,15 @@ require __DIR__ . '/partials/layout_top.php';
               </div>
             </div>
           </div>
+        <?php elseif ($type === 'gallery'): ?>
+          <?php
+            $items = $val;
+            $inputName = 'block_gallery[' . $id . '][]';
+            $uploadName = 'gallery_block_files[' . $id . '][]';
+            $fileCaptionName = 'gallery_block_file_captions[' . $id . '][]';
+            $hint = 'Envie várias imagens em uma galeria única. Use a legenda para nome do prato, parada ou foto no lightbox.';
+            require __DIR__ . '/partials/gallery_picker.php';
+          ?>
         <?php endif; ?>
       </div>
     <?php endforeach; ?>

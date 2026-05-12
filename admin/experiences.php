@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && csrf_check()) {
             'icon'        => trim($_POST['icon'] ?? 'sparkles'),
             'description' => trim($_POST['description'] ?? ''),
             'cover'       => sanitize_public_image_url((string)($_POST['cover'] ?? '')),
-            'gallery'     => sanitize_public_image_items(array_merge((array)($_POST['gallery_urls'] ?? []), upload_gallery_files('gallery_files', 'experience_gallery'))),
+            'gallery'     => gallery_items_from_post('gallery_urls', 'gallery_files', 'experience_gallery', 'gallery_file_captions'),
             'is_active'   => isset($_POST['is_active']) ? 1 : 0,
             'sort_order'  => (int)($_POST['sort_order'] ?? 0),
         ];
